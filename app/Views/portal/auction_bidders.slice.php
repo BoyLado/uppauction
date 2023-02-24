@@ -103,82 +103,82 @@ transition: all .2s ease-in-out;
       
       <!-- Start UI Content -->
 
-<div class="row" id="div_bidders">
-  <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" onclick="alert();">
-        <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #001</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+      <div class="row" id="div_bidders">
+        <!-- <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+          <div class="card mb-2 bg-gradient-dark zoom">
+            <a href="javascript:void(0)" onclick="alert();">
+              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+              <div class="products">
+                <h5 class="card-title text-primary text-white">
+                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                  <span class="text-bold text-red">Bidder #001</span>      <br>
+                  <span class="card-text text-white">Address</span>
+                </h5>
+                <div class="float-right">
+                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
-      </a>
-    </div>
-  </div>
-   <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" onclick="alert();">
-        <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-         <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #002</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+          <div class="card mb-2 bg-gradient-dark zoom">
+            <a href="javascript:void(0)" onclick="alert();">
+              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+              <div class="products">
+               <h5 class="card-title text-primary text-white">
+                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                  <span class="text-bold text-red">Bidder #002</span>      <br>
+                  <span class="card-text text-white">Address</span>
+                </h5>
+                <div class="float-right">
+                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
-      </a>
-    </div>
-  </div>
-   <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" onclick="alert();">
-        <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
-            <span class="text-bold text-red">Bidder #003</span><br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+          <div class="card mb-2 bg-gradient-dark zoom">
+            <a href="javascript:void(0)" onclick="alert();">
+              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+              <div class="products">
+                <h5 class="card-title text-primary text-white">
+                  <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
+                  <span class="text-bold text-red">Bidder #003</span><br>
+                  <span class="card-text text-white">Address</span>
+                </h5>
+                <div class="float-right">
+                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
-      </a>
-    </div>
-  </div>
-   <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" onclick="alert();">
-        <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #004</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+          <div class="card mb-2 bg-gradient-dark zoom">
+            <a href="javascript:void(0)" onclick="alert();">
+              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+              <div class="products">
+                <h5 class="card-title text-primary text-white">
+                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                  <span class="text-bold text-red">Bidder #004</span>      <br>
+                  <span class="card-text text-white">Address</span>
+                </h5>
+                <div class="float-right">
+                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                </div>
+              </div>
+            </a>
           </div>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
+        </div> -->
+      </div>
 
-<div class="modal fade" id="modal_addBidder" role="dialog">
+      <div class="modal fade" id="modal_addBidder" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
@@ -223,13 +223,6 @@ transition: all .2s ease-in-out;
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
 
       <!-- End UI Content -->
 
@@ -284,7 +277,8 @@ transition: all .2s ease-in-out;
     //
     // ======================================================>
     //
-BIDDERS.loadBidders();
+    
+    BIDDERS.loadBidders();
 
     $('#lnk_addNewBidder').on('click',function(){
       $('#div_imageDetails').hide();
@@ -303,16 +297,6 @@ BIDDERS.loadBidders();
     $('#form_addBidder').on('submit',function(e){
       e.preventDefault();
       BIDDERS.addBidder(this);
-    });
-
-
-    
-$('#lnk_addNewBidder').on('click',function(){
-      $('#modal_addBidder').modal('show');
-    });
-
-    $('#btn_addNewBidder').on('click',function(){
-      $('#modal_addBidder').modal('show');
     });
 
   });

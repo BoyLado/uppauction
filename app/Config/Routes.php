@@ -61,6 +61,26 @@ $routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinn
 
 
 /*
+ *  ------------------------------------------------------------------
+ *  BACK END FUNCTIONS 
+ *  ------------------------------------------------------------------
+ */
+
+$routes->get('portal/load-bidders', 'Portal\BidderController::loadBidders');
+$routes->post('portal/add-bidder', 'Portal\BidderController::addBidder');
+$routes->get('portal/select-bidder', 'Portal\BidderController::selectBidder');
+$routes->post('portal/edit-bidder', 'Portal\BidderController::editBidder');
+$routes->post('portal/remove-bidder', 'Portal\BidderController::removeBidder');
+
+
+$routes->get('portal/load-items', 'Portal\BidderController::loadBidders');
+$routes->get('portal/add-item', 'Portal\BidderController::addBidder');
+$routes->get('portal/select-item', 'Portal\BidderController::selectBidder');
+$routes->get('portal/edit-item', 'Portal\BidderController::editBidder');
+$routes->get('portal/remove-item', 'Portal\BidderController::removeBidder');
+
+
+/*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------

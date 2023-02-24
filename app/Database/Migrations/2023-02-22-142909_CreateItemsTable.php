@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateUsersTable extends Migration
+class CreateItemsTable extends Migration
 {
     public function up()
     {
@@ -15,43 +15,46 @@ class CreateUsersTable extends Migration
                 'unsigned'          => true,
                 'auto_increment'    => true,
             ],
-            'first_name'        => [
+            'user_id'           => [
+                'type'              => 'INT',
+                'constraint'        => 11,
+                'unsigned'          => true,
+                'null'              => true,
+            ],
+            'item_number'       => [
                 'type'              => 'VARCHAR',
                 'constraint'        => 100,
                 'null'              => true,
             ],
-            'last_name'         => [
-                'type'              => 'VARCHAR',
-                'constraint'        => 100,
+            'item_description'  => [
+                'type'              => 'TEXT',
                 'null'              => true,
             ],
-            'position'          => [
-                'type'              => 'VARCHAR',
-                'constraint'        => 100,
+            'bidder_id'         => [
+                'type'              => 'INT',
+                'constraint'        => 11,
+                'unsigned'          => true,
                 'null'              => true,
             ],
-            'user_email'        => [
-                'type'              => 'VARCHAR',
-                'constraint'        => 150,
-                'null'              => false,
-            ],
-            'user_name'        => [
-                'type'              => 'VARCHAR',
-                'constraint'        => 150,
-                'null'              => false,
-            ],
-            'user_password'     => [
-                'type'              => 'VARCHAR',
-                'constraint'        => 100,
+            'winning_amount'    => [
+                'type'              => 'DECIMAL',
+                'constraint'        => [20,2],
                 'null'              => true,
             ],
-            'user_status'       => [
-                'type'              => 'ENUM',
-                'constraint'        => ['1','0'],
+            'created_by'        => [
+                'type'              => 'INT',
+                'constraint'        => 11,
+                'unsigned'          => true,
                 'null'              => true,
             ],
             'created_date'      => [
                 'type'              => 'DATETIME',
+                'null'              => true,
+            ],
+            'updated_by'        => [
+                'type'              => 'INT',
+                'constraint'        => 11,
+                'unsigned'          => true,
                 'null'              => true,
             ],
             'updated_date'      => [
@@ -60,11 +63,11 @@ class CreateUsersTable extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('users');
+        $this->forge->createTable('items');
     }
 
     public function down()
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('items');
     }
 }
