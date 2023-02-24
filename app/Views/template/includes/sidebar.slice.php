@@ -47,7 +47,7 @@
         </li>
         <li class="nav-item">
           <a href="<?php echo base_url(); ?>/portal/auction-bidders" id="nav_bidders" class="nav-link">
-            <i class="nav-icon fas fa-user-tie"></i>
+           <i class="nav-icon fa fa-users" ></i> 
             <p>AUCTION BIDDERS</p>
           </a>
         </li>
@@ -59,7 +59,7 @@
         </li>
         <li class="nav-item">
           <a href="<?php echo base_url(); ?>/portal/auction-winners" id="nav_winners" class="nav-link">
-            <i class="nav-icon fas fa-calendar"></i>
+            <i class="nav-icon fas fa fa-trophy"></i>
             <p>AUCTION WINNERS</p>
           </a>
         </li>

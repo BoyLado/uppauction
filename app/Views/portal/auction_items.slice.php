@@ -144,7 +144,7 @@
 
     //topNav icon & label
 
-    let topNav = `<i class="fas fa-th mr-2"></i>
+    let topNav = `<i class="fas fa-list mr-2"></i>
                   <b>AUCTION ITEMS</b>`;
     $('#lnk_topNav').html(topNav);
 

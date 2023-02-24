@@ -64,6 +64,7 @@
                 <a class="dropdown-item" href="javascript:void(0)" id="lnk_importContacts">
                   <i class="fa fa-upload mr-1"></i>Import
                 </a>
+
               </div>
             </div>
             <div class="d-none d-lg-block">
@@ -73,6 +74,11 @@
               <button type="button" class="btn btn-default btn-sm" id="btn_importContacts">
                 <i class="fa fa-upload mr-1"></i> Import
               </button>
+              <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            
             </div>
           </div>
         </div><!-- /.col -->
@@ -88,6 +94,108 @@
       <!-- Start UI Content -->
 
 
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
+<div class="row" data-target="#exampleModalLong">
+  <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+    <div class="card mb-2 bg-gradient-dark zoom">
+      <a href="javascript:void(0)" id="winner1">
+        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+        <div class="products">
+          <h5 class="card-title text-primary text-white">
+            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+            <span class="text-bold text-red">Bidder #001</span>      <br>
+            <span class="card-text text-white">Address</span>
+          </h5>
+          <div class="float-right">
+            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+    <div class="card mb-2 bg-gradient-dark zoom">
+      <a href="javascript:void(0)" id="winner2">
+        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+        <div class="products">
+         <h5 class="card-title text-primary text-white">
+            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+            <span class="text-bold text-red">Bidder #002</span>      <br>
+            <span class="card-text text-white">Address</span>
+          </h5>
+          <div class="float-right">
+            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+ <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+    <div class="card mb-2 bg-gradient-dark zoom">
+      <a href="javascript:void(0)" id="winner3">
+        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+        <div class="products">
+          <h5 class="card-title text-primary text-white">
+            <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
+            <span class="text-bold text-red">Bidder #003</span><br>
+            <span class="card-text text-white">Address</span>
+          </h5>
+          <div class="float-right">
+            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+    <div class="card mb-2 bg-gradient-dark zoom">
+      <a href="javascript:void(0)" id="winner4">
+        <img class="card-img-top rounded" data-target="#exampleModalLong"src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+        <div class="products">
+          <h5 class="card-title text-primary text-white">
+            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+            <span class="text-bold text-red">Bidder #004</span>      <br>
+            <span class="card-text text-white">Address</span>
+          </h5>
+          <div class="float-right">
+            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+          </div>
+        </div>
+</div>
+
+   
+                                                                                                                                                                                                                                                                             
+  
+   
 
 
 
@@ -144,7 +252,7 @@
 
     //topNav icon & label
 
-    let topNav = `<i class="fas fa-th mr-2"></i>
+    let topNav = `<i class="fas fa-trophy mr-2"></i>
                   <b>AUCTION WINNERS</b>`;
     $('#lnk_topNav').html(topNav);
 
@@ -154,6 +262,26 @@
     //
     // ======================================================>
     //
+  $('#winner1').on('click',function(){
+  $('#exampleModalLong').modal('show');
+
+  });
+
+  $('#winner2').on('click',function(){
+  $('#exampleModalLong').modal('show');
+
+  });
+
+  $('#winner3').on('click',function(){
+  $('#exampleModalLong').modal('show');
+
+  });
+
+  $('#winner4').on('click',function(){
+  $('#exampleModalLong').modal('show');
+
+  });
+
 
 
   });
