@@ -71,6 +71,8 @@ $routes->post('portal/add-bidder', 'Portal\BidderController::addBidder');
 $routes->get('portal/select-bidder', 'Portal\BidderController::selectBidder');
 $routes->post('portal/edit-bidder', 'Portal\BidderController::editBidder');
 $routes->post('portal/remove-bidder', 'Portal\BidderController::removeBidder');
+$routes->post('portal/check-upload-file', 'Portal\BidderController::checkUploadFile');
+$routes->post('portal/upload-season-pass', 'Portal\BidderController::uploadSeasonPass');
 
 
 $routes->get('portal/load-items', 'Portal\BidderController::loadBidders');

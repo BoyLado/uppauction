@@ -2,6 +2,8 @@ const HELPER = (function(){
 
 	let thisHelper = {};
 
+	let baseUrl = $('#txt_baseUrl').val();
+
 	let idleTime = 0;
 
 	thisHelper.sampleHelper = function()

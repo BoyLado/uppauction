@@ -53,6 +53,7 @@ class Bidders extends Model
             'a.last_name',
             'a.address',
             'a.phone_number',
+            'a.email',
             'a.id_number',
             'a.id_picture',
             'a.created_by',
@@ -79,6 +80,7 @@ class Bidders extends Model
             'a.last_name',
             'a.address',
             'a.phone_number',
+            'a.email',
             'a.id_number',
             'a.id_picture',
             'a.created_by',
@@ -123,6 +125,7 @@ class Bidders extends Model
             'a.last_name',
             'a.address',
             'a.phone_number',
+            'a.email',
             'a.id_number',
             'a.id_picture',
             'a.created_by',
@@ -169,5 +172,33 @@ class Bidders extends Model
         } catch (PDOException $e) {
             throw $e;
         }
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    ///// BidderController->checkOnDb()
+    ////////////////////////////////////////////////////////////
+    public function checkOnDb($emails)
+    {
+        $columns = [
+            'a.id',
+            'a.bidder_number',
+            'a.first_name',
+            'a.last_name',
+            'a.address',
+            'a.phone_number',
+            'a.email',
+            'a.id_number',
+            'a.id_picture',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date',
+        ];
+
+        $builder = $this->db->table('bidders a')->select($columns);
+        $builder->whereIn('a.email',$emails);
+        $query = $builder->get();
+        return  $query->getRowArray();
     }
 }

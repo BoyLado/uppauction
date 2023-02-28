@@ -83,19 +83,19 @@ const BIDDERS = (function(){
 	      let strImage = `<img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;"
 	                       src="${e.target.result}"
 	                       alt="User profile picture">`;
-	      $('#div_imagePreview').html(strImage);
+	      $('#div_addImagePreview').html(strImage);
 
 	      $('#lbl_fileName').html(imageName);
 	      $('#lbl_fileSize').html(`(${imageSize.toFixed(2)} KB)`);
 	      $('#lbl_fileStatus').html(imageStatus);
 
-	      $('#div_imageDetails').show();
+	      $('#div_addImageDetails').show();
 	    }
 	    reader.readAsDataURL(imageFile.files[0]);
 	  }
 	  else
 	  {
-	    $('#div_imagePreview').html(`<img class="profile-user-img img-fluid img-circle" id="img_profilePicture"
+	    $('#div_addImagePreview').html(`<img class="profile-user-img img-fluid img-circle" id="img_profilePicture"
 	                       src="${baseUrl}/public/assets/img/user-placeholder.png"
 	                       alt="User profile picture">`);
 
@@ -103,7 +103,7 @@ const BIDDERS = (function(){
 	    $('#lbl_fileSize').html('');
 	    $('#lbl_fileStatus').html('');
 
-	    $('#div_imageDetails').hide();
+	    $('#div_addImageDetails').hide();
 
 	    alert('Please select image file.');
 	  }
@@ -113,7 +113,7 @@ const BIDDERS = (function(){
 	{
 		let formData = new FormData(thisForm);
 
-		formData.append("idPicture", $('#file_idPicture')[0].files[0]);
+		formData.append("idPicture", $('#file_addIdPicture')[0].files[0]);
 
 		$.ajax({
 			/* BidderController->addBidder() */
@@ -144,7 +144,7 @@ const BIDDERS = (function(){
 		        title: `Error! <br>${result}`
 		      });
 
-		      $('#txt_bidderNumber').val('').focus();
+		      $('#txt_addBidderNumber').val('').focus();
 		    }
 		  }
 		});
@@ -152,7 +152,6 @@ const BIDDERS = (function(){
 
 	thisBidder.selectBidder = function(bidderId)
 	{
-		alert('Under Construction');
 		$.ajax({
 			/* BidderController->selectBidder() */
 		  url : `${baseUrl}/portal/select-bidder`,
@@ -162,6 +161,24 @@ const BIDDERS = (function(){
 		  success : function(data)
 		  {
 		  	console.log(data);
+		  	$('#div_editImageDetails').hide();
+		  	$('#modal_editBidder').modal('show');
+
+		  	let img_editIdPicture = `<img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;" id="img_editIdPicture"
+	                               src="${baseUrl}/public/assets/uploads/images/bidders/${data['id_picture']}"
+	                               alt="User profile picture">`;
+		  	$('#div_editImagePreview').html(img_editIdPicture);
+
+		  	$('#txt_bidderId').val(data['id']);
+
+		  	$('#txt_editBidderNumber').val(data['bidder_number']);
+		  	$('#txt_firstName').val(data['first_name']);
+		  	$('#txt_lastName').val(data['last_name']);
+		  	$('#txt_address').val(data['address']);
+		  	$('#txt_phoneNumber').val(data['phone_number']);
+		  	$('#txt_email').val(data['email']);
+		  	$('#txt_idNumber').val(data['id_number']);
+		  	$('#txt_seasonPassLink').val(data['season_pass']);
 		  }
 		});
 	}
@@ -169,6 +186,8 @@ const BIDDERS = (function(){
 	thisBidder.editBidder = function(thisForm)
 	{
 		let formData = new FormData(thisForm);
+
+		formData.append("idPicture", $('#file_addIdPicture')[0].files[0]);
 
 		$.ajax({
 			/* BidderController->editBidder() */
@@ -199,7 +218,7 @@ const BIDDERS = (function(){
 		        title: `Error! <br>${result}`
 		      });
 
-		      $('#txt_bidderNumber').val('').focus();
+		      $('#txt_addBidderNumber').val('').focus();
 		    }
 		  }
 		});
@@ -243,6 +262,75 @@ const BIDDERS = (function(){
 			  }
 			});
 		}
+	}
+
+	function urlencode(obj, prefix) {
+	    str = (obj + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
+	        // .replace(/~/g, '%7E');
+	}
+
+	thisBidder.checkCSVFile = function(thisInput)
+	{
+		var fileName = thisInput.files[0].name;
+
+		let formData = new FormData();
+		formData.set('seasonPassList',thisInput.files[0],fileName);
+		
+
+		$('#lbl_loader').show();
+		$('#div_checkResult').hide();
+		$('#div_errorResult').hide();
+		$('#btn_submitSeasonPassList').prop('disabled',true);
+		$.ajax({
+			url : `${baseUrl}/portal/check-upload-file`,
+			method : 'POST',
+			dataType: 'json',
+			processData: false, // important
+			contentType: false, // important
+			data : formData,
+			success : function(result)
+			{
+				console.log(result);
+				checkFileResult = result;
+				$('#lbl_loader').hide();
+				if(result['upload_res'] == "")
+				{
+					let forUpdate = result['for_update'].length;
+					let forInsert = result['for_insert'].length;
+					let conflictRows = result['conflict_rows'].length;
+
+					$('#lbl_forUpdate').text(forUpdate);
+					$('#lbl_forInsert').text(forInsert);
+					$('#lbl_conflictRows').text(conflictRows);
+					$('#div_checkResult').show();
+					(conflictRows == 0)? $('#lbl_download').hide() : $('#lbl_download').show();
+
+					let conflictRowData = result['conflict_rows'];
+					
+					var myJSON = JSON.stringify(conflictRowData);
+					var trafficFilterHolder = urlencode(myJSON);
+						
+					$('#lnk_download').attr('href','<?php echo base_url(); ?>/portal/download-conflicts/'+trafficFilterHolder);
+
+					if(forUpdate != 0 || forInsert != 0)
+					{
+						$('#btn_submitSeasonPassList').prop('disabled',false);
+					}
+				}
+				else
+				{
+					$('#div_errorResult > p').text(result['upload_res']);
+					$('#div_errorResult').show();
+				}
+			}
+		});
 	}
 
 	return thisBidder;

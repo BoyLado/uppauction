@@ -73,6 +73,7 @@ transition: all .2s ease-in-out;
               <a href="<?php echo base_url(); ?>/contacts" class="text-muted">All</a>
             </small>
           </h6> -->
+          
           <div class="float-right ">
             <div class="d-inline d-lg-none">
               <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
@@ -82,11 +83,17 @@ transition: all .2s ease-in-out;
                 <a class="dropdown-item" href="javascript:void(0)" id="lnk_addNewBidder">
                   <i class="fa fa-plus mr-1"></i>Add New Bidder
                 </a>
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importBiddersSeasonPass">
+                  <i class="fa fa-upload mr-1"></i>Import
+                </a>
               </div>
             </div>
             <div class="d-none d-lg-block">
               <button type="button" class="btn btn-default btn-sm" id="btn_addNewBidder">
                 <i class="fa fa-plus mr-1"></i> Add New Bidder
+              </button>
+              <button type="button" class="btn btn-default btn-sm" id="btn_importBiddersSeasonPass">
+                <i class="fa fa-upload mr-1"></i> Import
               </button>
             </div>
           </div>
@@ -192,13 +199,18 @@ transition: all .2s ease-in-out;
               <form id="form_addBidder">
 
                 <label>Bidder Number:</label>
-                <input type="text" class="form-control" id="txt_bidderNumber" name="txt_bidderNumber" required>
+                <input type="text" class="form-control" id="txt_addBidderNumber" name="txt_addBidderNumber" required>
 
                 <label>ID Picture:</label>
                 <div class="row">
                   <div class="col-lg-12 col-sm-12">
-                    <div class="text-center bg-light mb-2" id="div_imagePreview">
-                      <img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;" id="img_profilePicture"
+                    <div class="text-center" id="div_addImageDetails">
+                      <span id="lbl_fileName"></span><br>
+                      <span id="lbl_fileSize"></span><br>
+                      <span id="lbl_fileStatus"></span>
+                    </div>
+                    <div class="text-center bg-light mb-2" id="div_addImagePreview">
+                      <img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;" id="img_addIdPicture"
                            src="<?php echo base_url(); ?>/public/assets/img/user-placeholder.png"
                            alt="User profile picture">
                     </div> 
@@ -206,12 +218,7 @@ transition: all .2s ease-in-out;
                       <span class="info-box-number">Note:</span>
                       <span class="info-box-text">Accepted files (.jpg, .png, .jpeg)</span>
                     </div>
-                    <input type="file" class="form-control" id="file_idPicture" name="file_idPicture" style="padding: 3px 3px 3px 3px !important;" accept="image/*" required>
-                    <div class="text-center" id="div_imageDetails">
-                      <span id="lbl_fileName"></span><br>
-                      <span id="lbl_fileSize"></span><br>
-                      <span id="lbl_fileStatus"></span>
-                    </div>                  
+                    <input type="file" class="form-control" id="file_addIdPicture" name="file_addIdPicture" style="padding: 3px 3px 3px 3px !important;" accept="image/*" required>                  
                   </div>
                 </div> 
               </form>
@@ -219,6 +226,152 @@ transition: all .2s ease-in-out;
             </div>
             <div class="modal-footer modal-footer--sticky">
               <button type="submit" class="btn btn-primary" form="form_addBidder">Save Bidder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal_editBidder" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header modal-header--sticky">
+              <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Edit Bidder Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="form_editBidder">
+
+                <input type="hidden" id="txt_bidderId" name="txt_bidderId">
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-5 col-lg-5">
+                    <div class="row">
+                      <div class="col-lg-12 col-sm-12">
+                        <div class="text-center bg-light mb-2" id="div_editImagePreview">
+                          <img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;" id="img_editIdPicture"
+                               src="<?php echo base_url(); ?>/public/assets/img/user-placeholder.png"
+                               alt="User profile picture">
+                        </div> 
+                        <div class="info-box-content">
+                          <span class="info-box-number">Note:</span>
+                          <span class="info-box-text">Accepted files (.jpg, .png, .jpeg)</span>
+                        </div>
+                        <input type="file" class="form-control" id="file_editIdPicture" name="file_editIdPicture" style="padding: 3px 3px 3px 3px !important;" accept="image/*">
+                        <div class="text-center" id="div_editImageDetails">
+                          <span id="lbl_fileName"></span><br>
+                          <span id="lbl_fileSize"></span><br>
+                          <span id="lbl_fileStatus"></span>
+                        </div>                  
+                      </div>
+                    </div> 
+                  </div>
+                  <div class="col-sm-12 col-md-7 col-lg-7">
+                    <table class="table mb-0">
+                      <tbody>
+                        <tr>
+                          <td class="p-1"><label>Bidder Number *:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_editBidderNumber" name="txt_editBidderNumber" required>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>First Name *:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_firstName" name="txt_firstName" required>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>Last Name *:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_lastName" name="txt_lastName" required>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>Address:</label></td>
+                          <td class="p-1">
+                            <textarea class="form-control" rows="3" id="txt_address" name="txt_address"></textarea>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>Phone Number:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_phoneNumber" name="txt_phoneNumber">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>Email *:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_email" name="txt_email" required>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>ID/DL Number *:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_idNumber" name="txt_idNumber" required>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="p-1"><label>Season Pass Link:</label></td>
+                          <td class="p-1">
+                            <input type="text" class="form-control" id="txt_seasonPassLink" name="txt_seasonPassLink">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+            <div class="modal-footer modal-footer--sticky">
+              <button type="submit" class="btn btn-primary" form="form_editBidder">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal_importSeasonPass" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header modal-header--sticky">
+              <h5 class="modal-title"><i class="fa fa-upload mr-1"></i> Import Season Pass</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="form_importSeasonPass" enctype="multipart/form-data">
+                <label>CSV File Only:</label>
+                <input type="file" class="form-control" id="file_seasonPassList" name="file_seasonPassList" style="padding: 3px 3px 3px 3px !important;" accept=".csv">
+
+                <span id="lbl_loader"><br><i>Analizing your file, please wait...</i></span>
+                <div class="pt-3" id="div_checkResult">
+                  <label>For Update: <span id="lbl_forUpdate"></span></label>
+                  <br>
+                  <label>For Insert: <span id="lbl_forInsert"></span></label>
+                  <br>
+                  <label>Conflict Rows: <span id="lbl_conflictRows"></span></label>
+                  
+                  <p id="lbl_download">
+                    Click <a href="#" id="lnk_download" target="_blank">here</a> to download conflict rows.
+                  </p>
+                </div>
+                <div class="pt-3" id="div_errorResult" style="color:red;">
+                  <label>Error:</label>
+                  <p></p>
+                  <br>
+                </div>
+                <label id="lbl_uploadingProgress" class="text-danger"><i>Uploading in progress, Please wait...</i></label>
+              </form>             
+
+            </div>
+            <div class="modal-footer modal-footer--sticky">
+              <button type="submit" class="btn btn-primary" id="btn_submitSeasonPassList" form="form_importSeasonPass">Upload Season Pass</button>
             </div>
           </div>
         </div>
@@ -281,22 +434,49 @@ transition: all .2s ease-in-out;
     BIDDERS.loadBidders();
 
     $('#lnk_addNewBidder').on('click',function(){
-      $('#div_imageDetails').hide();
+      $('#div_addImageDetails').hide();
       $('#modal_addBidder').modal('show');
     });
 
     $('#btn_addNewBidder').on('click',function(){
-      $('#div_imageDetails').hide();
+      $('#div_addImageDetails').hide();
       $('#modal_addBidder').modal('show');
     });
 
-    $('#file_idPicture').on('change',function(){
+    $('#file_addIdPicture').on('change',function(){
       BIDDERS.uploadBidderPicturePreview(this);
     });
 
     $('#form_addBidder').on('submit',function(e){
       e.preventDefault();
       BIDDERS.addBidder(this);
+    });
+
+    $('#form_editBidder').on('submit',function(e){
+      e.preventDefault();
+      BIDDERS.editBidder(this);
+    });
+
+    $('#lnk_importBiddersSeasonPass').on('click',function(){
+      $('#lbl_loader').hide();
+      $('#div_checkResult').hide();
+      $('#lbl_download').hide();
+      $('#div_errorResult').hide();
+      $('#lbl_uploadingProgress').hide();
+      $('#modal_importSeasonPass').modal('show');
+    });
+
+    $('#btn_importBiddersSeasonPass').on('click',function(){
+      $('#lbl_loader').hide();
+      $('#div_checkResult').hide();
+      $('#lbl_download').hide();
+      $('#div_errorResult').hide();
+      $('#lbl_uploadingProgress').hide();
+      $('#modal_importSeasonPass').modal('show');
+    });
+
+    $('#file_seasonPassList').on('change',function(){
+      BIDDERS.checkCSVFile(this);
     });
 
   });
