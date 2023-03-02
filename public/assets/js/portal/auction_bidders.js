@@ -4,6 +4,8 @@ const BIDDERS = (function(){
 
 	let baseUrl = $('#txt_baseUrl').val();
 
+	let __arrFileResult = [];
+
 	var Toast = Swal.mixin({
 	  toast: true,
 	  position: 'top',
@@ -164,8 +166,10 @@ const BIDDERS = (function(){
 		  	$('#div_editImageDetails').hide();
 		  	$('#modal_editBidder').modal('show');
 
+		  	let imgSrc = (data['id_picture'] == null)? `${baseUrl}/public/assets/img/user-placeholder.png` : `${baseUrl}/public/assets/uploads/images/bidders/${data['id_picture']}`;
+
 		  	let img_editIdPicture = `<img class="profile-user-img img-fluid" style="width: 100%; object-fit: cover;" id="img_editIdPicture"
-	                               src="${baseUrl}/public/assets/uploads/images/bidders/${data['id_picture']}"
+	                               src="${imgSrc}"
 	                               alt="User profile picture">`;
 		  	$('#div_editImagePreview').html(img_editIdPicture);
 
@@ -298,7 +302,7 @@ const BIDDERS = (function(){
 			success : function(result)
 			{
 				console.log(result);
-				checkFileResult = result;
+				__arrFileResult = result;
 				$('#lbl_loader').hide();
 				if(result['upload_res'] == "")
 				{
@@ -331,6 +335,35 @@ const BIDDERS = (function(){
 				}
 			}
 		});
+	}
+
+	thisBidder.uploadSeasonPass = function()
+	{
+		$('#lbl_uploadingProgress').show();
+		if(confirm("Please confirm!"))
+		{
+			let rawData = __arrFileResult;
+			$.ajax({
+				url : `${baseUrl}/portal/upload-season-pass`,
+				method : 'POST',
+				dataType: 'json',
+				data : {
+					'rawData' : 
+					{
+						'forUpdate' : JSON.stringify(rawData['for_update']), 
+						'forInsert' : JSON.stringify(rawData['for_insert'])
+					}
+				},
+				success : function(result)
+				{
+					console.log(result);
+					$('#lbl_uploadingProgress').html("<i>Upload complete!</i>");
+		      setTimeout(function(){
+            location.reload();
+          }, 3000);							
+				}
+			});
+		}
 	}
 
 	return thisBidder;

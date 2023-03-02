@@ -28,6 +28,11 @@
   {
     border: 1px solid #ced4da;
   }
+
+  .hide-scroll::-webkit-scrollbar
+  {
+    display: none;
+  }
   
 </style>
 
@@ -87,8 +92,58 @@
 
       <!-- Start UI Content -->
 
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+          <h5>Auction Item Details</h5>
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <td class="p-1">
+                  <label>Item Number *:</label>
+                  <input type="text" class="form-control" id="txt_editBidderNumber" name="txt_editBidderNumber" required>
+                </td>
+              </tr>
+              <tr>
+                <td class="p-1">
+                  <label>Item Description *:</label>
+                  <textarea class="form-control" rows="5" id="txt_address" name="txt_address"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td class="p-1">
+                  <label>Bidder Number/Name *:</label>
+                  <select class="form-control form-select select2" style="width: 100%;">
+                    <option value="">Choose Bidder</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="p-1">
+                  <label>Amount:</label>
+                  <input type="text" class="form-control" id="txt_phoneNumber" name="txt_phoneNumber">
+                </td>
+              </tr>
+              <tr>
+                <td class="p-1">
+                  <div class="float-right">
+                    <button type="submit" class="btn btn-primary">Next Item</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-8"></div>
+      </div>
 
-
+      <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 col-lg-6">
+            
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6"></div>
+        </div>
+      </div>
 
 
 

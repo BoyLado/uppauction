@@ -50,6 +50,11 @@ transition: all .2s ease-in-out;
   transform: scale(1.1);
 }
 
+.hide-scroll::-webkit-scrollbar
+{
+  display: none;
+}
+
 </style>
 
 @endsection
@@ -65,14 +70,10 @@ transition: all .2s ease-in-out;
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <h6 class="mt-1 float-left">
-            <span>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">Contacts</a> -
-            </span> 
-            <small>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">All</a>
-            </small>
-          </h6> -->
+
+          <div class="mt-1 float-left">
+            <input type="search" class="form-control form-control-sm" id="txt_searchBidder" name="txt_searchBidder" placeholder="Search Bidder">
+          </div>
           
           <div class="float-right ">
             <div class="d-inline d-lg-none">
@@ -109,81 +110,83 @@ transition: all .2s ease-in-out;
 
       
       <!-- Start UI Content -->
-
-      <div class="row" id="div_bidders">
-        <!-- <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-          <div class="card mb-2 bg-gradient-dark zoom">
-            <a href="javascript:void(0)" onclick="alert();">
-              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-              <div class="products">
-                <h5 class="card-title text-primary text-white">
-                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-                  <span class="text-bold text-red">Bidder #001</span>      <br>
-                  <span class="card-text text-white">Address</span>
-                </h5>
-                <div class="float-right">
-                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
+      <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
+        <div class="row" id="div_bidders">
+          <!-- <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+            <div class="card mb-2 bg-gradient-dark zoom">
+              <a href="javascript:void(0)" onclick="alert();">
+                <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+                <div class="products">
+                  <h5 class="card-title text-primary text-white">
+                    <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                    <span class="text-bold text-red">Bidder #001</span>      <br>
+                    <span class="card-text text-white">Address</span>
+                  </h5>
+                  <div class="float-right">
+                    <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                    <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                  </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
+           <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+            <div class="card mb-2 bg-gradient-dark zoom">
+              <a href="javascript:void(0)" onclick="alert();">
+                <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+                <div class="products">
+                 <h5 class="card-title text-primary text-white">
+                    <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                    <span class="text-bold text-red">Bidder #002</span>      <br>
+                    <span class="card-text text-white">Address</span>
+                  </h5>
+                  <div class="float-right">
+                    <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                    <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+           <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+            <div class="card mb-2 bg-gradient-dark zoom">
+              <a href="javascript:void(0)" onclick="alert();">
+                <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+                <div class="products">
+                  <h5 class="card-title text-primary text-white">
+                    <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
+                    <span class="text-bold text-red">Bidder #003</span><br>
+                    <span class="card-text text-white">Address</span>
+                  </h5>
+                  <div class="float-right">
+                    <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                    <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+           <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+            <div class="card mb-2 bg-gradient-dark zoom">
+              <a href="javascript:void(0)" onclick="alert();">
+                <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+                <div class="products">
+                  <h5 class="card-title text-primary text-white">
+                    <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
+                    <span class="text-bold text-red">Bidder #004</span>      <br>
+                    <span class="card-text text-white">Address</span>
+                  </h5>
+                  <div class="float-right">
+                    <a href="#" onclick="alert('Under Construction')" >Edit</a> |
+                    <a href="#" onclick="alert('Under Construction')" >Delete</a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div> -->
         </div>
-         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-          <div class="card mb-2 bg-gradient-dark zoom">
-            <a href="javascript:void(0)" onclick="alert();">
-              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-              <div class="products">
-               <h5 class="card-title text-primary text-white">
-                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-                  <span class="text-bold text-red">Bidder #002</span>      <br>
-                  <span class="card-text text-white">Address</span>
-                </h5>
-                <div class="float-right">
-                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-          <div class="card mb-2 bg-gradient-dark zoom">
-            <a href="javascript:void(0)" onclick="alert();">
-              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-              <div class="products">
-                <h5 class="card-title text-primary text-white">
-                  <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
-                  <span class="text-bold text-red">Bidder #003</span><br>
-                  <span class="card-text text-white">Address</span>
-                </h5>
-                <div class="float-right">
-                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-         <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-          <div class="card mb-2 bg-gradient-dark zoom">
-            <a href="javascript:void(0)" onclick="alert();">
-              <img class="card-img-top rounded" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-              <div class="products">
-                <h5 class="card-title text-primary text-white">
-                  <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-                  <span class="text-bold text-red">Bidder #004</span>      <br>
-                  <span class="card-text text-white">Address</span>
-                </h5>
-                <div class="float-right">
-                  <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-                  <a href="#" onclick="alert('Under Construction')" >Delete</a>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div> -->
       </div>
+      
 
       <div class="modal fade" id="modal_addBidder" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
@@ -197,10 +200,6 @@ transition: all .2s ease-in-out;
             <div class="modal-body">
 
               <form id="form_addBidder">
-
-                <label>Bidder Number:</label>
-                <input type="text" class="form-control" id="txt_addBidderNumber" name="txt_addBidderNumber" required>
-
                 <label>ID Picture:</label>
                 <div class="row">
                   <div class="col-lg-12 col-sm-12">
@@ -347,7 +346,7 @@ transition: all .2s ease-in-out;
 
               <form id="form_importSeasonPass" enctype="multipart/form-data">
                 <label>CSV File Only:</label>
-                <input type="file" class="form-control" id="file_seasonPassList" name="file_seasonPassList" style="padding: 3px 3px 3px 3px !important;" accept=".csv">
+                <input type="file" class="form-control" id="file_seasonPassList" name="file_seasonPassList" style="padding: 3px 3px 3px 3px !important;" accept=".csv" required>
 
                 <span id="lbl_loader"><br><i>Analizing your file, please wait...</i></span>
                 <div class="pt-3" id="div_checkResult">
@@ -475,8 +474,15 @@ transition: all .2s ease-in-out;
       $('#modal_importSeasonPass').modal('show');
     });
 
+    $('#btn_submitSeasonPassList').prop('disabled',true);
+
     $('#file_seasonPassList').on('change',function(){
       BIDDERS.checkCSVFile(this);
+    });
+
+    $('#form_importSeasonPass').on('submit',function(e){
+      e.preventDefault();
+      BIDDERS.uploadSeasonPass();
     });
 
   });

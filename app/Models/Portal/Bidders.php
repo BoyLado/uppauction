@@ -56,6 +56,7 @@ class Bidders extends Model
             'a.email',
             'a.id_number',
             'a.id_picture',
+            'a.season_pass',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -71,7 +72,7 @@ class Bidders extends Model
     ////////////////////////////////////////////////////////////
     ///// BidderController->addBidder()
     ////////////////////////////////////////////////////////////
-    public function validateBidderNumber($bidderId)
+    public function selectLastBidderNumber()
     {
         $columns = [
             'a.id',
@@ -83,6 +84,7 @@ class Bidders extends Model
             'a.email',
             'a.id_number',
             'a.id_picture',
+            'a.season_pass',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -90,7 +92,7 @@ class Bidders extends Model
         ];
 
         $builder = $this->db->table('bidders a')->select($columns);
-        $builder->where('a.id',$bidderId);
+        $builder->orderBy('a.id','DESC');
         $query = $builder->get();
         return  $query->getRowArray();
     }
@@ -128,6 +130,7 @@ class Bidders extends Model
             'a.email',
             'a.id_number',
             'a.id_picture',
+            'a.season_pass',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -178,7 +181,7 @@ class Bidders extends Model
     ////////////////////////////////////////////////////////////
     ///// BidderController->checkOnDb()
     ////////////////////////////////////////////////////////////
-    public function checkOnDb($emails)
+    public function checkOnDb($bidderNumbers)
     {
         $columns = [
             'a.id',
@@ -197,8 +200,40 @@ class Bidders extends Model
         ];
 
         $builder = $this->db->table('bidders a')->select($columns);
-        $builder->whereIn('a.email',$emails);
+        $builder->whereIn('a.bidder_number',$bidderNumbers);
         $query = $builder->get();
-        return  $query->getRowArray();
+        return  $query->getResultArray();
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// BidderController->uploadSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function addBidders($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidders');
+                $builder->insertBatch($arrData);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// BidderController->uploadSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function editBidders($arrData, $arrWhere)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidders');
+                $builder->updateBatch($arrData, $arrWhere);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
     }
 }
