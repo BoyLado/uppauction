@@ -46,10 +46,10 @@ class IndexController extends BaseController
             if(!empty($validateLogInResult))
             {
               $userData = [
-                'arkonorllc_user_id'        => $validateLogInResult['user_id'],
-                'arkonorllc_user_firstName' => $validateLogInResult['first_name'],
-                'arkonorllc_user_lastName'  => $validateLogInResult['last_name'],
-                'arkonorllc_user_loggedIn'  => true
+                'upp_user_id'        => $validateLogInResult['user_id'],
+                'upp_user_firstName' => $validateLogInResult['first_name'],
+                'upp_user_lastName'  => $validateLogInResult['last_name'],
+                'upp_user_loggedIn'  => true
               ];
               $this->session->set($userData);
 

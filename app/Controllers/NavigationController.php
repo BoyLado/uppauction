@@ -15,11 +15,11 @@ class NavigationController extends BaseController
 
     public function login()
     {
-        if($this->session->has('arkonorllc_user_loggedIn'))
+        if($this->session->has('upp_user_loggedIn'))
         {
-            if($this->session->get('arkonorllc_user_loggedIn'))
+            if($this->session->get('upp_user_loggedIn'))
             {
-                return redirect()->to(base_url() . '/dashboard');
+                return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
         $data['pageTitle'] = "Arkonor LLC | Login";
@@ -35,11 +35,11 @@ class NavigationController extends BaseController
             $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
             return redirect()->to($uri); 
         }
-        if($this->session->has('arkonorllc_user_loggedIn'))
+        if($this->session->has('upp_user_loggedIn'))
         {
-            if($this->session->get('arkonorllc_user_loggedIn'))
+            if($this->session->get('upp_user_loggedIn'))
             {
-                return redirect()->to(base_url() . '/dashboard');
+                return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
         $data['pageTitle'] = "Arkonor LLC | Forgot Password";
@@ -54,11 +54,11 @@ class NavigationController extends BaseController
             $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
             return redirect()->to($uri); 
         }
-        if($this->session->has('arkonorllc_user_loggedIn'))
+        if($this->session->has('upp_user_loggedIn'))
         {
-            if($this->session->get('arkonorllc_user_loggedIn'))
+            if($this->session->get('upp_user_loggedIn'))
             {
-                return redirect()->to(base_url() . '/dashboard');
+                return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
         $data['pageTitle'] = "Arkonor LLC | Change Password";
@@ -76,11 +76,11 @@ class NavigationController extends BaseController
             $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
             return redirect()->to($uri); 
         }
-        if($this->session->has('arkonorllc_user_loggedIn'))
+        if($this->session->has('upp_user_loggedIn'))
         {
-            if($this->session->get('arkonorllc_user_loggedIn'))
+            if($this->session->get('upp_user_loggedIn'))
             {
-                return redirect()->to(base_url() . '/dashboard');
+                return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
         $data['pageTitle'] = "Arkonor LLC | Sign Up";

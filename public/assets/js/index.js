@@ -41,7 +41,7 @@ const INDEX = (function(){
 		      });
 
           setTimeout(function(){
-            window.location.replace(`${baseUrl}/dashboard`);
+            window.location.replace(`${baseUrl}/portal/auction-dashboard`);
           }, 1000);
         }
         else

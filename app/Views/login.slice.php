@@ -22,7 +22,7 @@
 
   <style type="text/css">
     body{
-      background-image: url('public/assets/img/login-background.png');
+      background-image: url('public/assets/img/upp-login-background.jpg');
       background-size: cover;
       background-position: center; /* Center the image */
       background-repeat: no-repeat; /* Do not repeat the image */
@@ -31,9 +31,9 @@
 </head>
 <body class="hold-transition login-page">
   <div class="login-box">
-    <div class="login-logo mb-0">
+    <div class="login-logo mb-2">
       <center>
-        <img src="public/assets/img/arkcrmlogo.png" height="100%" class="img img-round">
+        <img src="public/assets/img/upp-logo.png" width="100px" class="img img-round">
       </center>
     </div>
     <!-- /.login-logo -->
@@ -60,7 +60,7 @@
           </div>
           <div class="row">
             <div class="col-8">
-              <a href="<?php echo base_url(); ?>/forgot-password" class="text-muted">Forgot password?</a>
+              <!-- <a href="<?php echo base_url(); ?>/forgot-password" class="text-muted">Forgot password?</a> -->
             </div>
             <!-- /.col -->
             <div class="col-4">

@@ -47,6 +47,17 @@ $routes->get('/', 'NavigationController');
 
 $routes->get('login', 'NavigationController::login');
 
+/*
+ * --------------------------------------------------------------------
+ * FRONT END FUNCTIONS
+ * --------------------------------------------------------------------
+ */
+$routes->post('user-login', 'IndexController::login');
+$routes->post('user-forgot-password', 'IndexController::forgotPassword');
+$routes->post('user-change-password', 'IndexController::changePassword');
+$routes->post('user-sign-up', 'IndexController::signUp');
+$routes->get('user-logout', 'IndexController::logout');
+
 
 /*
  *  ------------------------------------------------------------------
@@ -65,6 +76,9 @@ $routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinn
  *  BACK END FUNCTIONS 
  *  ------------------------------------------------------------------
  */
+////////////////////////////////////////////////////////////////////
+//////////////////////// BIDDERS ///////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
 $routes->get('portal/load-bidders', 'Portal\BidderController::loadBidders');
 $routes->post('portal/add-bidder', 'Portal\BidderController::addBidder');
@@ -74,12 +88,15 @@ $routes->post('portal/remove-bidder', 'Portal\BidderController::removeBidder');
 $routes->post('portal/check-upload-file', 'Portal\BidderController::checkUploadFile');
 $routes->post('portal/upload-season-pass', 'Portal\BidderController::uploadSeasonPass');
 
+////////////////////////////////////////////////////////////////////
+//////////////////////// ITEMS /////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 
-$routes->get('portal/load-items', 'Portal\BidderController::loadBidders');
-$routes->get('portal/add-item', 'Portal\BidderController::addBidder');
-$routes->get('portal/select-item', 'Portal\BidderController::selectBidder');
-$routes->get('portal/edit-item', 'Portal\BidderController::editBidder');
-$routes->get('portal/remove-item', 'Portal\BidderController::removeBidder');
+$routes->get('portal/load-items', 'Portal\ItemController::loadItems');
+$routes->post('portal/add-item', 'Portal\ItemController::addItem');
+$routes->get('portal/select-item', 'Portal\ItemController::selectItem');
+$routes->post('portal/edit-item', 'Portal\ItemController::editItem');
+$routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
 
 /*

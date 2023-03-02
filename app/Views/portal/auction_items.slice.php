@@ -45,7 +45,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <div class="content-header pt-1 pb-1">
+  <!-- <div class="content-header pt-1 pb-1">
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
@@ -80,11 +80,13 @@
               </button>
             </div>
           </div>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
   <!-- /.content-header -->
+
+  <br>
 
   <!-- Main content -->
   <div class="content">
@@ -95,66 +97,106 @@
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-4">
           <h5>Auction Item Details</h5>
-          <table class="table mb-0">
-            <tbody>
-              <tr>
-                <td class="p-1">
-                  <label>Item Number *:</label>
-                  <input type="text" class="form-control" id="txt_editBidderNumber" name="txt_editBidderNumber" required>
-                </td>
-              </tr>
-              <tr>
-                <td class="p-1">
-                  <label>Item Description *:</label>
-                  <textarea class="form-control" rows="5" id="txt_address" name="txt_address"></textarea>
-                </td>
-              </tr>
-              <tr>
-                <td class="p-1">
-                  <label>Bidder Number/Name *:</label>
-                  <select class="form-control form-select select2" style="width: 100%;">
-                    <option value="">Choose Bidder</option>
-                  </select>
-                </td>
-              </tr>
-              <tr>
-                <td class="p-1">
-                  <label>Amount:</label>
-                  <input type="text" class="form-control" id="txt_phoneNumber" name="txt_phoneNumber">
-                </td>
-              </tr>
-              <tr>
-                <td class="p-1">
-                  <div class="float-right">
-                    <button type="submit" class="btn btn-primary">Next Item</button>
+          <form id="form_addItem">
+            <table class="table mb-0">
+              <tbody>
+                <tr>
+                  <td class="p-1">
+                    <label>Item Number *:</label>
+                    <input type="text" class="form-control" id="txt_itemNumber" name="txt_itemNumber" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-1">
+                    <label>Item Description *:</label>
+                    <textarea class="form-control" rows="5" id="txt_itemDescription" name="txt_itemDescription" required></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-1">
+                    <label>Bidder Number/Name *:</label>
+                    <select class="form-control select2" id="slc_bidderNumber" name="slc_bidderNumber" style="width: 100%;" required>
+                      <option value="">Choose Bidder</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-1">
+                    <label>Amount *:</label>
+                    <input type="number" class="form-control" id="txt_winningAmount" name="txt_winningAmount" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="p-1">
+                    <div class="float-right">
+                      <button type="submit" class="btn btn-primary" form="form_addItem" id="btn_nextItem">Next Item</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form> 
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-8">
+          <h5>Auction Item Lists</h5>
+          <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
+            <div class="row" id="div_items">
+              <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Item #1</h3>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-8"></div>
-      </div>
-
-      <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
-        <div class="row">
-          <div class="col-sm-12 col-md-6 col-lg-6">
-            
+                  <div class="card-body">
+                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
+                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
+                    <h5>ITEM DESCRIPTION:</h5>
+                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Item #2</h3>
+                  </div>
+                  <div class="card-body">
+                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
+                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
+                    <h5>ITEM DESCRIPTION:</h5>
+                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Item #3</h3>
+                  </div>
+                  <div class="card-body">
+                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
+                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
+                    <h5>ITEM DESCRIPTION:</h5>
+                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-primary">
+                  <div class="card-header">
+                    <h3 class="card-title">Item #4</h3>
+                  </div>
+                  <div class="card-body">
+                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
+                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
+                    <h5>ITEM DESCRIPTION:</h5>
+                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
+                  </div>
+                </div>
+              </div> -->
+            </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-6"></div>
         </div>
       </div>
-
-
-
-      
-
-
-
-
-
-
-
 
       <!-- End UI Content -->
 
@@ -209,6 +251,16 @@
     //
     // ======================================================>
     //
+
+    ITEMS.loadItems();
+    ITEMS.loadBidders();
+
+    $('#txt_itemNumber').focus();
+
+    $('#form_addItem').on('submit',function(e){
+      e.preventDefault();
+      ITEMS.addItem(this);
+    });
 
 
   });
