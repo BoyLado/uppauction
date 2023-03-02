@@ -98,20 +98,95 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Winner Items</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
+
+
+<div class="row">
+<div class="col-12">
+<div class="card">
+<div class="card-header bg-gray">
+<h3 class="card-title">Bidder Number: 01</h3><br>
+<h3 class="card-title">Bidder Name: Mr. Bean</h3>
+<div class="card-tools">
+<div class="input-group input-group-sm" style="width: 150px;">
+</div>
+</div>
+</div>
+</div>
+
+<div class="card-body table-responsive p-0">
+  <table class="table table-hover text-nowrap">
+<thead>
+  <tr>
+    <th>No.</th>
+      <th>Item Number</th>
+      <th>Description</th>
+    <th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>#0</td>
+<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
+<td><span class="tag tag-success">$80.00</span></td>
+</tr>
+<tr>
+<th>No.</th>
+<th>Item Number</th>
+<th>Description</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>#016</td>
+<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
+<td><span class="tag tag-success">$80.00</span></td>
+</tr>
+<tr>
+<th>No.</th>
+<th>Item Number</th>
+<th>Description</th>
+<th>Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>#012</td>
+<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
+<td><span class="tag tag-success">$80.00</span></td>
+</tr>
+        <tr>
+          <td class="bg-gray"colspan="3">TOTAL AMOUNT</td>
+          <td class="bg-gray"><b>$240<b></td>
+        </tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+
+        <div class="mt-4">
+        <div class="btn btn-primary btn-lg btn-flat">
+        <i class="fas fa-cart-plus fa-lg mr-2"></i>
+        Checkout
+        </div>
+        </div>
       </div>
     </div>
   </div>
