@@ -50,6 +50,11 @@ class CreateUsersTable extends Migration
                 'constraint'        => ['1','0'],
                 'null'              => true,
             ],
+            'picture'           => [
+                'type'              => 'VARCHAR',
+                'constraint'        => 255,
+                'null'              => true,
+            ],
             'created_date'      => [
                 'type'              => 'DATETIME',
                 'null'              => true,

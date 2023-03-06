@@ -15,7 +15,6 @@ class Users extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'salutation',
         'first_name',
         'last_name',
         'position',
@@ -23,9 +22,7 @@ class Users extends Model
         'user_name',
         'user_email',
         'user_password',
-        'user_auth_code',
         'user_status',
-        'password_auth_code',
         'created_date',
         'updated_date'
     ];
@@ -111,9 +108,7 @@ class Users extends Model
             'first_name',
             'last_name',
             'position',
-            'picture',
-            'user_auth_code',
-            'password_auth_code'
+            'picture'
         ];
 
         $builder = $this->db->table('users');
@@ -172,7 +167,6 @@ class Users extends Model
     {
         $columns = [
             'id as user_id',
-            'salutation',
             'first_name',
             'last_name',
             'user_email',
@@ -208,7 +202,7 @@ class Users extends Model
     {
         $columns = [
           'id as user_id',
-          'CONCAT(salutation," ",first_name," ",last_name) as complete_name',
+          'CONCAT(first_name," ",last_name) as complete_name',
           'position',
           'picture'
         ];
@@ -242,11 +236,11 @@ class Users extends Model
     {
         $columns = [
           'id as user_id',
-          'salutation',
           'first_name',
           'last_name',
           'position',
-          'user_email'
+          'user_email',
+          'user_name'
         ];
 
         $builder = $this->db->table('users')->select($columns)->where('id',$userId);

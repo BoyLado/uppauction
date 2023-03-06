@@ -29,7 +29,7 @@
     border: 1px solid #ced4da;
   }
   
-.products {
+  .products {
     position: absolute; /* Position the background text */
     bottom: 0; /* At the bottom. Use top:0 to append it to the top */
     background: rgb(0, 0, 0); /* Fallback color */
@@ -42,18 +42,18 @@
   }
 
   .zoom { 
-transition: all .2s ease-in-out; 
-}
+  transition: all .2s ease-in-out; 
+  }
 
-.zoom:hover { 
+  .zoom:hover { 
 
-  transform: scale(1.1);
-}
+    transform: scale(1.1);
+  }
 
-.hide-scroll::-webkit-scrollbar
-{
-  display: none;
-}
+  .hide-scroll::-webkit-scrollbar
+  {
+    display: none;
+  }
 
 </style>
 
@@ -75,7 +75,7 @@ transition: all .2s ease-in-out;
             <input type="search" class="form-control form-control-sm" id="txt_searchBidder" name="txt_searchBidder" placeholder="Search Bidder">
           </div>
           
-          <div class="float-right ">
+          <div class="mt-1 float-right">
             <div class="d-inline d-lg-none">
               <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
                 <i class="nav-icon fas fa-ellipsis-v"></i>
@@ -370,6 +370,7 @@ transition: all .2s ease-in-out;
 
             </div>
             <div class="modal-footer modal-footer--sticky">
+              <a href="<?php echo base_url(); ?>/public/assets/files/SeasonPassBatchUploadTemplate.xlsx" type="button" class="btn btn-primary">Download CSV Template</a>
               <button type="submit" class="btn btn-primary" id="btn_submitSeasonPassList" form="form_importSeasonPass">Upload Season Pass</button>
             </div>
           </div>
@@ -431,6 +432,10 @@ transition: all .2s ease-in-out;
     //
     
     BIDDERS.loadBidders();
+
+    $('#txt_searchBidder').on('keyup',function(){
+      BIDDERS.loadBidders($(this).val());
+    }); 
 
     $('#lnk_addNewBidder').on('click',function(){
       $('#div_addImageDetails').hide();

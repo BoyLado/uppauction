@@ -28,6 +28,32 @@
   {
     border: 1px solid #ced4da;
   }
+
+  .products {
+    position: absolute; /* Position the background text */
+    bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.8); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%; /* Full width */
+    padding: 15px; /* Some padding */
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+    .zoom { 
+  transition: all .2s ease-in-out; 
+  }
+
+  .zoom:hover { 
+
+    transform: scale(1.1);
+  }
+
+  .hide-scroll::-webkit-scrollbar
+  {
+    display: none;
+  }
   
 </style>
 
@@ -44,42 +70,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <h6 class="mt-1 float-left">
-            <span>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">Contacts</a> -
-            </span> 
-            <small>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">All</a>
-            </small>
-          </h6>
-          <div class="float-right">
-            <div class="d-inline d-lg-none">
-              <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
-                <i class="nav-icon fas fa-ellipsis-v"></i>
-              </button>
-              <div class="dropdown-menu" style="">
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addContacts">
-                  <i class="fa fa-plus mr-1"></i>Add Contact
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importContacts">
-                  <i class="fa fa-upload mr-1"></i>Import
-                </a>
-
-              </div>
-            </div>
-            <div class="d-none d-lg-block">
-              <button type="button" class="btn btn-default btn-sm" id="btn_addContacts">
-                <i class="fa fa-plus mr-1"></i> Add Contact
-              </button>
-              <button type="button" class="btn btn-default btn-sm" id="btn_importContacts">
-                <i class="fa fa-upload mr-1"></i> Import
-              </button>
-              <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            
-            </div>
+          <div class="mt-1 float-left">
+            <input type="search" class="form-control form-control-sm" id="txt_searchWinner" name="txt_searchWinner" placeholder="Search Winner">
+          </div>
+          <div class="mt-1 float-right">
+            <input type="date" class="form-control form-control-sm" id="txt_dateFilter" name="txt_dateFilter" value="<?php echo date('Y-m-d'); ?>">
           </div>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -93,196 +88,55 @@
 
       <!-- Start UI Content -->
 
+      <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
+        <div class="row" id="div_winners">
 
-<!-- Button trigger modal -->
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Winner Items</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-
-<div class="row">
-<div class="col-12">
-<div class="card">
-<div class="card-header bg-gray">
-<h3 class="card-title">Bidder Number: 01</h3><br>
-<h3 class="card-title">Bidder Name: Mr. Bean</h3>
-<div class="card-tools">
-<div class="input-group input-group-sm" style="width: 150px;">
-</div>
-</div>
-</div>
-</div>
-
-<div class="card-body table-responsive p-0">
-  <table class="table table-hover text-nowrap">
-<thead>
-  <tr>
-    <th>No.</th>
-      <th>Item Number</th>
-      <th>Description</th>
-    <th>Amount</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>#0</td>
-<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
-<td><span class="tag tag-success">$80.00</span></td>
-</tr>
-<tr>
-<th>No.</th>
-<th>Item Number</th>
-<th>Description</th>
-<th>Amount</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2</td>
-<td>#016</td>
-<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
-<td><span class="tag tag-success">$80.00</span></td>
-</tr>
-<tr>
-<th>No.</th>
-<th>Item Number</th>
-<th>Description</th>
-<th>Amount</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>3</td>
-<td>#012</td>
-<td>the mouse pad was made of Rubber , <br>it is Flexible ,the deviation of 1-1.5 cm is normal</td>
-<td><span class="tag tag-success">$80.00</span></td>
-</tr>
-        <tr>
-          <td class="bg-gray"colspan="3">TOTAL AMOUNT</td>
-          <td class="bg-gray"><b>$240<b></td>
-        </tr>
-</tbody>
-</table>
-</div>
-
-</div>
-
-</div>
-</div>
-      <div class="modal-footer">
-
-        <div class="mt-4">
-        <div class="btn btn-primary btn-lg btn-flat">
-        <i class="fas fa-cart-plus fa-lg mr-2"></i>
-        Checkout
-        </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
- 
-<div class="row" data-target="#exampleModalLong">
-  <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" id="winner1">
-        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #001</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
+      <div class="modal fade" id="modal_checkout" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header modal-header--sticky">
+              <h5 class="modal-title">
+                <i class="fa fa-shopping-cart mr-1"></i> <span id="lbl_bidderName">Juan Dela Cruz</span>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="form_checkout" enctype="multipart/form-data">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Item No.</th>
+                      <th>Item Description</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>             
+
+            </div>
+            <div class="modal-footer modal-footer--sticky">
+              <button type="submit" class="btn btn-primary" id="btn_checkout" form="form_checkout">
+                <i class="fa fa-shopping-cart"></i> Check Out
+              </button>
+            </div>
           </div>
         </div>
-      </a>
-    </div>
-  </div>
-
-<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" id="winner2">
-        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-         <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #002</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
- <div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" id="winner3">
-        <img class="card-img-top rounded" data-target="#exampleModalLong" src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span><br>
-            <span class="text-bold text-red">Bidder #003</span><br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-    <div class="card mb-2 bg-gradient-dark zoom">
-      <a href="javascript:void(0)" id="winner4">
-        <img class="card-img-top rounded" data-target="#exampleModalLong"src="<?php echo base_url(); ?>/public/assets/img/1.jpg" alt="" style="height: 300px; width: 100%; object-fit: cover;">
-        <div class="products">
-          <h5 class="card-title text-primary text-white">
-            <span class="text-bold text-white">Bidder Name: Mr Bean</span> <br>
-            <span class="text-bold text-red">Bidder #004</span>      <br>
-            <span class="card-text text-white">Address</span>
-          </h5>
-          <div class="float-right">
-            <a href="#" onclick="alert('Under Construction')" >Edit</a> |
-            <a href="#" onclick="alert('Under Construction')" >Delete</a>
-          </div>
-        </div>
-</div>
-
-   
-                                                                                                                                                                                                                                                                             
-  
-   
-
-
-
-
-      
-
-
-
-
-
-
-
+      </div>
 
       <!-- End UI Content -->
 
@@ -337,26 +191,16 @@
     //
     // ======================================================>
     //
-  $('#winner1').on('click',function(){
-  $('#exampleModalLong').modal('show');
 
-  });
+    WINNERS.loadWinners();
+    
+    $('#txt_searchWinner').on('keyup',function(){
+      WINNERS.loadWinners($(this).val());
+    });
 
-  $('#winner2').on('click',function(){
-  $('#exampleModalLong').modal('show');
-
-  });
-
-  $('#winner3').on('click',function(){
-  $('#exampleModalLong').modal('show');
-
-  });
-
-  $('#winner4').on('click',function(){
-  $('#exampleModalLong').modal('show');
-
-  });
-
+    $('#txt_dateFilter').on('change',function(){
+      WINNERS.loadWinners($('#txt_searchWinner').val());
+    });
 
 
   });

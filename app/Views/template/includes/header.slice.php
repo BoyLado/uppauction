@@ -3,7 +3,7 @@
 <!-- CSS Libraries here! -->
 
 <!-- Icon -->
-<link rel="icon" href="<?php echo base_url(); ?>/public/assets/img/arkonorllc-logo-edited.png">
+<link rel="icon" href="<?php echo base_url(); ?>/public/assets/img/upp-logo.png">
 
 <!-- Google Font: Source Sans Pro -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">

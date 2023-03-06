@@ -6,8 +6,25 @@ use App\Controllers\BaseController;
 
 class WinnerController extends BaseController
 {
-    public function index()
+    public function __construct()
     {
-        //
+        $this->bidders = model('Portal/Bidders');
+        $this->items = model('Portal/Items');
+    }
+
+    public function loadWinners()
+    {
+        $fields = $this->request->getGet();
+
+        $arrResult = $this->items->loadWinners($fields['order'],$fields['dateFilter'],$fields['textSearch']);
+        return $this->response->setJSON($arrResult);
+    }
+
+    public function loadWinnerItems()
+    {
+        $fields = $this->request->getGet();
+
+        $arrResult = $this->items->loadWinnerItems($fields['bidderId']);
+        return $this->response->setJSON($arrResult);
     }
 }

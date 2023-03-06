@@ -44,7 +44,7 @@ class Bidders extends Model
     ////////////////////////////////////////////////////////////
     ///// BidderController->loadBidders()
     ////////////////////////////////////////////////////////////
-    public function loadBidders()
+    public function loadBidders($order, $textSearch = "")
     {
         $columns = [
             'a.id',
@@ -63,7 +63,14 @@ class Bidders extends Model
             'a.updated_date',
         ];
 
-        $builder = $this->db->table('bidders a')->select($columns)->orderBy('a.id','DESC');
+        $builder = $this->db->table('bidders a')->select($columns)->orderBy('a.id',$order);
+        if($textSearch != "")
+        {
+            $builder->orLike('a.bidder_number',$textSearch);
+            $builder->orLike('a.first_name',$textSearch);
+            $builder->orLike('a.last_name',$textSearch);
+            $builder->orLike('a.email',$textSearch);
+        }
         $builder->where('a.status',1);
         $query = $builder->get();
         return  $query->getResultArray();

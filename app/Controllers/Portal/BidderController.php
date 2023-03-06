@@ -18,7 +18,9 @@ class BidderController extends BaseController
         // {
         //     if(session()->get('upp_user_loggedIn'))
         //     {
-                $arrResult = $this->bidders->loadBidders();
+                $fields = $this->request->getGet();
+
+                $arrResult = $this->bidders->loadBidders($fields['order'],$fields['textSearch']);
                 return $this->response->setJSON($arrResult);
         //     }
         //     else

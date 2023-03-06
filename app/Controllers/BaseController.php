@@ -47,7 +47,7 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
 
-        date_default_timezone_set('Asia/Manila');
+        date_default_timezone_set('America/Chicago');
 
         // E.g.: $this->session = \Config\Services::session();
         $this->slice = new \App\Libraries\SliceLibrary();

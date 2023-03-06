@@ -29,6 +29,16 @@
     border: 1px solid #ced4da;
   }
 
+  .zoom { 
+    transition: all .2s ease-in-out; 
+  }
+
+  .zoom:hover { 
+
+    transform: scale(1.1);
+    z-index: 9;
+  }
+
   .hide-scroll::-webkit-scrollbar
   {
     display: none;
@@ -145,6 +155,19 @@
                 <div class="card card-outline card-primary">
                   <div class="card-header">
                     <h3 class="card-title">Item #1</h3>
+                    <div class="float-right">
+                      <a href="javascript:void(0)" data-toggle="dropdown">
+                        <i class="nav-icon fas fa-ellipsis-v"></i>
+                      </a>
+                      <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.selectItem();">
+                          <i class="fa fa-pen mr-1"></i>Edit
+                        </a>
+                        <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.removeItem();">
+                          <i class="fa fa-trash mr-1"></i>Delete
+                        </a>
+                      </div>
+                    </div>
                   </div>
                   <div class="card-body">
                     <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
@@ -193,6 +216,61 @@
                   </div>
                 </div>
               </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modal_editItem" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header modal-header--sticky">
+              <h5 class="modal-title"><i class="fa fa-pen mr-1"></i> Edit Item</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <form id="form_editItem">
+                <input type="hidden" id="txt_itemId" name="txt_itemId">
+                <table class="table mb-0">
+                  <tbody>
+                    <tr>
+                      <td class="p-1">
+                        <label>Item Number *:</label>
+                        <input type="text" class="form-control" id="txt_editItemNumber" name="txt_editItemNumber" required>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1">
+                        <label>Item Description *:</label>
+                        <textarea class="form-control" rows="5" id="txt_editItemDescription" name="txt_editItemDescription" required></textarea>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1">
+                        <label>Bidder Number/Name *:</label>
+                        <select class="form-control select2" id="slc_editBidderNumber" name="slc_editBidderNumber" style="width: 100%;" required>
+                          <option value="">Choose Bidder</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-1">
+                        <label>Amount *:</label>
+                        <input type="number" class="form-control" id="txt_editWinningAmount" name="txt_editWinningAmount" required>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>             
+
+            </div>
+            <div class="modal-footer modal-footer--sticky">
+              <button type="submit" class="btn btn-primary" id="btn_submitEditItem" form="form_editItem">
+                <i class="fa fa-save mr-2"></i> Save Changes
+              </button>
             </div>
           </div>
         </div>
@@ -253,13 +331,18 @@
     //
 
     ITEMS.loadItems();
-    ITEMS.loadBidders();
+    ITEMS.loadBidders('slc_bidderNumber');
 
     $('#txt_itemNumber').focus();
 
     $('#form_addItem').on('submit',function(e){
       e.preventDefault();
       ITEMS.addItem(this);
+    });
+
+    $('#form_editItem').on('submit',function(e){
+      e.preventDefault();
+      ITEMS.editItem(this);
     });
 
 

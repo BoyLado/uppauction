@@ -101,28 +101,28 @@ class ItemController extends BaseController
         $fields = $this->request->getPost();
 
         $this->validation->setRules([
-            'txt_itemNumber' => [
+            'txt_editItemNumber' => [
                 'label'  => 'Item Number',
                 'rules'  => 'required',
                 'errors' => [
                     'required'    => 'Item Number is required',
                 ],
             ],
-            'txt_itemDescription' => [
+            'txt_editItemDescription' => [
                 'label'  => 'Item Description',
                 'rules'  => 'required',
                 'errors' => [
                     'required'    => 'Item Description is required',
                 ],
             ],
-            'slc_bidderNumber' => [
+            'slc_editBidderNumber' => [
                 'label'  => 'Bidder Number',
                 'rules'  => 'required',
                 'errors' => [
                     'required'    => 'Bidder Number is required',
                 ],
             ],
-            'txt_winningAmount' => [
+            'txt_editWinningAmount' => [
                 'label'  => 'Amount',
                 'rules'  => 'required',
                 'errors' => [
@@ -134,15 +134,15 @@ class ItemController extends BaseController
         if($this->validation->withRequest($this->request)->run())
         {
             $arrData = [
-                'item_number'       => $fields['txt_itemNumber'],
-                'item_description'  => $fields['txt_itemDescription'],
-                'bidder_id'         => $fields['slc_bidderNumber'],
-                'winning_amount'    => $fields['txt_winningAmount'],
+                'item_number'       => $fields['txt_editItemNumber'],
+                'item_description'  => $fields['txt_editItemDescription'],
+                'bidder_id'         => $fields['slc_editBidderNumber'],
+                'winning_amount'    => $fields['txt_editWinningAmount'],
                 'updated_by'        => $this->session->get('upp_user_id'),
                 'updated_date'      => date('Y-m-d H:i:s')
             ];
 
-            $result = $this->items->editItem($arrData, $fields['itemId']);
+            $result = $this->items->editItem($arrData, $fields['txt_itemId']);
             $msgResult[] = ($result > 0)? "Success" : "Database error";
         }
         else

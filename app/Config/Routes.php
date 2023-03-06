@@ -44,7 +44,7 @@ $routes->get('/', 'NavigationController');
  *  FRONT END NAVIGATION 
  *  ------------------------------------------------------------------
  */
-
+$routes->get('pre-registration', 'NavigationController::preRegistration');
 $routes->get('login', 'NavigationController::login');
 
 /*
@@ -69,6 +69,9 @@ $routes->get('portal/auction-dashboard', 'Portal\NavigationController::auctionDa
 $routes->get('portal/auction-bidders', 'Portal\NavigationController::auctionBidders');
 $routes->get('portal/auction-items', 'Portal\NavigationController::auctionItems');
 $routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinners');
+
+//////////////////////////// MY ACCOUNT ////////////////////////////////
+$routes->get('my-account', 'Portal\NavigationController::myAccount');
 
 
 /*
@@ -97,6 +100,24 @@ $routes->post('portal/add-item', 'Portal\ItemController::addItem');
 $routes->get('portal/select-item', 'Portal\ItemController::selectItem');
 $routes->post('portal/edit-item', 'Portal\ItemController::editItem');
 $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
+
+////////////////////////////////////////////////////////////////////
+//////////////////////// ITEMS /////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+$routes->get('portal/load-winners', 'Portal\WinnerController::loadWinners');
+$routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerItems');
+
+
+/////////////////////////////////////////////////////////////////////
+//////////////////////////// MY ACCOUNT /////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+$routes->get('load-my-account', 'Portal\MyAccountController::loadMyAccount');
+$routes->post('change-my-account-picture', 'Portal\MyAccountController::changeMyAccountPicture');
+$routes->get('load-my-account-details', 'Portal\MyAccountController::loadMyAccountDetails');
+$routes->post('edit-my-account-details', 'Portal\MyAccountController::editMyAccountDetails');
+$routes->post('edit-my-account-password', 'Portal\MyAccountController::editMyAccountPassword');
 
 
 /*

@@ -11,7 +11,7 @@ class NavigationController extends BaseController
         // $this->campaigns        = model('Portal/Campaigns');
         // $this->contacts         = model('Portal/Contacts');
         // $this->organizations    = model('Portal/Organizations');
-        // $this->documents        = model('Portal/Documents');
+        $this->users        = model('Portal/Users');
     }
 
     public function auctionDashboard()
@@ -86,6 +86,27 @@ class NavigationController extends BaseController
                 $data['pageTitle'] = "Items | UPP Auction Services";
                 $data['customScripts'] = 'auction_winners';
                 return $this->slice->view('portal.auction_winners', $data);
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
+
+    public function myAccount()
+    {
+        if($this->session->has('upp_user_loggedIn'))
+        {
+            if($this->session->get('upp_user_loggedIn'))
+            {
+                $data['pageTitle'] = "My Account | UPP Auction Services";
+                $data['customScripts'] = 'my_account';
+                return $this->slice->view('portal.my_account', $data);
             }
             else
             {

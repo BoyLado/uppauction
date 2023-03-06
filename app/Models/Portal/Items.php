@@ -139,4 +139,68 @@ class Items extends Model
     //         throw $e;
     //     }
     // }
+
+
+
+    /////////////////////////////////////////////// WINNERS /////////////////////////////////////////////////
+
+
+
+    ////////////////////////////////////////////////////////////
+    ///// ItemController->loadWinners()
+    ////////////////////////////////////////////////////////////
+    public function loadWinners($order,$dateFilter,$textSearch)
+    {
+        $columns = [
+            'a.id',
+            'a.bidder_number',
+            'a.first_name',
+            'a.last_name',
+            'a.email',
+            'a.season_pass',
+            'b.created_date',
+        ];
+
+        $builder = $this->db->table('bidders a');
+        $builder->select($columns);
+        $builder->where('DATE_FORMAT(b.created_date,"%Y-%m-%d")',$dateFilter);
+        if($textSearch != "")
+        {
+            $builder->orLike('a.bidder_number',$textSearch);
+            $builder->orLike('a.first_name',$textSearch);
+            $builder->orLike('a.last_name',$textSearch);
+            $builder->orLike('a.email',$textSearch);
+        }
+        $builder->join('items b','a.id = b.bidder_id','inner');
+        $builder->orderBy('a.id','DESC');
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }   
+
+    ////////////////////////////////////////////////////////////
+    ///// ItemController->loadWinnerItems()
+    ////////////////////////////////////////////////////////////
+    public function loadWinnerItems($bidderId)
+    {
+        $columns = [
+            'a.id',
+            'a.item_number',
+            'a.item_description',
+            'a.bidder_id',
+            '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
+            '(SELECT CONCAT(first_name," ",last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
+            'a.winning_amount',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date',
+        ];
+
+        $builder = $this->db->table('items a');
+        $builder->select($columns);
+        $builder->where('a.bidder_id', $bidderId);
+        $builder->orderBy('a.id','DESC');
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
 }

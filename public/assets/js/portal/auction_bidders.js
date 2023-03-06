@@ -14,13 +14,14 @@ const BIDDERS = (function(){
 	});
 
 
-	thisBidder.loadBidders = function()
+	thisBidder.loadBidders = function(textSearch = "")
 	{
 		$.ajax({
 			/* BidderController->loadBidders() */
 		  url : `${baseUrl}/portal/load-bidders`,
 		  method : 'get',
 		  dataType: 'json',
+		  data:{order:'DESC',textSearch : textSearch},
 		  success : function(data)
 		  {
 		    console.log(data);
@@ -28,17 +29,17 @@ const BIDDERS = (function(){
 		    data.forEach(function(value,key){
 		    	let imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
 		    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
-		    	let address = (value['address'] != null)? value['address'] : '---';
+		    	let email = (value['email'] != null)? value['email'] : '---';
 		    	
 		    	bidders += `<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
-							          <div class="card mb-2 bg-gradient-dark grow">
+							          <div class="card mb-2 bg-gradient-dark zoom">
 							            <a href="javascript:void(0)" onclick="alert();">
 							              <img class="card-img-top rounded" src="${imgSrc}" alt="" style="height: 300px; width: 100%; object-fit: cover;">
 							              <div class="products">
 							                <h5 class="card-title text-primary text-white">
 							                  <span class="text-bold text-red">Bidder #${value['bidder_number']}</span> | ${bidderName}</h5>
 							                <br>
-							                <span class="card-text text-muted">${address}</span>
+							                <span class="card-text text-muted">${email}</span>
 							                <div class="float-right">
 							                  <a href="javascript:void(0)" onclick="BIDDERS.selectBidder(${value['id']})" >Edit</a> |
 							                  <a href="javascript:void(0)" onclick="BIDDERS.removeBidder(${value['id']})" >Delete</a>

@@ -22,7 +22,7 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "Arkonor LLC | Login";
+        $data['pageTitle'] = "U Pick A Pallet | Login";
         $data['userAuthCode'] = "";
         return $this->slice->view('login', $data);
     }
@@ -42,7 +42,7 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "Arkonor LLC | Forgot Password";
+        $data['pageTitle'] = "U Pick A Pallet | Forgot Password";
         return $this->slice->view('forgot_password', $data);
     }
 
@@ -61,7 +61,7 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "Arkonor LLC | Change Password";
+        $data['pageTitle'] = "U Pick A Pallet | Change Password";
         $data['userId'] = $userId;
         $data['userAuthCode'] = $userAuthCode;
         $data['passwordAuthCode'] = $passwordAuthCode;
@@ -83,9 +83,14 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "Arkonor LLC | Sign Up";
+        $data['pageTitle'] = "U Pick A Pallet | Sign Up";
         $data['userId'] = $userId;
         $data['userAuthCode'] = $userAuthCode;
         return $this->slice->view('sign_up', $data);
+    }
+
+    public function preRegistration()
+    {
+        return $this->slice->view('pre_registration_form');
     }
 }
