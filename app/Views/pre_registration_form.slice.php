@@ -15,16 +15,52 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/dist/css/adminlte.min.css">
+
+  <style type="text/css">
+    
+
+
+#button {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+#text{
+  margin-top: 25px;
+}
+
+#fields{
+  margin-bottom: 25px;
+
+}
+
+#text1{
+  margin-top: 25px;
+}
+#h2, #h4{
+  margin-top: 25px;
+  text-align: center;
+}
+
+#nav{
+
+    background-color: #6EC1E4;
+
+}
+
+
+  </style>
+
 </head>
 <body class="hold-transition layout-top-nav layout-navbar-fixed">
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" id="nav">
     <div class="container">
       <a href="<?php echo base_url(); ?>/public/assets/AdminLTE/index3.html" class="navbar-brand">
-        <img src="<?php echo base_url(); ?>/public/assets/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <img src="<?php echo base_url(); ?>/public/assets/img/upp-logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"><b>U PICK A PALLET LLC</b></span>
       </a>
 
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,13 +71,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="index3.html" class="nav-link"><b>Home</b></a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="#" class="nav-link"><b>Contact</b></a>
           </li>
           <li class="nav-item dropdown">
-            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Dropdown</a>
+            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><b>Dropdown</b></a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
               <li><a href="#" class="dropdown-item">Some action </a></li>
               <li><a href="#" class="dropdown-item">Some other action</a></li>
@@ -190,87 +226,166 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0"> Top Navigation <small>Example 3.0</small></h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Layout</a></li>
-              <li class="breadcrumb-item active">Top Navigation</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+        
     </div>
     <!-- /.content-header -->
 
     <!-- Main content -->
     <div class="content">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the card's
-                  content.
-                </p>
-
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div>
-
-            <div class="card card-primary card-outline">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-
-                <p class="card-text">
-                  Some quick example text to build on the card title and make up the bulk of the card's
-                  content.
-                </p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div><!-- /.card -->
-          </div>
-          <!-- /.col-md-6 -->
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="card-header">
-                <h5 class="card-title m-0">Featured</h5>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-
-            <div class="card card-primary card-outline">
-              <div class="card-header">
-                <h5 class="card-title m-0">Featured</h5>
-              </div>
-              <div class="card-body">
-                <h6 class="card-title">Special title treatment</h6>
-
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <!-- /.col-md-6 -->
+        <div>
+          <h2 id="h2">
+            Auction Pre-Registration
+          </h2>
+          <div>
+          <h5 id="h4">
+            To pre-register to bid onsite at our next auction, please fill out the form below. After we receive your information, we will contact you to complete the registration process.
+          </h5>
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
+        <div class="row">
+          <div class="col-md-3">
+                <h3  class="card-title"><b>Auction Date</b></h3>
+                  <div id="text1" class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                    <input type="date" class="form-control datetimepicker-input" data-target="#reservationdatetime">
+                      <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                      
+                    </div>
+                  </div>
+          </div>
+        </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <label id="text"for="formGroupExampleInput2">Company Name</label>
+                  <input id="fields" type="text" class="form-control" id="formGroupExampleInput" placeholder="Company Name">
+                </div>
+               </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="formGroupExampleInput2">First</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="First name">
+                </div>
+                <div class="col-lg-6">
+                  <label for="formGroupExampleInput2">Last</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Last name">
+                </div>
+              </div>
+              <form>
+                <div class="form-group">
+                  <label id="text"for="exampleFormControlInput1">Street Address</label>
+                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Street Address">
+                </div>
+              </form>
+              <form>
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Address Line</label>
+                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Address Line">
+                </div>
+              </form>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCity">City</label>
+                  <input type="text" class="form-control" id="inputCity" placeholder="City">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputState">State</label>
+                  <select id="inputState" class="form-control">
+                    <option selected>Choose...</option>
+                    <option>Alabama</option>
+                    <option>Alaska</option>
+                    <option>Arizona</option>
+                    <option>Arkansas</option>
+                    <option>California</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="inputZip">ZIP Code</label>
+                  <input type="text" class="form-control" id="inputZip" placeholder="inputZip">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="formGroupExampleInput2">Phone Number</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Phone Number">
+                </div>
+                <div class="col-lg-6">
+                  <label for="formGroupExampleInput2">Driver’s License Number</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Driver’s License Number">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label id="text"for="formGroupExampleInput2">Email Address</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Email Address">
+                </div>
+               </div>
+               <label id="text" lass="gfield_label gform-field-label gfield_label_before_complex">I AGREE TO THE BUYERS CONTRACT<span class="gfield_required"><span class="gfield_required gfield_required_asterisk"> *</span></span></label>
+               <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1">
+                    <h4>BY CONSENTING AND BIDDING YOU ARE ACKNOWLEDGING AGREEMENT WITH THE TERMS BELOW.</h4>
+                  </label>
+               </div>
+               <div style="height: 40vh; overflow-y:scroll; width: 100%; border: 1px solid black;">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+                obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+                nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+                tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+                quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
+                sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
+                recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
+                minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
+                quibusdam sed amet tempora. Sit laborum ab, eius fugit doloribus tenetur 
+                fugiat, temporibus enim commodi iusto libero magni deleniti quod quam 
+                consequuntur! Commodi minima excepturi repudiandae velit hic maxime
+                doloremque. Quaerat provident commodi consectetur veniam similique ad 
+                earum omnis ipsum saepe, voluptas, hic voluptates pariatur est explicabo 
+                fugiat, dolorum eligendi quam cupiditate excepturi mollitia maiores labore 
+                suscipit quas? Nulla, placeat. Voluptatem quaerat non architecto ab laudantium
+                modi minima sunt esse temporibus sint culpa, recusandae aliquam numquam 
+                totam ratione voluptas quod exercitationem fuga. Possimus quis earum veniam 
+                quasi aliquam eligendi, placeat qui corporis!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+                obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+                nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+                tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+                quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
+                sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
+                recusandae alias error harum maxime adipisci amet laborum. Perspiciatis 
+                minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit 
+                quibusdam sed amet tempora. Sit laborum ab, eius fugit doloribus tenetur 
+                fugiat, temporibus enim commodi iusto libero magni deleniti quod quam 
+                consequuntur! Commodi minima excepturi repudiandae velit hic maxime
+                doloremque. Quaerat provident commodi consectetur veniam similique ad 
+                earum omnis ipsum saepe, voluptas, hic voluptates pariatur est explicabo 
+                fugiat, dolorum eligendi quam cupiditate excepturi mollitia maiores labore 
+                suscipit quas? Nulla, placeat. Voluptatem quaerat non architecto ab laudantium
+                modi minima sunt esse temporibus sint culpa, recusandae aliquam numquam 
+                totam ratione voluptas quod exercitationem fuga. Possimus quis earum veniam 
+                quasi aliquam eligendi, placeat qui corporis!
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <label id="text"for="formGroupExampleInput2">Type Name To Agree To Terms</label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Full Name">
+                </div>
+               </div>
+               <div >
+               <button id="button" type="button" class="btn btn-primary">Submit</button>
+               </div>
+      </div>
   </div>
+
+    <!-- /.content -->
+ 
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -283,10 +398,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      Anything you want
+   
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <center><strong>Copyright &copy; 2023 <a href="https://auction.upickapallet.com">U PICK A PALLET LLC</a>.</strong> All rights reserved.</center>
   </footer>
 </div>
 <!-- ./wrapper -->
