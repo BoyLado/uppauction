@@ -22,22 +22,36 @@
 
   <style type="text/css">
     body{
-      background-image: url('public/assets/img/upp-login-background.jpg');
+      background-image: url('public/assets/img/Mart.GIF');
       background-size: cover;
       background-position: center; /* Center the image */
       background-repeat: no-repeat; /* Do not repeat the image */
     }
+
+#signbutton:hover{
+
+  border-color: white;
+  color: white;
+  background-color: black;
+}
+#signbutton{
+
+  border-color: white;
+  color: white;
+}
+
+
   </style>
 </head>
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo mb-2">
       <center>
-        <img src="public/assets/img/upp-logo.png" width="100px" class="img img-round">
+        <!-- <img src="public/assets/img/upp-logo.png" width="100px" class="img img-round"> -->
       </center>
     </div>
     <!-- /.login-logo -->
-    <div class="card card-outline card-primary" style="background: rgba(0, 0, 0, 0.7);">
+    <div class="card card-outline card-primary" style="background: rgba(9, 131, 165, 0.7);">
       <div class="card-body">
         <p class="login-box-msg text-white">Sign in to start your session</p>
 
@@ -64,7 +78,7 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" id="btn_signIn" class="btn btn-sm btn-block btn-outline-primary">Sign In</button>
+              <button id="signbutton" type="submit" id="btn_signIn" class="btn btn-sm btn-block btn-outline-danger">Sign In</button>
             </div>
             <!-- /.col -->
           </div>

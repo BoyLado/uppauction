@@ -7,7 +7,8 @@
 @section('custom_styles')
 <!-- Select2 -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
-
+<!-- Full Calendar -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.css">
 <style type="text/css">
   /*INTERNAL STYLES*/
   .tbl tr td{
@@ -145,6 +146,11 @@
             </a>
           </div>
         </div>
+        </div>
+
+      <div id="div_calendars">
+        <hr>
+        <center><h5>Loading...</h5></center>
       </div>
 
     </div><!-- /.container flued -->
@@ -152,10 +158,9 @@
 </div>
 <!-- /.content-wrapper -->
 <footer class="main-footer pt-2 pb-2">
-  <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+  <center><strong>Copyright &copy; 2023 <a href="#">U PICK A PALLET LLC</a>.</strong></center>
   All rights reserved.
   <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 3.2.0
   </div>
   <!-- <center>
     <button type="button" class="btn btn-info btn-sm"><i class="fa fa-save mr-1"></i> Save</button>
@@ -172,7 +177,8 @@
 <!-- Plugins -->
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
-
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
 <!-- Custom Scripts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
@@ -198,9 +204,14 @@
     //
     // ======================================================>
     //
-
-
-  });
-</script>
+let objCalendar = new FullCalendar.Calendar(document.getElementById(`div_calendars`),{
+      headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      themeSystem: 'bootstrap'
+    });
+    objCalendar.render();
 
 @endsection
