@@ -107,6 +107,7 @@ $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
 $routes->get('portal/load-winners', 'Portal\WinnerController::loadWinners');
 $routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerItems');
+$routes->post('portal/add-payment', 'Portal\WinnerController::addPayment');
 
 
 /////////////////////////////////////////////////////////////////////

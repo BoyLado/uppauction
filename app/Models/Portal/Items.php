@@ -43,7 +43,7 @@ class Items extends Model
     ////////////////////////////////////////////////////////////
     ///// ItemController->loadItems()
     ////////////////////////////////////////////////////////////
-    public function loadItems()
+    public function loadItems($dateNow)
     {
         $columns = [
             'a.id',
@@ -59,7 +59,10 @@ class Items extends Model
             'a.updated_date',
         ];
 
-        $builder = $this->db->table('items a')->select($columns)->orderBy('a.id','DESC');
+        $builder = $this->db->table('items a');
+        $builder->select($columns);
+        $builder->where('DATE_FORMAT(a.created_date,"%Y-%m-%d")',$dateNow);
+        $builder->orderBy('a.id','DESC');
         $query = $builder->get();
         return  $query->getResultArray();
     }
@@ -158,21 +161,24 @@ class Items extends Model
             'a.last_name',
             'a.email',
             'a.season_pass',
-            'b.created_date',
+            'DATE_FORMAT(b.created_date,"%Y-%m-%d") as created_date',
         ];
 
         $builder = $this->db->table('bidders a');
         $builder->select($columns);
-        $builder->where('DATE_FORMAT(b.created_date,"%Y-%m-%d")',$dateFilter);
         if($textSearch != "")
         {
-            $builder->orLike('a.bidder_number',$textSearch);
-            $builder->orLike('a.first_name',$textSearch);
-            $builder->orLike('a.last_name',$textSearch);
-            $builder->orLike('a.email',$textSearch);
+            $builder->groupStart();
+                $builder->orLike('a.bidder_number',$textSearch);
+                $builder->orLike('a.first_name',$textSearch);
+                $builder->orLike('a.last_name',$textSearch);
+                $builder->orLike('a.email',$textSearch);
+            $builder->groupEnd();
         }
         $builder->join('items b','a.id = b.bidder_id','inner');
+        $builder->groupBy('a.bidder_number');
         $builder->orderBy('a.id','DESC');
+        $builder->where('DATE_FORMAT(b.created_date,"%Y-%m-%d")',$dateFilter);
         $query = $builder->get();
         return  $query->getResultArray();
     }   
@@ -180,7 +186,7 @@ class Items extends Model
     ////////////////////////////////////////////////////////////
     ///// ItemController->loadWinnerItems()
     ////////////////////////////////////////////////////////////
-    public function loadWinnerItems($bidderId)
+    public function loadWinnerItems($bidderId, $dateNow)
     {
         $columns = [
             'a.id',
@@ -199,6 +205,7 @@ class Items extends Model
         $builder = $this->db->table('items a');
         $builder->select($columns);
         $builder->where('a.bidder_id', $bidderId);
+        $builder->where('DATE_FORMAT(a.created_date,"%Y-%m-%d")', $dateNow);
         $builder->orderBy('a.id','DESC');
         $query = $builder->get();
         return  $query->getResultArray();

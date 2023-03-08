@@ -17,7 +17,7 @@ class ItemController extends BaseController
         // {
         //     if(session()->get('upp_user_loggedIn'))
         //     {
-                $arrResult = $this->items->loadItems();
+                $arrResult = $this->items->loadItems(date('Y-m-d'));
                 return $this->response->setJSON($arrResult);
         //     }
         //     else

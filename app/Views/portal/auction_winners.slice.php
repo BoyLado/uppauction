@@ -107,31 +107,88 @@
             </div>
             <div class="modal-body">
 
-              <form id="form_checkout" enctype="multipart/form-data">
-                <table class="table table-striped">
-                  <thead>
+              <form id="form_checkout">
+                <input type="hidden" id="txt_bidderId" name="txt_bidderId">
+                <table class="table table-striped mb-2" id="tbl_cart">
+                  <thead class="bg-primary">
                     <tr>
                       <th>No.</th>
                       <th>Item No.</th>
                       <th>Item Description</th>
-                      <th>Amount</th>
+                      <th><span class="float-right">Amount</span></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody></tbody>
+                  <tfoot class="bg-secondary">
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td colspan="4"></td>
                     </tr>
-                  </tbody>
+                  </tfoot>
                 </table>
-              </form>             
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6">
+                    <table class="table mb-0">
+                      <tbody>
+                        <tr>
+                          <td width="58%"><label>Sub Total: </label></td>
+                          <td><label class="float-right">$357.00</label></td>
+                        </tr>
+                        <tr>
+                          <td width="58%"><label>Tax (9.54%): </label></td>
+                          <td><label class="float-right">$34.06</label></td>
+                        </tr>
+                        <tr>
+                          <td width="58%"><label>Card Transaction Fee (4.35%): </label></td>
+                          <td><label class="float-right">$0.00</label></td>
+                        </tr>
+                        <tr>
+                          <td width="58%"><label>Total: </label></td>
+                          <td><label class="float-right text-danger">$391.05</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 ">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="chk_cashPayment" checked>
+                          <label class="form-check-label text-bold" for="chk_cashPayment">CASH</label>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="number" class="form-control" id="txt_cashPayment" name="txt_cashPayment">
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="chk_cardPayment">
+                          <label class="form-check-label text-bold" for="chk_cardPayment">CARD</label>
+                        </div>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="number" class="form-control" id="txt_cardPayment" name="txt_cardPayment" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="callout callout-danger bg-warning">
+                        <h5 class="text-bold">Change: </h5>
+                        <h3 class="text-bold" id="lbl_change">$108.95</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>     
 
             </div>
             <div class="modal-footer modal-footer--sticky">
               <button type="submit" class="btn btn-primary" id="btn_checkout" form="form_checkout">
-                <i class="fa fa-shopping-cart"></i> Check Out
+                <i class="fa fa-shopping-cart mr-1"></i> Check Out
               </button>
             </div>
           </div>
@@ -202,6 +259,56 @@
       WINNERS.loadWinners($('#txt_searchWinner').val());
     });
 
+    $('#chk_cashPayment').on('change',function(){
+      if($(this).is(':checked'))
+      {
+        $('#txt_cashPayment').prop('readonly',false);
+        $('#txt_cashPayment').prop('required',true);
+        $('#txt_cashPayment').focus();
+        $('#btn_checkout').prop('disabled',false);
+      }
+      else
+      {
+        $('#txt_cashPayment').prop('readonly',true);
+        $('#txt_cardPayment').focus();
+      }
+      let cashPayment = $(this).is(':checked');
+      let cardPayment = $('#chk_cardPayment').is(':checked');
+      if(cashPayment == false && cardPayment == false)
+      {
+        $('#btn_checkout').prop('disabled',true);
+      }
+    });
+
+    $('#chk_cardPayment').on('change',function(){
+      if($(this).is(':checked'))
+      {
+        $('#txt_cardPayment').prop('readonly',false);
+        $('#txt_cardPayment').prop('required',true);
+        $('#txt_cardPayment').focus();
+        $('#btn_checkout').prop('disabled',false);
+      }
+      else
+      {
+        $('#txt_cardPayment').prop('readonly',true);
+        $('#txt_cashPayment').focus();
+      }
+      let cashPayment = $('#chk_cashPayment').is(':checked');
+      let cardPayment = $(this).is(':checked');
+      if(cashPayment == false && cardPayment == false)
+      {
+        $('#btn_checkout').prop('disabled',true);
+      }
+    });
+
+    $('#txt_cashPayment').on('keyup',function(){
+      // $('#lbl_change').text(10);
+    });
+
+    $('#form_checkout').on('submit',function(e){
+      e.preventDefault();
+      WINNERS.addPayment(this);
+    });
 
   });
 </script>

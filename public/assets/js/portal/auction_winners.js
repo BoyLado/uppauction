@@ -59,16 +59,73 @@ const WINNERS = (function(){
 
 	thisWinners.loadWinnerItems = function(bidderId)
 	{
+		let txt_dateFilter = $('#txt_dateFilter').val();
 		$.ajax({
 			/* WinnerController->loadWinnerItems() */
 		  url : `${baseUrl}/portal/load-winner-items`,
 		  method : 'get',
 		  dataType: 'json',
-		  data:{bidderId:bidderId},
+		  data:{bidderId:bidderId,txt_dateFilter:txt_dateFilter},
 		  success : function(data)
 		  {
 		  	console.log(data);
 		  	$('#modal_checkout').modal('show');
+		  	$('#txt_bidderId').val(bidderId);
+		  	let tbody = '';
+		  	let number = 1;
+		  	let totalAmount = 0;
+		  	data.forEach(function(value,key){
+		  		tbody += `<tr>
+                      <td>${number}</td>
+                      <td>${value['item_number']}</td>
+                      <td>${value['item_description']}</td>
+                      <td><span class="float-right">${parseFloat(value['winning_amount']).toFixed(2)}</span></td>
+                    </tr>`;
+          number++;
+
+          totalAmount += parseFloat(value['winning_amount']);
+		  	});
+		  	
+		  	$('#tbl_cart tbody').html(tbody);
+		  }
+		});
+	}
+
+	thisWinners.addPayment = function(thisForm)
+	{
+		let formData = new FormData(thisForm);
+
+		formData.set('txt_dateFilter',$('#txt_dateFilter').val());
+
+		$.ajax({
+			/* WinnerController->addPayment() */
+		  url : `${baseUrl}/portal/add-payment`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		    console.log(result);
+		    if(result == 'Success')
+		    {
+		    	$('#modal_checkout').modal('hide');
+          Toast.fire({
+		        icon: 'success',
+		        title: 'Success! <br>Payment Success.',
+		      });
+		      setTimeout(function(){
+            window.location.replace(`${baseUrl}/portal/auction-winners`);
+          }, 1000);
+		    }
+		    else
+		    {
+          Toast.fire({
+		        icon: 'error',
+		        title: `Error! <br>${result}`
+		      });
+		    }
 		  }
 		});
 	}

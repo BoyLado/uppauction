@@ -148,7 +148,7 @@
           </form> 
         </div>
         <div class="col-sm-12 col-md-12 col-lg-8">
-          <h5>Auction Item Lists</h5>
+          <h5>Auction Item Lists (<?php echo date('Y-m-d'); ?>)</h5>
           <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
             <div class="row" id="div_items">
               <!-- <div class="col-sm-12 col-md-6 col-lg-6">
