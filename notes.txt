@@ -10,6 +10,13 @@ Users
 -created_date
 -updated_date
 
+user_logs
+-id
+-user_id
+-log_title
+-log_details
+-created_date
+
 
 Bidders
 -id
@@ -27,6 +34,20 @@ Bidders
 -updated_by
 -updated_date
 
+bidder_registrations
+-id
+-bidder_id
+-auction_date
+-created_dat
+
+bidder_guests
+-id
+-registration_id
+-guest_first_name
+-guest_last_name
+-relation_to_bidder
+-created_date
+
 
 Items
 -id
@@ -40,3 +61,15 @@ Items
 -updated_by
 -updated_date
 
+
+Payments
+-id
+-bidder_id
+-sub_total
+-tax
+-card_transaction_fee
+-cash_payment
+-card_payment
+-total_payment
+-created_by
+-created_date

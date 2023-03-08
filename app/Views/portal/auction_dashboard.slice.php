@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
 <!-- Full Calendar -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.css">
+
 <style type="text/css">
   /*INTERNAL STYLES*/
   .tbl tr td{
@@ -177,8 +178,11 @@
 <!-- Plugins -->
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+
+<!-- FullCallendar -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
+
 <!-- Custom Scripts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
@@ -204,7 +208,7 @@
     //
     // ======================================================>
     //
-let objCalendar = new FullCalendar.Calendar(document.getElementById(`div_calendars`),{
+    let objCalendar = new FullCalendar.Calendar(document.getElementById(`div_calendars`),{
       headerToolbar: {
         left  : 'prev,next today',
         center: 'title',
@@ -213,5 +217,8 @@ let objCalendar = new FullCalendar.Calendar(document.getElementById(`div_calenda
       themeSystem: 'bootstrap'
     });
     objCalendar.render();
+
+  });
+</script>
 
 @endsection
