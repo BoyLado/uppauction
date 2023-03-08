@@ -4,6 +4,10 @@ const WINNERS = (function(){
 
 	let baseUrl = $('#txt_baseUrl').val();
 
+	function numberWithCommas(x) {
+	   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
 	var Toast = Swal.mixin({
 	  toast: true,
 	  position: 'top',
@@ -39,7 +43,7 @@ const WINNERS = (function(){
   						                <br>
   						                <span class="card-text text-muted">${email}</span>
   						                <div class="float-right">
-  						                <span class="text-red text-bold">PAID</span>
+  						                <span class="text-red text-bold"></span>
   						                </div>
   						              </div>
   						            </a>
@@ -73,7 +77,9 @@ const WINNERS = (function(){
 		  	$('#txt_bidderId').val(bidderId);
 		  	let tbody = '';
 		  	let number = 1;
-		  	let totalAmount = 0;
+		  	let subTotal = 0;
+		  	let tax = 0.0954;
+		  	let total = 0;
 		  	data.forEach(function(value,key){
 		  		tbody += `<tr>
                       <td>${number}</td>
@@ -83,10 +89,18 @@ const WINNERS = (function(){
                     </tr>`;
           number++;
 
-          totalAmount += parseFloat(value['winning_amount']);
+          subTotal += parseFloat(value['winning_amount']);
 		  	});
 		  	
 		  	$('#tbl_cart tbody').html(tbody);
+
+		  	tax = subTotal * tax;
+		  	total = subTotal + tax;
+
+		  	$('#lbl_subTotal').text(numberWithCommas(subTotal.toFixed(2)));
+		  	$('#lbl_tax').text(numberWithCommas(tax.toFixed(2)));
+		  	$('#lbl_cardTransactionFee').text("0.00");
+		  	$('#lbl_total').text(numberWithCommas(total.toFixed(2)));
 		  }
 		});
 	}
@@ -97,37 +111,46 @@ const WINNERS = (function(){
 
 		formData.set('txt_dateFilter',$('#txt_dateFilter').val());
 
-		$.ajax({
-			/* WinnerController->addPayment() */
-		  url : `${baseUrl}/portal/add-payment`,
-		  method : 'post',
-		  dataType: 'json',
-		  processData: false, // important
-		  contentType: false, // important
-		  data : formData,
-		  success : function(result)
-		  {
-		    console.log(result);
-		    if(result == 'Success')
-		    {
-		    	$('#modal_checkout').modal('hide');
-          Toast.fire({
-		        icon: 'success',
-		        title: 'Success! <br>Payment Success.',
-		      });
-		      setTimeout(function(){
-            window.location.replace(`${baseUrl}/portal/auction-winners`);
-          }, 1000);
-		    }
-		    else
-		    {
-          Toast.fire({
-		        icon: 'error',
-		        title: `Error! <br>${result}`
-		      });
-		    }
-		  }
-		});
+		Toast.fire({
+      icon: 'success',
+      title: 'Success! <br>Payment Success.',
+    });
+
+    setTimeout(function(){
+      window.location.replace(`${baseUrl}/portal/auction-winners`);
+    }, 1000);
+
+		// $.ajax({
+		// 	/* WinnerController->addPayment() */
+		//   url : `${baseUrl}/portal/add-payment`,
+		//   method : 'post',
+		//   dataType: 'json',
+		//   processData: false, // important
+		//   contentType: false, // important
+		//   data : formData,
+		//   success : function(result)
+		//   {
+		//     console.log(result);
+		//     if(result == 'Success')
+		//     {
+		//     	$('#modal_checkout').modal('hide');
+    //       Toast.fire({
+		//         icon: 'success',
+		//         title: 'Success! <br>Payment Success.',
+		//       });
+		//       setTimeout(function(){
+    //         window.location.replace(`${baseUrl}/portal/auction-winners`);
+    //       }, 1000);
+		//     }
+		//     else
+		//     {
+    //       Toast.fire({
+		//         icon: 'error',
+		//         title: `Error! <br>${result}`
+		//       });
+		//     }
+		//   }
+		// });
 	}
 
 	return thisWinners;

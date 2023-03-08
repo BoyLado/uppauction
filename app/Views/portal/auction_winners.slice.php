@@ -131,19 +131,19 @@
                       <tbody>
                         <tr>
                           <td width="58%"><label>Sub Total: </label></td>
-                          <td><label class="float-right">$357.00</label></td>
+                          <td><label class="float-right">$<span id="lbl_subTotal">0.00</span></label></td>
                         </tr>
                         <tr>
                           <td width="58%"><label>Tax (9.54%): </label></td>
-                          <td><label class="float-right">$34.06</label></td>
+                          <td><label class="float-right">$<span id="lbl_tax">0.00</span></label></td>
                         </tr>
                         <tr>
                           <td width="58%"><label>Card Transaction Fee (4.35%): </label></td>
-                          <td><label class="float-right">$0.00</label></td>
+                          <td><label class="float-right">$<span id="lbl_cardTransactionFee">0.00</span></label></td>
                         </tr>
                         <tr>
                           <td width="58%"><label>Total: </label></td>
-                          <td><label class="float-right text-danger">$391.05</label></td>
+                          <td><label class="float-right text-danger">$<span id="lbl_total">0.00</span></label></td>
                         </tr>
                       </tbody>
                     </table>
@@ -178,7 +178,7 @@
                     <div>
                       <div class="callout callout-danger bg-warning">
                         <h5 class="text-bold">Change: </h5>
-                        <h3 class="text-bold" id="lbl_change">$108.95</h3>
+                        <h3 class="text-bold">$<span id="lbl_change">0.00</span></h3>
                       </div>
                     </div>
                   </div>
@@ -223,6 +223,10 @@
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
+<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
+
+
 <!-- Custom Scripts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
@@ -244,6 +248,50 @@
 
     //events
     $('.select2').select2();
+
+    function numberWithCommas(x) {
+       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function computePaymentAndChange()
+    {
+      let change = 0;
+      let cashPayment = ($('#txt_cashPayment').val() == "")? 0 : $('#txt_cashPayment').val();
+      let cardPayment = ($('#txt_cardPayment').val() == "")? 0 : $('#txt_cardPayment').val();
+
+      let transactionFee = 0;
+
+      transactionFee = (cardPayment == "")? 0 : (parseFloat(cardPayment) * 0.0435);
+      $('#lbl_cardTransactionFee').text(numberWithCommas(parseFloat(transactionFee).toFixed(2)));
+
+      let subTotal = parseFloat($('#lbl_subTotal').text());
+      let tax = parseFloat($('#lbl_tax').text());
+      let totalAmount = 0;
+      if($('#chk_cardPayment').is(':checked'))
+      {
+        totalAmount = subTotal + tax + transactionFee;
+        console.log(totalAmount);
+        $('#lbl_total').text(numberWithCommas(totalAmount.toFixed(2)));
+      }
+      else
+      {
+        totalAmount = subTotal + tax;
+        console.log(totalAmount);
+        $('#lbl_total').text(numberWithCommas(totalAmount.toFixed(2)));
+      }
+
+      let total = $('#lbl_total').text();
+
+      change = (parseFloat(cashPayment) + parseFloat(cardPayment)) - parseFloat(total);
+      if(change >= 0)
+      {
+        $('#lbl_change').text(numberWithCommas(change.toFixed(2)));
+      }
+      else
+      {
+        $('#lbl_change').text(numberWithCommas((0).toFixed(2)));
+      }
+    }
 
     //
     // ======================================================>
@@ -270,6 +318,7 @@
       else
       {
         $('#txt_cashPayment').prop('readonly',true);
+        $('#txt_cashPayment').val('');
         $('#txt_cardPayment').focus();
       }
       let cashPayment = $(this).is(':checked');
@@ -278,6 +327,7 @@
       {
         $('#btn_checkout').prop('disabled',true);
       }
+      computePaymentAndChange();
     });
 
     $('#chk_cardPayment').on('change',function(){
@@ -291,6 +341,7 @@
       else
       {
         $('#txt_cardPayment').prop('readonly',true);
+        $('#txt_cardPayment').val('');
         $('#txt_cashPayment').focus();
       }
       let cashPayment = $('#chk_cashPayment').is(':checked');
@@ -299,10 +350,15 @@
       {
         $('#btn_checkout').prop('disabled',true);
       }
+      computePaymentAndChange();
     });
 
     $('#txt_cashPayment').on('keyup',function(){
-      // $('#lbl_change').text(10);
+      computePaymentAndChange();
+    });
+
+    $('#txt_cardPayment').on('keyup',function(){
+      computePaymentAndChange();
     });
 
     $('#form_checkout').on('submit',function(e){

@@ -34,10 +34,20 @@ class WinnerController extends BaseController
 
         $arrWinnerItems = $this->items->loadWinnerItems($fields['bidderId'],$fields['txt_dateFilter']);
 
+        $subTotal = 0;
+        $total = 0;
+        $tax = 0;
+        $change = 0;
+        $cashPayment = 0;
+        $cardPayment = 0;
+        $transactionFee = 0;
         foreach ($arrWinnerItems as $key => $value) 
         {
-            // code...
+            $subTotal += (float)$value['winning_amount'];
         }
+
+        $tax = $subTotal * 0.0954;
+        
 
         $arrData = [
             'bidder_id' => $fields['txt_bidderId'],
