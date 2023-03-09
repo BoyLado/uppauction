@@ -30,6 +30,12 @@
   {
     border: 1px solid #ced4da;
   }
+
+#activeusers, #lbl_organizationsCount, #moreinfo{
+
+  color: white !important;
+}
+
   
 </style>
 
@@ -44,41 +50,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header pt-1 pb-1">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12">
-          <h6 class="mt-1 float-left">
-            <span>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">Contacts</a> -
-            </span> 
-            <small>
-              <a href="<?php echo base_url(); ?>/contacts" class="text-muted">All</a>
-            </small>
-          </h6>
-          <div class="float-right">
-            <div class="d-inline d-lg-none">
-              <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown">
-                <i class="nav-icon fas fa-ellipsis-v"></i>
-              </button>
-              <div class="dropdown-menu" style="">
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addContacts">
-                  <i class="fa fa-plus mr-1"></i>Add Contact
-                </a>
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_importContacts">
-                  <i class="fa fa-upload mr-1"></i>Import
-                </a>
-              </div>
-            </div>
-            <div class="d-none d-lg-block">
-              <button type="button" class="btn btn-default btn-sm" id="btn_addContacts">
-                <i class="fa fa-plus mr-1"></i> Add Contact
-              </button>
-              <button type="button" class="btn btn-default btn-sm" id="btn_importContacts">
-                <i class="fa fa-upload mr-1"></i> Import
-              </button>
-            </div>
-          </div>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
+     
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content-header -->
@@ -89,72 +61,200 @@
 
       <div class="row">
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3 id="lbl_campaignsCount">0</h3>
-              <h5>CAMPAIGNS</h5>
-            </div>
-            <div class="icon">
-              <i class="fa fa-bullhorn"></i>
-            </div>
-            <a href="<?php echo base_url(); ?>/campaigns" class="small-box-footer">
-              More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-6">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3 id="lbl_contactsCount">0</h3>
-              <h5>CONTACTS</h5>
+              <h3 id="lbl_contactsCount">3</h3>
+              <h5>Active Users</h5>
             </div>
             <div class="icon">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-user"></i>
             </div>
-            <a href="<?php echo base_url(); ?>/contacts" class="small-box-footer">
+            <a href="#" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
 
         <div class="col-lg-3 col-6">
-          <div class="small-box bg-dark">
+          <div class="small-box bg-info">
             <div class="inner">
-              <h3 id="lbl_organizationsCount">0</h3>
-              <h5>ORGANIZATIONS</h5>
+              <h3 id="lbl_campaignsCount">$250</h3>
+              <h5><b>Sales</b></h5>
             </div>
             <div class="icon">
-              <i class="fa fa-building"></i>
+              <i class="fas fa-shopping-cart"></i>
             </div>
-            <a href="<?php echo base_url(); ?>/organizations" class="small-box-footer">
+            <a href="#" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
-
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-orange">
+            <div class="inner">
+              <h3 id="lbl_organizationsCount">14</h3>
+              <h5 id="activeusers">Sold Items</h5>
+            </div>
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <a id="moreinfo" href="#" class="small-box-footer">
+              More info <i id="moreinfo" class="fas fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+ 
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3 id="lbl_thirdPartiesCount">0</h3>
-              <h5>THIRD PARTIES</h5>
+              <h3 id="lbl_thirdPartiesCount">300</h3>
+              <h5>Season Pass Members</h5>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="fas fa-users"></i>
             </div>
-            <a href="<?php echo base_url(); ?>/third-parties" class="small-box-footer">
+            <a href="#" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
         </div>
         </div>
-
-      <div id="div_calendars">
+      <div class="row">
+        <div class="col-md-9">
+        <div class="card-header">
+        <div id="div_calendars">
         <hr>
         <center><h5>Loading...</h5></center>
       </div>
+    </div>
+  </div>
+  
 
-    </div><!-- /.container flued -->
+  <div class="col-md-3">
+      <div class="card">
+      <div class="card-header">
+      <h3 class="card-title">Latest Members</h3>
+      <div class="card-tools">
+      <span class="badge badge-danger">8 New Members</span>
+      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+      <i class="fas fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove">
+      <i class="fas fa-times"></i>
+      </button>
+      </div>
+      </div>
+
+      <div class="card-body p-0">
+      <ul class="users-list clearfix">
+      <li>
+      <img src="dist/img/user1-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Alexander Pierce</a>
+      <span class="users-list-date">Today</span>
+      </li>
+      <li>
+      <img src="dist/img/user8-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Norman</a>
+      <span class="users-list-date">Yesterday</span>
+      </li>
+      <li>
+      <img src="dist/img/user7-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Jane</a>
+      <span class="users-list-date">12 Jan</span>
+      </li>
+      <li>
+      <img src="dist/img/user6-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">John</a>
+      <span class="users-list-date">12 Jan</span>
+      </li>
+      <li>
+      <img src="dist/img/user2-160x160.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Alexander</a>
+      <span class="users-list-date">13 Jan</span>
+      </li>
+      <li>
+      <img src="dist/img/user5-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Sarah</a>
+      <span class="users-list-date">14 Jan</span>
+      </li>
+      <li>
+      <img src="dist/img/user4-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Nora</a>
+      <span class="users-list-date">15 Jan</span>
+      </li>
+      <li>
+      <img src="dist/img/user3-128x128.jpg" alt="User Image">
+      <a class="users-list-name" href="#">Nadia</a>
+      <span class="users-list-date">15 Jan</span>
+      </li>
+      </ul>
+
+      </div>
+
+      <div class="card-footer text-center">
+      <a href="javascript:">View All Users</a>
+      </div>
+      </div>
+      <div class="card">
+        <div class="card-header border-0">
+        <h3 class="card-title">Auction Product</h3>
+        <div class="card-tools">
+        </div>
+        <div class="card-body table-responsive p-0">
+        <table class="table table-valign-middle">
+        <thead>
+        <tr>
+        <th>Product No.</th>
+        <th>Winning Amount</th>
+        <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>
+        #1
+        </td>
+        <td>$13</td>
+        <td>
+        Paid
+        </td>
+        </a>
+        </td>
+        </tr>
+        <tr>
+        <td>
+        #2
+        </td>
+        <td>$29</td>
+        <td>
+        Unpaid
+        </td>
+        </tr>
+        <tr>
+        <td>
+        #3
+        </td>
+        <td>$100</td>
+        <td>
+        Paid
+        </td>
+        </tr>
+        <tr>
+        <td>
+        #4
+        </td>
+        <td>$49</td>
+        <td>
+        Unpaid
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+    </div>
+
+<!-- /.container flued -->
   </div><!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
