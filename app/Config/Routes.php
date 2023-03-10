@@ -47,6 +47,8 @@ $routes->get('/', 'NavigationController');
 $routes->get('pre-registration', 'NavigationController::preRegistration');
 $routes->get('login', 'NavigationController::login');
 
+$routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preRegistrationConfirmation/$1');
+
 /*
  * --------------------------------------------------------------------
  * FRONT END FUNCTIONS
@@ -121,6 +123,7 @@ $routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerIte
 ////////////////////////////////////////////////////////////////////
 //////////////////////// PAYMENTS //////////////////////////////////
 ////////////////////////////////////////////////////////////////////
+$routes->get('portal/load-payments', 'Portal\PaymentController::loadPayments');
 $routes->post('portal/add-payment', 'Portal\PaymentController::addPayment');
 
 

@@ -96,4 +96,10 @@ class NavigationController extends BaseController
     {
         return $this->slice->view('pre_registration_form');
     }
+
+    public function preRegistrationConfirmation($result)
+    {
+        $data['confirmation_result'] = $result;
+        return $this->slice->view('pre_registration_confirmation',$data);
+    }
 }

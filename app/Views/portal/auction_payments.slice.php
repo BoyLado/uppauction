@@ -70,12 +70,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12">
-          <div class="mt-1 float-left">
+          <!-- <div class="mt-1 float-left">
             <input type="search" class="form-control form-control-sm" id="txt_searchWinner" name="txt_searchWinner" placeholder="Search Winner">
           </div>
           <div class="mt-1 float-right">
             <input type="date" class="form-control form-control-sm" id="txt_dateFilter" name="txt_dateFilter" value="<?php echo date('Y-m-d'); ?>">
-          </div>
+          </div> -->
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -89,9 +89,25 @@
       <!-- Start UI Content -->
 
       <div class="card">
-        <div class="card-header">Payment Histories</div>
+        <div class="card-header"><b>Payment Histories</b></div>
         <div class="card-body">
-          
+          <table class="table table-bordered" id="tbl_payments">
+            <thead>
+              <tr>
+                <th>Transaction Date</th>
+                <th>Bidder Name</th>
+                <th>Sub Total</th>
+                <th>Tax (9.54%)</th>
+                <th>Transaction Fee (4.35%)</th>
+                <th>Cash Payment</th>
+                <th>Card Payment</th>
+                <th>Total Payment</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -246,6 +262,9 @@
 
     //events
     $('.select2').select2();
+
+
+    PAYMENTS.loadPayments();
 
   });
 </script>

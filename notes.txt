@@ -85,3 +85,11 @@ Payments
 -total_payment
 -created_by
 -created_date
+
+
+
+
+->Payment Histories (Bug Fix)
+->Load Pre Registered Customers on Admin Side
+->Pre-registration Module (Add Functionality for not Season Pass Holder)
+->Accept Season Pass with Leading Zeros (Revise validation scripts)
