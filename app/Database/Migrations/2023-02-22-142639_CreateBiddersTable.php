@@ -20,6 +20,11 @@ class CreateBiddersTable extends Migration
                 'constraint'        => 100,
                 'null'              => true,
             ],
+            'company_name'      => [
+                'type'              => 'VARCHAR',
+                'constraint'        => 100,
+                'null'              => true,
+            ],
             'first_name'        => [
                 'type'              => 'VARCHAR',
                 'constraint'        => 100,

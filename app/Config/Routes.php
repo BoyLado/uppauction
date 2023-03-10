@@ -58,6 +58,14 @@ $routes->post('user-change-password', 'IndexController::changePassword');
 $routes->post('user-sign-up', 'IndexController::signUp');
 $routes->get('user-logout', 'IndexController::logout');
 
+////////////////////////////////////////////////////////////////////
+//////////////////////// PRE REGISTRATION //////////////////////////
+////////////////////////////////////////////////////////////////////
+
+$routes->get('load-auction-dates', 'PreRegistrationController::loadAuctionDates');
+$routes->post('pre-registration-with-season-pass', 'PreRegistrationController::preRegistrationWithSeasonPass');
+$routes->post('pre-registration-without-season-pass', 'PreRegistrationController::preRegistrationWithoutSeasonPass');
+$routes->get('confirm-pre-registration/(:any)/(:any)', 'PreRegistrationController::confirmPreRegistration/$1/$2');
 
 /*
  *  ------------------------------------------------------------------
@@ -69,6 +77,8 @@ $routes->get('portal/auction-dashboard', 'Portal\NavigationController::auctionDa
 $routes->get('portal/auction-bidders', 'Portal\NavigationController::auctionBidders');
 $routes->get('portal/auction-items', 'Portal\NavigationController::auctionItems');
 $routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinners');
+$routes->get('portal/auction-payments', 'Portal\NavigationController::auctionPayments');
+$routes->get('portal/auction-calendar', 'Portal\NavigationController::auctionCalendar');
 
 //////////////////////////// MY ACCOUNT ////////////////////////////////
 $routes->get('my-account', 'Portal\NavigationController::myAccount');
@@ -107,8 +117,21 @@ $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
 $routes->get('portal/load-winners', 'Portal\WinnerController::loadWinners');
 $routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerItems');
-$routes->post('portal/add-payment', 'Portal\WinnerController::addPayment');
 
+////////////////////////////////////////////////////////////////////
+//////////////////////// PAYMENTS //////////////////////////////////
+////////////////////////////////////////////////////////////////////
+$routes->post('portal/add-payment', 'Portal\PaymentController::addPayment');
+
+
+////////////////////////////////////////////////////////////////////
+//////////////////////// CALENDAR //////////////////////////////////
+////////////////////////////////////////////////////////////////////
+$routes->get('portal/load-auctions', 'Portal\AuctionController::loadAuctions');
+$routes->post('portal/add-auction', 'Portal\AuctionController::addAuction');
+$routes->get('portal/select-auction', 'Portal\AuctionController::selectAuction');
+$routes->post('portal/edit-auction', 'Portal\AuctionController::editAuction');
+$routes->post('portal/remove-auction', 'Portal\AuctionController::removeAuction');
 
 /////////////////////////////////////////////////////////////////////
 //////////////////////////// MY ACCOUNT /////////////////////////////

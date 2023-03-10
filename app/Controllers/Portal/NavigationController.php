@@ -83,9 +83,51 @@ class NavigationController extends BaseController
         {
             if($this->session->get('upp_user_loggedIn'))
             {
-                $data['pageTitle'] = "Items | UPP Auction Services";
+                $data['pageTitle'] = "Winners | UPP Auction Services";
                 $data['customScripts'] = 'auction_winners';
                 return $this->slice->view('portal.auction_winners', $data);
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
+
+    public function auctionPayments()
+    {
+        if($this->session->has('upp_user_loggedIn'))
+        {
+            if($this->session->get('upp_user_loggedIn'))
+            {
+                $data['pageTitle'] = "Payments | UPP Auction Services";
+                $data['customScripts'] = 'auction_payments';
+                return $this->slice->view('portal.auction_payments', $data);
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
+
+    public function auctionCalendar()
+    {
+        if($this->session->has('upp_user_loggedIn'))
+        {
+            if($this->session->get('upp_user_loggedIn'))
+            {
+                $data['pageTitle'] = "Auction Calendar | UPP Auction Services";
+                $data['customScripts'] = 'auction_calendar';
+                return $this->slice->view('portal.auction_calendar', $data);
             }
             else
             {

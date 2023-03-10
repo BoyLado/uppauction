@@ -3,7 +3,7 @@
 // override core en language system validation or define your own en language validation message
 return [
 	'forgot_password' 					=> 'Forgot Password',
-	'invite_user' 							=> 'Invite User',
+	'pre_registration' 					=> 'Pre Registration',
 	'contact_email' 						=> 'Contact Email',
 	'organization_email' 				=> 'Organization Email',
 	'unsubscribe_confirmation' 	=> 'Unsubscribe Confirmation',

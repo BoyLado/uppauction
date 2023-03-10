@@ -309,7 +309,7 @@ function sendSliceMail($type,$senderEmail,$receiverEmail,&$data)
 	$CIEmail->setFrom($senderEmail);
 	$CIEmail->setTo($receiverEmail);
 
-	$CIEmail->setSubject(sprintf(lang('ArkonorEmail.'.$type), $data['subjectTitle']));
+	$CIEmail->setSubject(sprintf(lang('UPPEmail.'.$type), $data['subjectTitle']));
 	$CIEmail->setMessage($CISlice->view('email.'.$type.'_html', $data, TRUE));
 	$CIEmail->setAltMessage($CISlice->view('email.'.$type.'_txt', $data, TRUE));
 

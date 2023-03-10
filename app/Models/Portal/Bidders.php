@@ -243,4 +243,74 @@ class Bidders extends Model
             throw $e;
         }
     }
+
+
+    /* -------------------------- FRONTEND FUNCTIONALITY ------------------------------ */ 
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function validateBidder($emailAddress,$seasonPassNumber)
+    {
+        $columns = [
+            'a.id',
+            'a.bidder_number',
+            'a.email',
+        ];
+
+        $builder = $this->db->table('bidders a')->select($columns);
+        $builder->where('a.email',$emailAddress);
+        $builder->where('a.bidder_number',$seasonPassNumber);
+        $query = $builder->get();
+        return  $query->getRowArray();
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function addBidderRegistration($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidder_registrations');
+                $builder->insert($arrData);
+                $insertId = $this->db->insertID();
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? $insertId : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function addBidderGuest($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidder_guests');
+                $builder->insertBatch($arrData);
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    public function editBidderRegistration($arrData, $whereParams)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidder_registrations');
+                $builder->where($whereParams);
+                $builder->update($arrData);
+                $id = $this->db->affectedRows();
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? $id : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
 }

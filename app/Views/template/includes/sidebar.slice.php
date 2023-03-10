@@ -63,6 +63,18 @@
             <p>AUCTION WINNERS</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?php echo base_url(); ?>/portal/auction-payments" id="nav_payments" class="nav-link">
+            <i class="nav-icon fas fa fa-dollar"></i>
+            <p>AUCTION PAYMENTS</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?php echo base_url(); ?>/portal/auction-calendar" id="nav_calendar" class="nav-link">
+            <i class="nav-icon fas fa fa-calendar"></i>
+            <p>AUCTION CALENDAR</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

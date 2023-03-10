@@ -53,6 +53,7 @@ class Items extends Model
             '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
             '(SELECT CONCAT(first_name," ",last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
             'a.winning_amount',
+            'a.paid',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -97,6 +98,7 @@ class Items extends Model
             '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
             '(SELECT CONCAT(first_name," ",last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
             'a.winning_amount',
+            'a.paid',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -196,6 +198,7 @@ class Items extends Model
             '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
             '(SELECT CONCAT(first_name," ",last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
             'a.winning_amount',
+            'a.paid',
             'a.created_by',
             'a.created_date',
             'a.updated_by',
@@ -210,4 +213,19 @@ class Items extends Model
         $query = $builder->get();
         return  $query->getResultArray();
     }
+
+    ////////////////////////////////////////////////////////////
+    ///// PaymentController->addPayment()
+    ////////////////////////////////////////////////////////////
+    public function changeStatus($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $this->db->table('items')->updateBatch($arrData,'id');
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }   
 }

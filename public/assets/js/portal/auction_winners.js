@@ -32,7 +32,6 @@ const WINNERS = (function(){
   	    	let imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
   	    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
   	    	let email = (value['email'] != null)? value['email'] : '---';
-  	    	
   	    	bidders += `<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
   						          <div class="card mb-2 bg-gradient-dark zoom">
   						            <a href="javascript:void(0)" onclick="WINNERS.loadWinnerItems(${value['id']});">
@@ -85,6 +84,7 @@ const WINNERS = (function(){
                       <td>${number}</td>
                       <td>${value['item_number']}</td>
                       <td>${value['item_description']}</td>
+                      <td>${(value['paid'] == 1)? 'PAID':'UNPAID'}</td>
                       <td><span class="float-right">${parseFloat(value['winning_amount']).toFixed(2)}</span></td>
                     </tr>`;
           number++;
@@ -111,46 +111,37 @@ const WINNERS = (function(){
 
 		formData.set('txt_dateFilter',$('#txt_dateFilter').val());
 
-		Toast.fire({
-      icon: 'success',
-      title: 'Success! <br>Payment Success.',
-    });
-
-    setTimeout(function(){
-      window.location.replace(`${baseUrl}/portal/auction-winners`);
-    }, 1000);
-
-		// $.ajax({
-		// 	/* WinnerController->addPayment() */
-		//   url : `${baseUrl}/portal/add-payment`,
-		//   method : 'post',
-		//   dataType: 'json',
-		//   processData: false, // important
-		//   contentType: false, // important
-		//   data : formData,
-		//   success : function(result)
-		//   {
-		//     console.log(result);
-		//     if(result == 'Success')
-		//     {
-		//     	$('#modal_checkout').modal('hide');
-    //       Toast.fire({
-		//         icon: 'success',
-		//         title: 'Success! <br>Payment Success.',
-		//       });
-		//       setTimeout(function(){
-    //         window.location.replace(`${baseUrl}/portal/auction-winners`);
-    //       }, 1000);
-		//     }
-		//     else
-		//     {
-    //       Toast.fire({
-		//         icon: 'error',
-		//         title: `Error! <br>${result}`
-		//       });
-		//     }
-		//   }
-		// });
+		$.ajax({
+			/* WinnerController->addPayment() */
+		  url : `${baseUrl}/portal/add-payment`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		    console.log(result);
+		    if(result == 'Success')
+		    {
+		    	$('#modal_checkout').modal('hide');
+          Toast.fire({
+		        icon: 'success',
+		        title: 'Success! <br>Payment Success.',
+		      });
+		      setTimeout(function(){
+            window.location.replace(`${baseUrl}/portal/auction-winners`);
+          }, 1000);
+		    }
+		    else
+		    {
+          Toast.fire({
+		        icon: 'error',
+		        title: `Error! <br>${result}`
+		      });
+		    }
+		  }
+		});
 	}
 
 	return thisWinners;

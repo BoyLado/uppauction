@@ -27,32 +27,4 @@ class WinnerController extends BaseController
         $arrResult = $this->items->loadWinnerItems($fields['bidderId'],$fields['txt_dateFilter']);
         return $this->response->setJSON($arrResult);
     }
-
-    public function addPayment()
-    {
-        $fields = $this->request->getPost();
-
-        $arrWinnerItems = $this->items->loadWinnerItems($fields['bidderId'],$fields['txt_dateFilter']);
-
-        $subTotal = 0;
-        $total = 0;
-        $tax = 0;
-        $change = 0;
-        $cashPayment = 0;
-        $cardPayment = 0;
-        $transactionFee = 0;
-        foreach ($arrWinnerItems as $key => $value) 
-        {
-            $subTotal += (float)$value['winning_amount'];
-        }
-
-        $tax = $subTotal * 0.0954;
-        
-
-        $arrData = [
-            'bidder_id' => $fields['txt_bidderId'],
-            'paid_amount' => (float)$fields['txt_cashPayment'] + (float)$fields['txt_cardPayment']
-        ];
-        return $this->response->setJSON($arrData);
-    }
 }

@@ -18,9 +18,19 @@ user_logs
 -created_date
 
 
+auctions
+-id
+-auction_title
+-auction_description
+-auction_date
+-created_by
+-created_date
+
+
 Bidders
 -id
 -bidder_number (varchar)
+-company_name (optional)
 -first_name 
 -last_name
 -address
@@ -38,13 +48,14 @@ bidder_registrations
 -id
 -bidder_id
 -auction_date
--created_dat
+-created_date
 
 bidder_guests
 -id
 -registration_id
 -guest_first_name
 -guest_last_name
+-guest_email
 -relation_to_bidder
 -created_date
 
@@ -56,6 +67,7 @@ Items
 -item_description
 -bidder_id
 -winning_amount (decimal)
+-paid
 -created_by
 -created_date
 -updated_by

@@ -88,9 +88,10 @@
 
       <!-- Start UI Content -->
 
-      <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
-        <div class="row" id="div_winners">
-
+      <div class="card">
+        <div class="card-header">Payment Histories</div>
+        <div class="card-body">
+          
         </div>
       </div>
 
@@ -224,10 +225,6 @@
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
-<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/moment/moment-timezone-with-data.js"></script>
-<script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/fullcalendar/fullcalendar.js"></script>
-
-
 <!-- Custom Scripts -->
 <script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
@@ -239,133 +236,16 @@
 
     $('.nav-item').removeClass('menu-open');
     $('.nav-link').removeClass('active');
-    $('#nav_winners').addClass('active');
+    $('#nav_payments').addClass('active');
 
     //topNav icon & label
 
-    let topNav = `<i class="fas fa-trophy mr-2"></i>
-                  <b>AUCTION WINNERS</b>`;
+    let topNav = `<i class="fas fa-dollar mr-2"></i>
+                  <b>AUCTION PAYMENTS</b>`;
     $('#lnk_topNav').html(topNav);
 
     //events
     $('.select2').select2();
-
-    function numberWithCommas(x) {
-       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function computePaymentAndChange()
-    {
-      let change = 0;
-      let cashPayment = ($('#txt_cashPayment').val() == "")? 0 : $('#txt_cashPayment').val();
-      let cardPayment = ($('#txt_cardPayment').val() == "")? 0 : $('#txt_cardPayment').val();
-
-      let transactionFee = 0;
-
-      transactionFee = (cardPayment == "")? 0 : (parseFloat(cardPayment) * 0.0435);
-      $('#lbl_cardTransactionFee').text(numberWithCommas(parseFloat(transactionFee).toFixed(2)));
-
-      let subTotal = parseFloat($('#lbl_subTotal').text());
-      let tax = parseFloat($('#lbl_tax').text());
-      let totalAmount = 0;
-      if($('#chk_cardPayment').is(':checked'))
-      {
-        totalAmount = subTotal + tax + transactionFee;
-        console.log(totalAmount);
-        $('#lbl_total').text(numberWithCommas(totalAmount.toFixed(2)));
-      }
-      else
-      {
-        totalAmount = subTotal + tax;
-        console.log(totalAmount);
-        $('#lbl_total').text(numberWithCommas(totalAmount.toFixed(2)));
-      }
-
-      let total = $('#lbl_total').text();
-
-      change = (parseFloat(cashPayment) + parseFloat(cardPayment)) - parseFloat(total);
-      if(change >= 0)
-      {
-        $('#lbl_change').text(numberWithCommas(change.toFixed(2)));
-      }
-      else
-      {
-        $('#lbl_change').text(numberWithCommas((0).toFixed(2)));
-      }
-    }
-
-    //
-    // ======================================================>
-    //
-
-    WINNERS.loadWinners();
-    
-    $('#txt_searchWinner').on('keyup',function(){
-      WINNERS.loadWinners($(this).val());
-    });
-
-    $('#txt_dateFilter').on('change',function(){
-      WINNERS.loadWinners($('#txt_searchWinner').val());
-    });
-
-    $('#chk_cashPayment').on('change',function(){
-      if($(this).is(':checked'))
-      {
-        $('#txt_cashPayment').prop('readonly',false);
-        $('#txt_cashPayment').prop('required',true);
-        $('#txt_cashPayment').focus();
-        $('#btn_checkout').prop('disabled',false);
-      }
-      else
-      {
-        $('#txt_cashPayment').prop('readonly',true);
-        $('#txt_cashPayment').val('');
-        $('#txt_cardPayment').focus();
-      }
-      let cashPayment = $(this).is(':checked');
-      let cardPayment = $('#chk_cardPayment').is(':checked');
-      if(cashPayment == false && cardPayment == false)
-      {
-        $('#btn_checkout').prop('disabled',true);
-      }
-      computePaymentAndChange();
-    });
-
-    $('#chk_cardPayment').on('change',function(){
-      if($(this).is(':checked'))
-      {
-        $('#txt_cardPayment').prop('readonly',false);
-        $('#txt_cardPayment').prop('required',true);
-        $('#txt_cardPayment').focus();
-        $('#btn_checkout').prop('disabled',false);
-      }
-      else
-      {
-        $('#txt_cardPayment').prop('readonly',true);
-        $('#txt_cardPayment').val('');
-        $('#txt_cashPayment').focus();
-      }
-      let cashPayment = $('#chk_cashPayment').is(':checked');
-      let cardPayment = $(this).is(':checked');
-      if(cashPayment == false && cardPayment == false)
-      {
-        $('#btn_checkout').prop('disabled',true);
-      }
-      computePaymentAndChange();
-    });
-
-    $('#txt_cashPayment').on('keyup',function(){
-      computePaymentAndChange();
-    });
-
-    $('#txt_cardPayment').on('keyup',function(){
-      computePaymentAndChange();
-    });
-
-    $('#form_checkout').on('submit',function(e){
-      e.preventDefault();
-      WINNERS.addPayment(this);
-    });
 
   });
 </script>
