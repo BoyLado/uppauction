@@ -81,6 +81,7 @@ $routes->get('portal/auction-items', 'Portal\NavigationController::auctionItems'
 $routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinners');
 $routes->get('portal/auction-payments', 'Portal\NavigationController::auctionPayments');
 $routes->get('portal/auction-calendar', 'Portal\NavigationController::auctionCalendar');
+$routes->get('portal/registered-bidders', 'Portal\NavigationController::registeredBidders');
 
 //////////////////////////// MY ACCOUNT ////////////////////////////////
 $routes->get('my-account', 'Portal\NavigationController::myAccount');
@@ -135,6 +136,16 @@ $routes->post('portal/add-auction', 'Portal\AuctionController::addAuction');
 $routes->get('portal/select-auction', 'Portal\AuctionController::selectAuction');
 $routes->post('portal/edit-auction', 'Portal\AuctionController::editAuction');
 $routes->post('portal/remove-auction', 'Portal\AuctionController::removeAuction');
+
+
+////////////////////////////////////////////////////////////////////
+//////////////////////// REGISTERED BIDDERS ////////////////////////
+////////////////////////////////////////////////////////////////////
+
+$routes->get('portal/load-registered-bidders', 'Portal\BidderController::loadRegisteredBidders');
+$routes->get('portal/load-bidder-details', 'Portal\BidderController::loadBidderDetails');
+
+
 
 /////////////////////////////////////////////////////////////////////
 //////////////////////////// MY ACCOUNT /////////////////////////////

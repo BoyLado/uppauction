@@ -4,7 +4,7 @@
 return [
 	'forgot_password' 					=> 'Forgot Password',
 	'pre_registration' 					=> 'Pre Registration',
-	'contact_email' 						=> 'Contact Email',
+	'upp_receipt' 							=> 'UPP Receipt',
 	'organization_email' 				=> 'Organization Email',
 	'unsubscribe_confirmation' 	=> 'Unsubscribe Confirmation',
 	'unsubscribe_notification'  => 'Unsubscribe Notification',

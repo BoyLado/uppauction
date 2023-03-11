@@ -245,6 +245,98 @@ class Bidders extends Model
     }
 
 
+    ////////////////////////////////////////////////////////////
+    ///// BidderController->uploadSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function loadRegisteredBidders($order, $textSearch = "", $dateFilter = "")
+    {
+        $columns = [
+            'a.id',
+            'a.auction_date',
+            'a.confirmed',
+            'a.confirmed_date',
+            'a.created_date',
+            'b.id as bidder_id',
+            'b.bidder_number',
+            'b.first_name',
+            'b.last_name',
+            'b.address',
+            'b.phone_number',
+            'b.email',
+            'b.id_number',
+            'b.id_picture',
+            'b.season_pass'
+        ];
+
+        $builder = $this->db->table('bidder_registrations a');
+        $builder->select($columns);
+        $builder->join('bidders b','a.bidder_id = b.id','left');
+        $builder->orderBy('a.id',$order);
+        if($textSearch != "")
+        {
+            $builder->orLike('b.bidder_number',$textSearch);
+            $builder->orLike('b.first_name',$textSearch);
+            $builder->orLike('b.last_name',$textSearch);
+            $builder->orLike('b.email',$textSearch);
+        }
+        if($dateFilter != "")
+        {
+            $builder->where('DATE_FORMAT(a.auction_date,"%Y-%m-%d")',$dateFilter);
+        }
+        $builder->where('b.status',1);
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
+
+    public function loadBidderDetails($bidderId)
+    {
+        $columns = [
+            'a.id as registration_id',
+            'a.auction_date',
+            'a.confirmed',
+            'a.confirmed_date',
+            'a.created_date',
+            'b.id as bidder_id',
+            'b.bidder_number',
+            'b.first_name',
+            'b.last_name',
+            'b.address',
+            'b.phone_number',
+            'b.email',
+            'b.id_number',
+            'b.id_picture',
+            'b.season_pass'
+        ];
+
+        $builder = $this->db->table('bidder_registrations a');
+        $builder->select($columns);
+        $builder->join('bidders b','a.bidder_id = b.id','left');
+        $builder->where('a.bidder_id',$bidderId);
+        $builder->where('b.status',1);
+        $query = $builder->get();
+        return  $query->getRowArray();
+    }
+
+    public function loadBidderGuests($registrationId)
+    {
+        $columns = [
+            'a.id',
+            'a.guest_first_name',
+            'a.guest_last_name',
+            'a.guest_email',
+            'a.relation_to_bidder'
+        ];
+
+        $builder = $this->db->table('bidder_guests a');
+        $builder->select($columns);
+        $builder->where('a.registration_id',$registrationId);
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
+
+
+
+
     /* -------------------------- FRONTEND FUNCTIONALITY ------------------------------ */ 
 
     ////////////////////////////////////////////////////////////
@@ -261,6 +353,38 @@ class Bidders extends Model
         $builder = $this->db->table('bidders a')->select($columns);
         $builder->where('a.email',$emailAddress);
         $builder->where('a.bidder_number',$seasonPassNumber);
+        $query = $builder->get();
+        return  $query->getRowArray();
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithoutSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function validateEmail($emailAddress)
+    {
+        $columns = [
+            'a.id',
+            'a.bidder_number',
+            'a.email',
+        ];
+
+        $builder = $this->db->table('bidders a')->select($columns);
+        $builder->where('a.email',$emailAddress);
+        $query = $builder->get();
+        return  $query->getRowArray();
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithoutSeasonPass()
+    ////////////////////////////////////////////////////////////
+    public function loadMaxBidder()
+    {
+        $columns = [
+            'a.id',
+            'COUNT(a.bidder_number) as max_bidder_number',
+        ];
+
+        $builder = $this->db->table('bidders a')->select($columns);
         $query = $builder->get();
         return  $query->getRowArray();
     }

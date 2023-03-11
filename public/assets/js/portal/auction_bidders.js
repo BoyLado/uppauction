@@ -27,7 +27,15 @@ const BIDDERS = (function(){
 		    console.log(data);
 		    let bidders = '';
 		    data.forEach(function(value,key){
-		    	let imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	let imgSrc = '';
+		    	if(value['season_pass'] == null && value['id_picture'] == null)
+		    	{
+		    		imgSrc = `${baseUrl}/public/assets/img/user-placeholder.png`;
+		    	}
+		    	else
+		    	{
+		    		imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	}
 		    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
 		    	let email = (value['email'] != null)? value['email'] : '---';
 		    	
@@ -39,7 +47,7 @@ const BIDDERS = (function(){
 							                <h5 class="card-title text-primary text-white">
 							                  <span class="text-bold text-red">Bidder #${value['bidder_number']}</span> | ${bidderName}</h5>
 							                <br>
-							                <span class="card-text text-muted">${email}</span>
+							                <span class="card-text text-muted"><small>${email}</small></span>
 							                <div class="float-right">
 							                  <a href="javascript:void(0)" onclick="BIDDERS.selectBidder(${value['id']})" >Edit</a> |
 							                  <a href="javascript:void(0)" onclick="BIDDERS.removeBidder(${value['id']})" >Delete</a>
@@ -365,6 +373,105 @@ const BIDDERS = (function(){
 				}
 			});
 		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	thisBidder.loadRegisteredBidders = function(textSearch = "", dateFilter = "")
+	{
+		$.ajax({
+			/* BidderController->loadRegisteredBidders() */
+		  url : `${baseUrl}/portal/load-registered-bidders`,
+		  method : 'get',
+		  dataType: 'json',
+		  data:{order:'DESC',textSearch : textSearch,dateFilter : dateFilter},
+		  success : function(data)
+		  {
+		    console.log(data);
+		    let bidders = '';
+		    data.forEach(function(value,key){
+
+		    	let imgSrc = '';
+		    	if(value['season_pass'] == null && value['id_picture'] == null)
+		    	{
+		    		imgSrc = `${baseUrl}/public/assets/img/user-placeholder.png`;
+		    	}
+		    	else
+		    	{
+		    		imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	}
+		    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
+		    	let email = (value['email'] != null)? value['email'] : '---';
+
+		    	let confirmed = (value['confirmed'] == 'YES')? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-times text-warning"></i>';
+		    	
+		    	bidders += `<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+							          <div class="card mb-2 bg-gradient-dark zoom">
+							            <a href="javascript:void(0)" onclick="BIDDERS.loadBidderDetails(${value['bidder_id']})">
+							              <img class="card-img-top rounded" src="${imgSrc}" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+							              <div class="products">
+							                <h5 class="card-title text-primary text-white">
+							                  <span class="text-bold text-red">Bidder #${value['bidder_number']}</span> | ${bidderName}</h5>
+							                <br>
+							                <span class="card-text text-muted"><small>${email}</small></span>
+							                <div class="float-right">
+							                  ${confirmed}
+							                </div>
+							              </div>
+							            </a>
+							          </div>
+							        </div>`;
+		    });
+
+		    $('#div_bidders').html(bidders);
+		  }
+		});
+	}
+
+	thisBidder.loadBidderDetails = function(bidderId)
+	{
+		$.ajax({
+			/* BidderController->loadBidderDetails() */
+		  url : `${baseUrl}/portal/load-bidder-details`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {bidderId : bidderId},
+		  success : function(data)
+		  {
+		  	$('#modal_bidderDetails').modal('show');
+		  	$('#lnk_details').addClass('active');
+		  	$('#lnk_guests').removeClass('active');
+
+		  	$('#div_details').addClass('show active');
+		  	$('#div_guests').removeClass('show active');
+
+		  	//details
+
+		  	$('#lbl_bidderNumber').text(data['arrDetails']['bidder_number']);
+		  	$('#lbl_companyName').text(data['arrDetails']['company_name']);
+		  	$('#lbl_bidderName').text(`${data['arrDetails']['first_name']} ${data['arrDetails']['last_name']}`);
+		  	$('#lbl_address').text(data['arrDetails']['address']);
+		  	$('#lbl_phoneNumber').text(data['arrDetails']['phone_number']);
+		  	$('#lbl_email').text(data['arrDetails']['email']);
+		  	$('#lbl_driversLicense').text(data['arrDetails']['id_number']);
+
+
+		  	//guests
+		  	let tbody = '';
+		  	data['arrGuests'].forEach(function(value,key){
+		  		tbody += `<tr>
+                      <td>${value['guest_first_name']} ${value['guest_last_name']}</td>
+                      <td>${value['guest_email']}</td>
+                      <td>${value['relation_to_bidder']}</td>
+                    </tr>`;
+		  	});
+		  	if(tbody == '')
+		  	{
+		  		tbody = '<tr><td colspan="3"><center>No Guest Found!</center></td></tr>';
+		  	}
+		  	$('#tbl_guests tbody').html(tbody);
+		  }
+		});
 	}
 
 	return thisBidder;

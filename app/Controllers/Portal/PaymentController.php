@@ -22,6 +22,7 @@ class PaymentController extends BaseController
     {
         $fields = $this->request->getPost();
 
+        $arrBidder = $this->bidders->selectBidder($fields['txt_bidderId']);
         $arrPayments = $this->items->loadWinnerItems($fields['txt_bidderId'],$fields['txt_dateFilter']);
 
         $subTotal = 0;
@@ -64,6 +65,22 @@ class PaymentController extends BaseController
         if($result > 0)
         {
             $result = $this->items->changeStatus($arrItems);
+
+            //email
+            $emailSender    = 'ajhay.work@gmail.com';
+            $emailReceiver  = $arrBidder['email'];
+
+            $data['subjectTitle']           = 'Welcome New Bidder';
+            $data['bidderId']               = $newBidder;
+            $data['bidderEmailAddress']     = $arrBidder['email'];
+            $data['bidderNumber']           = $arrBidder['bidder_number'];
+            $data['arrItems']               = $arrPayments;
+            $data['subTotal']               = number_format($subTotal,2);
+            $data['tax']                    = number_format($tax,2);
+            $data['card_transaction_fee']   = number_format($transactionFee,2);
+            $data['total_payment']          = number_format($totalPayment,2);
+
+            $emailResult = sendSliceMail('upp_receipt',$emailSender,$emailReceiver,$data);
         }
         $msgResult[] = ($result > 0)? "Success" : "Database error";
 

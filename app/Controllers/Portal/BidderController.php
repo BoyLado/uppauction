@@ -283,4 +283,23 @@ class BidderController extends BaseController
 
         return $this->response->setJSON($uploadResult);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    public function loadRegisteredBidders()
+    {
+        $fields = $this->request->getGet();
+
+        $arrResult = $this->bidders->loadRegisteredBidders($fields['order'],$fields['textSearch'],$fields['dateFilter']);
+        return $this->response->setJSON($arrResult);
+    }
+
+    public function loadBidderDetails()
+    {
+        $fields = $this->request->getGet();
+
+        $arrResult['arrDetails'] = $this->bidders->loadBidderDetails($fields['bidderId']);
+        $arrResult['arrGuests']  = $this->bidders->loadBidderGuests($arrResult['arrDetails']['registration_id']);
+        return $this->response->setJSON($arrResult);
+    }
 }

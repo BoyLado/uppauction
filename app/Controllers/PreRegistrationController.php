@@ -125,7 +125,121 @@ class PreRegistrationController extends BaseController
 
     public function preRegistrationWithoutSeasonPass()
     {
+        $fields = $this->request->getPost();
 
+        $this->validation->setRules([
+            'slc_auctionDate' => [
+                'label'  => 'Auction Date',
+                'rules'  => 'required',
+                'errors' => [
+                    'required'    => 'Auction Date is required',
+                ],
+            ],
+            'txt_firstName' => [
+                'label'  => 'First Name',
+                'rules'  => 'required',
+                'errors' => [
+                    'required'    => 'First Name is required',
+                ],
+            ],
+            'txt_lastName' => [
+                'label'  => 'Last Name',
+                'rules'  => 'required',
+                'errors' => [
+                    'required'    => 'Last Name is required',
+                ],
+            ],
+            'txt_completeAddress' => [
+                'label'  => 'Complete Address',
+                'rules'  => 'required',
+                'errors' => [
+                    'required'    => 'Complete Address is required',
+                ],
+            ],
+            'txt_driverLicenseNumber' => [
+                'label'  => 'Drivers License',
+                'rules'  => 'required',
+                'errors' => [
+                    'required'    => 'Drivers License is required',
+                ],
+            ],
+            'txt_emailAddress' => [
+                'label'  => 'Item Description',
+                'rules'  => 'required|valid_email',
+                'errors' => [
+                    'required'    => 'Email Address is required',
+                    'valid_email' => 'Email Address must be valid'
+                ],
+            ]
+        ]);
+
+        if($this->validation->withRequest($this->request)->run())
+        {
+            $emailAddress     = $fields['txt_emailAddress'];
+            $validationResult = $this->bidders->validateEmail($emailAddress);
+
+            if($validationResult == null)
+            {
+                $bidderMax = $this->bidders->loadMaxBidder();
+                $newBidderNumber = (int)$bidderMax['max_bidder_number'] + 1;
+                $arrData = [
+                    'bidder_number' => $newBidderNumber,
+                    'company_name'  => $fields['txt_companyName'],
+                    'first_name'    => $fields['txt_firstName'],
+                    'last_name'     => $fields['txt_lastName'],
+                    'address'       => $fields['txt_completeAddress'],
+                    'phone_number'  => $fields['txt_phoneNumber'],
+                    'email'         => $fields['txt_emailAddress'],
+                    'id_number'     => $fields['txt_driverLicenseNumber'],
+                    'status'        => 1,
+                    'created_date'  => date('Y-m-d H:i:s')
+                ];
+
+                $newBidder = $this->bidders->addBidder($arrData);
+                if($newBidder > 0)
+                {
+                    $authCode = generate_code();
+                    $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
+                    $arrData = [
+                        'bidder_id'     => $newBidder,
+                        'auction_id'    => $auctionDate['id'],
+                        'auction_date'  => $auctionDate['auction_date'],
+                        'auth_code'     => encrypt_code($authCode),    
+                        'created_date'  => date('Y-m-d H:i:s')
+                    ];
+
+                    $result = $this->bidders->addBidderRegistration($arrData);
+                    if($result > 0)
+                    {
+                        //email
+                        $emailSender    = 'ajhay.work@gmail.com';
+                        $emailReceiver  = $emailAddress;
+
+                        $data['subjectTitle']           = 'Welcome New Bidder';
+                        $data['bidderId']               = $newBidder;
+                        $data['bidderEmailAddress']     = $emailAddress;
+                        $data['bidderSeasonPassNumber'] = "";
+                        $data['bidderNumber']           = $newBidderNumber;
+                        $data['bidderAuthCode']         = $authCode;
+                        $data['bidderGuests']           = [];
+
+                        $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
+                    }
+                }
+
+                $msgResult[] = ($result > 0)? "Success" : "Database error";
+            }
+            else
+            {
+                $msgResult[] = "Email already exist!";
+            }
+        }
+        else
+        {
+            $msgResult[] = $this->validation->getErrors();
+        }
+
+        return $this->response->setJSON($msgResult);
     }
 
     public function confirmPreRegistration($bidderId, $authCode)
