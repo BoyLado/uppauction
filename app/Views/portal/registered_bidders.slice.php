@@ -76,7 +76,6 @@
           </div>
           <div class="mt-1 float-right">
             <div class="form-inline">
-              <button class="btn btn-default btn-sm" id="btn_refresh"><i class="fa fa-refresh"></i></button>
               <input type="date" class="form-control form-control-sm" id="txt_dateFilter" name="txt_dateFilter" value="<?php echo date('Y-m-d'); ?>">
             </div>
           </div>
@@ -310,10 +309,6 @@
 
     $('#txt_searchWinner').on('keyup',function(){
       BIDDERS.loadRegisteredBidders($(this).val(), $('#txt_dateFilter').val());
-    });
-
-    $('#btn_refresh').on('click',function(){
-      BIDDERS.loadRegisteredBidders();
     });
 
     $('#txt_dateFilter').on('change',function(){

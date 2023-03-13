@@ -16,6 +16,8 @@ const BIDDERS = (function(){
 
 	thisBidder.loadBidders = function(textSearch = "")
 	{
+		$('body').waitMe(_waitMeLoaderConfig);
+
 		$.ajax({
 			/* BidderController->loadBidders() */
 		  url : `${baseUrl}/portal/load-bidders`,
@@ -59,6 +61,8 @@ const BIDDERS = (function(){
 		    });
 
 		    $('#div_bidders').html(bidders);
+
+		    $('body').waitMe('hide');
 		  }
 		});
 	}
@@ -279,13 +283,38 @@ const BIDDERS = (function(){
 
 	function urlencode(obj, prefix) {
 	    str = (obj + '').toString();
-	    return encodeURIComponent(str)
-	        .replace(/!/g, '%21')
-	        .replace(/'/g, '%27')
-	        .replace(/\(/g, '%28')
-	        .replace(/\)/g, '%29')
-	        .replace(/\*/g, '%2A')
-	        .replace(/%20/g, '+');
+	    // return encodeURIComponent(str)
+      //   .replace(/\-/g, '%2D')
+      //   .replace(/\_/g, '%5F')
+      //   .replace(/\./g, '%2E')
+      //   .replace(/\!/g, '%21')
+      //   .replace(/\~/g, '%7E')
+      //   .replace(/\*/g, '%2A')
+      //   .replace(/\'/g, '%27')
+      //   .replace(/\(/g, '%28')
+      //   .replace(/\)/g, '%29');
+
+      return (
+          encodeURIComponent(str)
+            // The following creates the sequences %27 %28 %29 %2A (Note that
+            // the valid encoding of "*" is %2A, which necessitates calling
+            // toUpperCase() to properly encode). Although RFC3986 reserves "!",
+            // RFC5987 does not, so we do not need to escape it.
+            .replace(/['()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
+            // The following are not required for percent-encoding per RFC5987,
+            // so we can allow for a little better readability over the wire: |`^
+            .replace(/%(7C|60|5E)/g, (str, hex) =>
+              String.fromCharCode(parseInt(hex, 16))
+            )
+        );
+	    // return encodeURIComponent(str);
+	        // .replace(/!/g, '%21')
+	        // .replace(/'/g, '%27')
+	        // .replace(/\(/g, '%28')
+	        // .replace(/\)/g, '%29')
+	        // .replace(/\./g, '%26')
+	        // .replace(/\*/g, '%2A')
+	        // .replace(/%20/g, '+')
 	        // .replace(/~/g, '%7E');
 	}
 
@@ -330,7 +359,7 @@ const BIDDERS = (function(){
 					var myJSON = JSON.stringify(conflictRowData);
 					var trafficFilterHolder = urlencode(myJSON);
 						
-					$('#lnk_download').attr('href','<?php echo base_url(); ?>/portal/download-conflicts/'+trafficFilterHolder);
+					$('#lnk_download').attr('href',`${baseUrl}/portal/download-conflicts/${trafficFilterHolder}`);
 
 					if(forUpdate != 0 || forInsert != 0)
 					{
@@ -352,6 +381,7 @@ const BIDDERS = (function(){
 		if(confirm("Please confirm!"))
 		{
 			let rawData = __arrFileResult;
+			$('body').waitMe(_waitMeLoaderConfig);
 			$.ajax({
 				url : `${baseUrl}/portal/upload-season-pass`,
 				method : 'POST',
@@ -367,9 +397,8 @@ const BIDDERS = (function(){
 				{
 					console.log(result);
 					$('#lbl_uploadingProgress').html("<i>Upload complete!</i>");
-		      setTimeout(function(){
-            location.reload();
-          }, 3000);							
+          $('body').waitMe('hide');	
+          location.reload();			
 				}
 			});
 		}
@@ -379,6 +408,7 @@ const BIDDERS = (function(){
 
 	thisBidder.loadRegisteredBidders = function(textSearch = "", dateFilter = "")
 	{
+		$('body').waitMe(_waitMeLoaderConfig);
 		$.ajax({
 			/* BidderController->loadRegisteredBidders() */
 		  url : `${baseUrl}/portal/load-registered-bidders`,
@@ -424,6 +454,7 @@ const BIDDERS = (function(){
 		    });
 
 		    $('#div_bidders').html(bidders);
+		    $('body').waitMe('hide');
 		  }
 		});
 	}

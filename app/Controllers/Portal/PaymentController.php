@@ -9,6 +9,7 @@ class PaymentController extends BaseController
     public function __construct()
     {
         $this->items = model('Portal/Items');
+        $this->bidders = model('Portal/Bidders');
         $this->payments = model('Portal/Payments');
     }
 
@@ -16,6 +17,17 @@ class PaymentController extends BaseController
     {
         $arrResult = $this->payments->loadPayments();
         return $this->response->setJSON($arrResult);
+    }
+
+    public function loadPaymentDetails()
+    {
+        $fields = $this->request->getGet();
+
+        $itemsId = explode(',',$fields['itemsId']);
+
+        $data['arrPaymentDetails'] = $this->payments->selectPayment($fields['paymentId']);
+        $data['arrItemDetails'] = $this->payments->loadPaymentDetails($itemsId);
+        return $this->response->setJSON($data);
     }
 
     public function addPayment()
@@ -31,6 +43,7 @@ class PaymentController extends BaseController
         $totalPayment = 0;
 
         $arrItems = [];
+        $arrItemsId = [];
 
         foreach ($arrPayments as $key => $value) 
         {
@@ -39,6 +52,7 @@ class PaymentController extends BaseController
                 'id' => $value['id'],
                 'paid' => 1
             ];
+            $arrItemsId[] = $value['id'];
         }
 
         $tax = $subTotal * 0.0954;
@@ -51,6 +65,7 @@ class PaymentController extends BaseController
 
         $arrData = [
             'bidder_id'             => $fields['txt_bidderId'],
+            'items_id'              => implode(',', $arrItemsId),
             'sub_total'             => number_format($subTotal,2),
             'tax'                   => number_format($tax,2),
             'card_transaction_fee'  => number_format($transactionFee,2),
@@ -70,8 +85,8 @@ class PaymentController extends BaseController
             $emailSender    = 'ajhay.work@gmail.com';
             $emailReceiver  = $arrBidder['email'];
 
-            $data['subjectTitle']           = 'Welcome New Bidder';
-            $data['bidderId']               = $newBidder;
+            $data['subjectTitle']           = 'UPP Payment Receipt';
+            $data['bidderId']               = $arrBidder['id'];
             $data['bidderEmailAddress']     = $arrBidder['email'];
             $data['bidderNumber']           = $arrBidder['bidder_number'];
             $data['arrItems']               = $arrPayments;

@@ -102,6 +102,7 @@
                 <th>Cash Payment</th>
                 <th>Card Payment</th>
                 <th>Total Payment</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -111,7 +112,7 @@
         </div>
       </div>
 
-      <div class="modal fade" id="modal_checkout" role="dialog">
+      <div class="modal fade" id="modal_paymentDetails" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
@@ -169,22 +170,16 @@
                   <div class="col-sm-12 col-md-6 col-lg-6 ">
                     <div class="row">
                       <div class="col-sm-12 col-md-6 col-lg-6">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="chk_cashPayment" checked>
-                          <label class="form-check-label text-bold" for="chk_cashPayment">CASH</label>
-                        </div>
+                        <label class="form-check-label text-bold" for="chk_cashPayment">CASH</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                           </div>
-                          <input type="number" class="form-control" id="txt_cashPayment" name="txt_cashPayment">
+                          <input type="number" class="form-control" id="txt_cashPayment" name="txt_cashPayment" readonly>
                         </div>
                       </div>
                       <div class="col-sm-12 col-md-6 col-lg-6">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="chk_cardPayment">
-                          <label class="form-check-label text-bold" for="chk_cardPayment">CARD</label>
-                        </div>
+                        <label class="form-check-label text-bold" for="chk_cardPayment">CARD</label>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
@@ -203,11 +198,6 @@
                 </div>
               </form>     
 
-            </div>
-            <div class="modal-footer modal-footer--sticky">
-              <button type="submit" class="btn btn-primary" id="btn_checkout" form="form_checkout">
-                <i class="fa fa-shopping-cart mr-1"></i> Check Out
-              </button>
             </div>
           </div>
         </div>

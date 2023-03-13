@@ -103,6 +103,7 @@ $routes->post('portal/edit-bidder', 'Portal\BidderController::editBidder');
 $routes->post('portal/remove-bidder', 'Portal\BidderController::removeBidder');
 $routes->post('portal/check-upload-file', 'Portal\BidderController::checkUploadFile');
 $routes->post('portal/upload-season-pass', 'Portal\BidderController::uploadSeasonPass');
+$routes->get('portal/download-conflicts/(:any)', 'Portal\BidderController::downloadConflicts/$1');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// ITEMS /////////////////////////////////////
@@ -125,6 +126,7 @@ $routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerIte
 //////////////////////// PAYMENTS //////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 $routes->get('portal/load-payments', 'Portal\PaymentController::loadPayments');
+$routes->get('portal/load-payment-details', 'Portal\PaymentController::loadPaymentDetails');
 $routes->post('portal/add-payment', 'Portal\PaymentController::addPayment');
 
 

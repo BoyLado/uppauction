@@ -53,7 +53,7 @@ class PreRegistrationController extends BaseController
         if($this->validation->withRequest($this->request)->run())
         {
             $emailAddress       = $fields['txt_emailAddress'];
-            $seasonPassNumber   = $fields['txt_seasonPassNumber'];
+            $seasonPassNumber   = (int)$fields['txt_seasonPassNumber'];
             $validationResult = $this->bidders->validateBidder($emailAddress,$seasonPassNumber);
 
             if($validationResult != null)

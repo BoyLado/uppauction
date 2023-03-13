@@ -21,6 +21,11 @@ class CreatePaymentsTable extends Migration
                 'unsigned'          => true,
                 'null'              => true,
             ],
+            'items_id'         => [
+                'type'              => 'VARCHAR',
+                'constraint'        => 100,
+                'null'              => true,
+            ],
             'sub_total'        => [
                 'type'              => 'DECIMAL',
                 'constraint'        => [20,2],

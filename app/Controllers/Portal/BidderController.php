@@ -107,7 +107,7 @@ class BidderController extends BaseController
                 'phone_number'  => $fields['txt_phoneNumber'],
                 'email'         => $fields['txt_email'],
                 'id_number'     => $fields['txt_idNumber'],
-                'season_pass'   => $fields['txt_seasonPassLink'],
+                'season_pass'   => ($fields['txt_seasonPassLink'] == "")? null : $fields['txt_seasonPassLink'],
                 'updated_by'    => $this->session->get('upp_user_id'),
                 'updated_date'  => date('Y-m-d H:i:s')
             ];
@@ -214,21 +214,18 @@ class BidderController extends BaseController
                         'first_name'        => checkData($value[1]),
                         'last_name'         => checkData($value[2]),
                         'email'             => checkData($value[3]),
-                        'phone_number'    => checkData($value[4]),
+                        'phone_number'      => checkData($value[4]),
                         'address'           => checkData($value[5]),
-                        'season_pass'       => checkData($value[6])
+                        'season_pass'       => checkData($value[6]),
+                        'status'            => 1
                     ];
                 }
                 $uniqueColumns = ['bidder_number'];
                 $checkDuplicateResult = checkDuplicateRows($newArrData, $uniqueColumns);
 
-                // $arrResult[] = $checkDuplicateResult;
-
                 if(count($checkDuplicateResult['rowData']) > 0)
                 {
                     $checkOnDbResult = $this->checkOnDb($checkDuplicateResult['rowData']);
-
-                    // $arrResult[] = $checkOnDbResult;
 
                     $arrResult['for_update'] = $checkOnDbResult['forUpdate'];
                     $arrResult['for_insert'] = $checkOnDbResult['forInsert'];
@@ -240,17 +237,6 @@ class BidderController extends BaseController
                     $arrResult['for_insert'] = [];
                     $arrResult['conflict_rows'] = $checkDuplicateResult['rowConflictData'];
                 }
-                
-
-                // $checkFileResult = checkDuplicate($newArrData);
-
-                // $checkOnDb = $this->checkOnDb((array)$checkFileResult['forUploadRows']);
-
-                
-                // $this->arrConflictData = "Hello World";
-                // $arrResult['duplicate_handling'] = $handling;
-
-                // $arrResult['rawData'] = $checkResult;
             }
             else
             {
@@ -282,6 +268,21 @@ class BidderController extends BaseController
         $uploadResult['updated_rows'] = (count($forUpdate) > 0)?$this->bidders->editBidders($forUpdate, $arrWhere) : 0;
 
         return $this->response->setJSON($uploadResult);
+    }
+
+    public function downloadConflicts($rawData)
+    {
+        // $Text = json_decode(urldecode($rawData),true);
+
+        $Text = json_decode($rawData,true);
+
+        return $this->response->setJSON($rawData);
+
+        // $date = date('d-m-y-'.substr((string)microtime(), 1, 8));
+        // $date = str_replace(".", "", $date);
+        // $filename = "export_".$date.".xlsx";
+
+        // downloadConflicts($filename,$Text);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
