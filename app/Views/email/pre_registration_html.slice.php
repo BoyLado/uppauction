@@ -6,8 +6,8 @@
 	<title></title>
 </head>
 <body>
-	<label>Bidder Number: {{ $bidderSeasonPassNumber }}</label>
-	<label>Email: {{ $bidderEmailAddress }}</label>
+	<label>Bidder Number: {{ ($bidderSeasonPassNumber == "")? $bidderNumber : $bidderSeasonPassNumber }}</label><br>
+	<label>Email: {{ $bidderEmailAddress }}</label><br>
 	<label>Auth Code: {{ $bidderAuthCode }}</label>
 
 	<br>

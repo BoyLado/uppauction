@@ -13,6 +13,7 @@ const CALENDAR = (function(){
 
 	thisCalendar.loadAuctions = function()
 	{
+		$('body').waitMe(_waitMeLoaderConfig);
 		$.ajax({
 			/* AuctionController->loadAuctions() */
 		  url : `${baseUrl}/portal/load-auctions`,
@@ -24,6 +25,7 @@ const CALENDAR = (function(){
 		  	let arrAuctionEvents = [];
 		  	data.forEach(function(value,key){
 		  		let arrEvents = [];
+		  		arrEvents['id'] 		= value['id'];
 		  		arrEvents['title'] 	= `${value['auction_title']} - ${value['auction_description']}`;
 		  		arrEvents['start'] 	= value['auction_date'];
 		  		arrEvents['end'] 		= value['auction_date'];
@@ -40,9 +42,15 @@ const CALENDAR = (function(){
 		  	  },
 		  	  themeSystem: 'bootstrap',
 		  	  events: arrAuctionEvents,
-		  	  eventTimeFormat: { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' }
+		  	  eventTimeFormat: { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' },
+		  	  eventClick:function(info)
+		  	  {
+		  	  	let eventObj = info.event;
+		  	  	alert(eventObj.id);
+		  	  }
 		  	});
 		  	objCalendar.render();
+		  	$('body').waitMe('hide');
 		  }
 		});
 	}

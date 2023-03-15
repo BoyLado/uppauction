@@ -218,18 +218,13 @@ function downloadConflicts($filename, $rawData = [])
 	$sheet = $spreadsheet->getActiveSheet();
 
 	$arrColumns = [
-		// ['A1','Chapter'],
-		// ['B1','ChapterID'],
-		['A1','PRC License Number'],
-		['B1','PRC Valid Until'],
-		['C1','PRC Card Number'],
-		['D1','Last Name'],
-		['E1','First Name'],
-		['F1','Middle Name'],
-		['G1','Email Address'],
-		['H1','Sex'],
-		['I1','Contact Number'],
-		['J1','Row Number']
+		['A1','Season Pass No.'],
+		['B1','First Name'],
+		['C1','Last Name'],
+		['D1','Email'],
+		['E1','Contact Number'],
+		['F1','Address'],
+		['G1','Season Pass Link (Embed Code)']
 	];
 
 	foreach ($arrColumns as $key => $value) 
@@ -241,17 +236,13 @@ function downloadConflicts($filename, $rawData = [])
 	foreach ($rawData as $key => $value) 
 	{
 		$index++;
-		// $sheet->setCellValue("B{$index}", $value['chapter']);
-		$sheet->setCellValue("A{$index}", $value['prcNumber']);
-		$sheet->setCellValue("B{$index}", $value['licenseRenewDate']);
-		$sheet->setCellValue("C{$index}", $value['prcCardNumber']);
-		$sheet->setCellValue("D{$index}", $value['lastName']);
-		$sheet->setCellValue("E{$index}", $value['firstName']);
-		$sheet->setCellValue("F{$index}", $value['middleName']);
-		$sheet->setCellValue("G{$index}", $value['email']);
-		$sheet->setCellValue("H{$index}", $value['sex']);
-		$sheet->setCellValue("I{$index}", $value['mobilePhone']);
-		$sheet->setCellValue("J{$index}", $value['rowNumber']);
+		$sheet->setCellValue("A{$index}", $value['bidder_number']);
+		$sheet->setCellValue("B{$index}", $value['first_name']);
+		$sheet->setCellValue("C{$index}", $value['last_name']);
+		$sheet->setCellValue("D{$index}", $value['email']);
+		$sheet->setCellValue("E{$index}", $value['phone_number']);
+		$sheet->setCellValue("F{$index}", $value['address']);
+		$sheet->setCellValue("G{$index}", $value['season_pass']);
 	}
 	
 

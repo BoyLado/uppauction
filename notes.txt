@@ -93,3 +93,5 @@ Payments
 ->Load Pre Registered Customers on Admin Side
 ->Pre-registration Module (Add Functionality for not Season Pass Holder)
 ->Accept Season Pass with Leading Zeros (Revise validation scripts)
+->Email Receipt Functionality
+->Load Guests

@@ -51,6 +51,7 @@ class Payments extends Model
             'a.bidder_id',
             '(SELECT CONCAT(first_name, " ", last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
             '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
+            'a.items_id',
             'a.sub_total',
             'a.tax',
             'a.card_transaction_fee',
@@ -71,6 +72,34 @@ class Payments extends Model
     }
 
     ////////////////////////////////////////////////////////////
+    ///// PaymentsController->loadPaymentDetails()
+    ////////////////////////////////////////////////////////////
+    public function loadPaymentDetails($itemsId)
+    {
+        $columns = [
+            'a.id',
+            'a.item_number',
+            'a.item_description',
+            'a.bidder_id',
+            '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
+            '(SELECT CONCAT(first_name," ",last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
+            'a.winning_amount',
+            'a.paid',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date',
+        ];
+
+        $builder = $this->db->table('items a');
+        $builder->select($columns);
+        $builder->whereIn('a.id',$itemsId);
+        $builder->orderBy('a.id','DESC');
+        $query = $builder->get();
+        return  $query->getResultArray();
+    }
+
+    ////////////////////////////////////////////////////////////
     ///// PaymentsController->addPayment()
     ////////////////////////////////////////////////////////////
     public function addPayment($arrData)
@@ -84,5 +113,35 @@ class Payments extends Model
         } catch (PDOException $e) {
             throw $e;
         }
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PaymentsController->loadPaymentDetails()
+    ////////////////////////////////////////////////////////////
+    public function selectPayment($paymentId)
+    {
+        $columns = [
+            'a.id',
+            'a.bidder_id',
+            '(SELECT CONCAT(first_name, " ", last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
+            '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
+            'a.items_id',
+            'a.sub_total',
+            'a.tax',
+            'a.card_transaction_fee',
+            'a.cash_payment',
+            'a.card_payment',
+            'a.total_payment',
+            'a.status',
+            'a.created_by',
+            'a.created_date',
+        ];
+
+        $builder = $this->db->table('payments a');
+        $builder->select($columns);
+        $builder->where('a.status',1);
+        $builder->where('a.id',$paymentId);
+        $query = $builder->get();
+        return  $query->getRowArray();
     }
 }

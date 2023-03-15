@@ -140,6 +140,27 @@ class NavigationController extends BaseController
         }
     }
 
+    public function registeredBidders()
+    {
+        if($this->session->has('upp_user_loggedIn'))
+        {
+            if($this->session->get('upp_user_loggedIn'))
+            {
+                $data['pageTitle'] = "Registered Bidders | UPP Auction Services";
+                $data['customScripts'] = 'auction_bidders';
+                return $this->slice->view('portal.registered_bidders', $data);
+            }
+            else
+            {
+                return redirect()->to(base_url());
+            }
+        }
+        else
+        {
+            return redirect()->to(base_url());
+        }
+    }
+
     public function myAccount()
     {
         if($this->session->has('upp_user_loggedIn'))

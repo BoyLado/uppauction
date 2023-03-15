@@ -41,6 +41,7 @@ const ITEMS = (function(){
 
 	thisItems.loadItems = function()
 	{
+		$('body').waitMe(_waitMeLoaderConfig);
 		$.ajax({
 			/* ItemController->loadItems() */
 		  url : `${baseUrl}/portal/load-items`,
@@ -90,6 +91,8 @@ const ITEMS = (function(){
 		  	}
 
 		  	$('#div_items').html(items);
+
+		  	$('body').waitMe('hide');
 		  }
 		});
 	}

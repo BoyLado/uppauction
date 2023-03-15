@@ -16,6 +16,8 @@ const BIDDERS = (function(){
 
 	thisBidder.loadBidders = function(textSearch = "")
 	{
+		$('body').waitMe(_waitMeLoaderConfig);
+
 		$.ajax({
 			/* BidderController->loadBidders() */
 		  url : `${baseUrl}/portal/load-bidders`,
@@ -27,7 +29,15 @@ const BIDDERS = (function(){
 		    console.log(data);
 		    let bidders = '';
 		    data.forEach(function(value,key){
-		    	let imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	let imgSrc = '';
+		    	if(value['season_pass'] == null && value['id_picture'] == null)
+		    	{
+		    		imgSrc = `${baseUrl}/public/assets/img/user-placeholder.png`;
+		    	}
+		    	else
+		    	{
+		    		imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	}
 		    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
 		    	let email = (value['email'] != null)? value['email'] : '---';
 		    	
@@ -39,7 +49,7 @@ const BIDDERS = (function(){
 							                <h5 class="card-title text-primary text-white">
 							                  <span class="text-bold text-red">Bidder #${value['bidder_number']}</span> | ${bidderName}</h5>
 							                <br>
-							                <span class="card-text text-muted">${email}</span>
+							                <span class="card-text text-muted"><small>${email}</small></span>
 							                <div class="float-right">
 							                  <a href="javascript:void(0)" onclick="BIDDERS.selectBidder(${value['id']})" >Edit</a> |
 							                  <a href="javascript:void(0)" onclick="BIDDERS.removeBidder(${value['id']})" >Delete</a>
@@ -51,6 +61,8 @@ const BIDDERS = (function(){
 		    });
 
 		    $('#div_bidders').html(bidders);
+
+		    $('body').waitMe('hide');
 		  }
 		});
 	}
@@ -271,13 +283,38 @@ const BIDDERS = (function(){
 
 	function urlencode(obj, prefix) {
 	    str = (obj + '').toString();
-	    return encodeURIComponent(str)
-	        .replace(/!/g, '%21')
-	        .replace(/'/g, '%27')
-	        .replace(/\(/g, '%28')
-	        .replace(/\)/g, '%29')
-	        .replace(/\*/g, '%2A')
-	        .replace(/%20/g, '+');
+	    // return encodeURIComponent(str)
+      //   .replace(/\-/g, '%2D')
+      //   .replace(/\_/g, '%5F')
+      //   .replace(/\./g, '%2E')
+      //   .replace(/\!/g, '%21')
+      //   .replace(/\~/g, '%7E')
+      //   .replace(/\*/g, '%2A')
+      //   .replace(/\'/g, '%27')
+      //   .replace(/\(/g, '%28')
+      //   .replace(/\)/g, '%29');
+
+      return (
+          encodeURIComponent(str)
+            // The following creates the sequences %27 %28 %29 %2A (Note that
+            // the valid encoding of "*" is %2A, which necessitates calling
+            // toUpperCase() to properly encode). Although RFC3986 reserves "!",
+            // RFC5987 does not, so we do not need to escape it.
+            .replace(/['()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
+            // The following are not required for percent-encoding per RFC5987,
+            // so we can allow for a little better readability over the wire: |`^
+            .replace(/%(7C|60|5E)/g, (str, hex) =>
+              String.fromCharCode(parseInt(hex, 16))
+            )
+        );
+	    // return encodeURIComponent(str);
+	        // .replace(/!/g, '%21')
+	        // .replace(/'/g, '%27')
+	        // .replace(/\(/g, '%28')
+	        // .replace(/\)/g, '%29')
+	        // .replace(/\./g, '%26')
+	        // .replace(/\*/g, '%2A')
+	        // .replace(/%20/g, '+')
 	        // .replace(/~/g, '%7E');
 	}
 
@@ -322,7 +359,7 @@ const BIDDERS = (function(){
 					var myJSON = JSON.stringify(conflictRowData);
 					var trafficFilterHolder = urlencode(myJSON);
 						
-					$('#lnk_download').attr('href','<?php echo base_url(); ?>/portal/download-conflicts/'+trafficFilterHolder);
+					$('#lnk_download').attr('href',`${baseUrl}/portal/download-conflicts/${trafficFilterHolder}`);
 
 					if(forUpdate != 0 || forInsert != 0)
 					{
@@ -344,6 +381,7 @@ const BIDDERS = (function(){
 		if(confirm("Please confirm!"))
 		{
 			let rawData = __arrFileResult;
+			$('body').waitMe(_waitMeLoaderConfig);
 			$.ajax({
 				url : `${baseUrl}/portal/upload-season-pass`,
 				method : 'POST',
@@ -359,12 +397,112 @@ const BIDDERS = (function(){
 				{
 					console.log(result);
 					$('#lbl_uploadingProgress').html("<i>Upload complete!</i>");
-		      setTimeout(function(){
-            location.reload();
-          }, 3000);							
+          $('body').waitMe('hide');	
+          location.reload();			
 				}
 			});
 		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	thisBidder.loadRegisteredBidders = function(textSearch = "", dateFilter = "")
+	{
+		$('body').waitMe(_waitMeLoaderConfig);
+		$.ajax({
+			/* BidderController->loadRegisteredBidders() */
+		  url : `${baseUrl}/portal/load-registered-bidders`,
+		  method : 'get',
+		  dataType: 'json',
+		  data:{order:'DESC',textSearch : textSearch,dateFilter : dateFilter},
+		  success : function(data)
+		  {
+		    console.log(data);
+		    let bidders = '';
+		    data.forEach(function(value,key){
+
+		    	let imgSrc = '';
+		    	if(value['season_pass'] == null && value['id_picture'] == null)
+		    	{
+		    		imgSrc = `${baseUrl}/public/assets/img/user-placeholder.png`;
+		    	}
+		    	else
+		    	{
+		    		imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+		    	}
+		    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
+		    	let email = (value['email'] != null)? value['email'] : '---';
+
+		    	let confirmed = (value['confirmed'] == 'YES')? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-times text-warning"></i>';
+		    	
+		    	bidders += `<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
+							          <div class="card mb-2 bg-gradient-dark zoom">
+							            <a href="javascript:void(0)" onclick="BIDDERS.loadBidderDetails(${value['bidder_id']})">
+							              <img class="card-img-top rounded" src="${imgSrc}" alt="" style="height: 300px; width: 100%; object-fit: cover;">
+							              <div class="products">
+							                <h5 class="card-title text-primary text-white">
+							                  <span class="text-bold text-red">Bidder #${value['bidder_number']}</span> | ${bidderName}</h5>
+							                <br>
+							                <span class="card-text text-muted"><small>${email}</small></span>
+							                <div class="float-right">
+							                  ${confirmed}
+							                </div>
+							              </div>
+							            </a>
+							          </div>
+							        </div>`;
+		    });
+
+		    $('#div_bidders').html(bidders);
+		    $('body').waitMe('hide');
+		  }
+		});
+	}
+
+	thisBidder.loadBidderDetails = function(bidderId)
+	{
+		$.ajax({
+			/* BidderController->loadBidderDetails() */
+		  url : `${baseUrl}/portal/load-bidder-details`,
+		  method : 'get',
+		  dataType: 'json',
+		  data : {bidderId : bidderId},
+		  success : function(data)
+		  {
+		  	$('#modal_bidderDetails').modal('show');
+		  	$('#lnk_details').addClass('active');
+		  	$('#lnk_guests').removeClass('active');
+
+		  	$('#div_details').addClass('show active');
+		  	$('#div_guests').removeClass('show active');
+
+		  	//details
+
+		  	$('#lbl_bidderNumber').text(data['arrDetails']['bidder_number']);
+		  	$('#lbl_companyName').text(data['arrDetails']['company_name']);
+		  	$('#lbl_bidderName').text(`${data['arrDetails']['first_name']} ${data['arrDetails']['last_name']}`);
+		  	$('#lbl_address').text(data['arrDetails']['address']);
+		  	$('#lbl_phoneNumber').text(data['arrDetails']['phone_number']);
+		  	$('#lbl_email').text(data['arrDetails']['email']);
+		  	$('#lbl_driversLicense').text(data['arrDetails']['id_number']);
+
+
+		  	//guests
+		  	let tbody = '';
+		  	data['arrGuests'].forEach(function(value,key){
+		  		tbody += `<tr>
+                      <td>${value['guest_first_name']} ${value['guest_last_name']}</td>
+                      <td>${value['guest_email']}</td>
+                      <td>${value['relation_to_bidder']}</td>
+                    </tr>`;
+		  	});
+		  	if(tbody == '')
+		  	{
+		  		tbody = '<tr><td colspan="3"><center>No Guest Found!</center></td></tr>';
+		  	}
+		  	$('#tbl_guests tbody').html(tbody);
+		  }
+		});
 	}
 
 	return thisBidder;

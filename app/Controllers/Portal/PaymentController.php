@@ -9,6 +9,7 @@ class PaymentController extends BaseController
     public function __construct()
     {
         $this->items = model('Portal/Items');
+        $this->bidders = model('Portal/Bidders');
         $this->payments = model('Portal/Payments');
     }
 
@@ -18,10 +19,22 @@ class PaymentController extends BaseController
         return $this->response->setJSON($arrResult);
     }
 
+    public function loadPaymentDetails()
+    {
+        $fields = $this->request->getGet();
+
+        $itemsId = explode(',',$fields['itemsId']);
+
+        $data['arrPaymentDetails'] = $this->payments->selectPayment($fields['paymentId']);
+        $data['arrItemDetails'] = $this->payments->loadPaymentDetails($itemsId);
+        return $this->response->setJSON($data);
+    }
+
     public function addPayment()
     {
         $fields = $this->request->getPost();
 
+        $arrBidder = $this->bidders->selectBidder($fields['txt_bidderId']);
         $arrPayments = $this->items->loadWinnerItems($fields['txt_bidderId'],$fields['txt_dateFilter']);
 
         $subTotal = 0;
@@ -30,6 +43,7 @@ class PaymentController extends BaseController
         $totalPayment = 0;
 
         $arrItems = [];
+        $arrItemsId = [];
 
         foreach ($arrPayments as $key => $value) 
         {
@@ -38,6 +52,7 @@ class PaymentController extends BaseController
                 'id' => $value['id'],
                 'paid' => 1
             ];
+            $arrItemsId[] = $value['id'];
         }
 
         $tax = $subTotal * 0.0954;
@@ -50,6 +65,7 @@ class PaymentController extends BaseController
 
         $arrData = [
             'bidder_id'             => $fields['txt_bidderId'],
+            'items_id'              => implode(',', $arrItemsId),
             'sub_total'             => number_format($subTotal,2),
             'tax'                   => number_format($tax,2),
             'card_transaction_fee'  => number_format($transactionFee,2),
@@ -64,6 +80,22 @@ class PaymentController extends BaseController
         if($result > 0)
         {
             $result = $this->items->changeStatus($arrItems);
+
+            //email
+            $emailSender    = 'ajhay.work@gmail.com';
+            $emailReceiver  = $arrBidder['email'];
+
+            $data['subjectTitle']           = 'UPP Payment Receipt';
+            $data['bidderId']               = $arrBidder['id'];
+            $data['bidderEmailAddress']     = $arrBidder['email'];
+            $data['bidderNumber']           = $arrBidder['bidder_number'];
+            $data['arrItems']               = $arrPayments;
+            $data['subTotal']               = number_format($subTotal,2);
+            $data['tax']                    = number_format($tax,2);
+            $data['card_transaction_fee']   = number_format($transactionFee,2);
+            $data['total_payment']          = number_format($totalPayment,2);
+
+            $emailResult = sendSliceMail('upp_receipt',$emailSender,$emailReceiver,$data);
         }
         $msgResult[] = ($result > 0)? "Success" : "Database error";
 

@@ -75,6 +75,12 @@
             <p>AUCTION CALENDAR</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?php echo base_url(); ?>/portal/registered-bidders" id="nav_regBidders" class="nav-link">
+            <i class="nav-icon fas fa fa-users"></i>
+            <p>REGISTERED BIDDERS</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

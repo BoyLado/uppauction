@@ -48,7 +48,8 @@
         <div class="col-sm-12">
 
           <div class="mt-1 float-left">
-            <input type="search" class="form-control form-control-sm" id="txt_searchBidder" name="txt_searchBidder" placeholder="Search Bidder">
+            <!-- <input type="search" class="form-control form-control-sm" id="txt_searchBidder" name="txt_searchBidder" placeholder="Search Bidder"> -->
+            <h5>Auction Events</h5>
           </div>
           
           <div class="mt-1 float-right">

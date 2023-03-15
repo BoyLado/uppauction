@@ -24,7 +24,8 @@ class WinnerController extends BaseController
     {
         $fields = $this->request->getGet();
 
-        $arrResult = $this->items->loadWinnerItems($fields['bidderId'],$fields['txt_dateFilter']);
+        $arrResult['arrBidderDetails'] = $this->bidders->selectBidder($fields['bidderId']);
+        $arrResult['arrItemDetails'] = $this->items->loadWinnerItems($fields['bidderId'],$fields['txt_dateFilter']);
         return $this->response->setJSON($arrResult);
     }
 }

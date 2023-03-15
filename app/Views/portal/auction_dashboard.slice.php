@@ -118,16 +118,18 @@
             </a>
           </div>
         </div>
-        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-9">
-        <div class="card-header">
-        <div id="div_calendars">
-        <hr>
-        <center><h5>Loading...</h5></center>
-      </div>
-    </div>
-  </div>
+          <div class="card">
+            <div class="card-body">
+              <div id="div_calendars">
+
+              </div>
+            </div>
+          </div>
+        </div>
   
 
   <div class="col-md-3">
@@ -308,6 +310,9 @@
     //
     // ======================================================>
     //
+
+    // $('body').waitMe(_waitMeLoaderConfig);
+
     let objCalendar = new FullCalendar.Calendar(document.getElementById(`div_calendars`),{
       headerToolbar: {
         left  : 'prev,next today',
@@ -317,6 +322,11 @@
       themeSystem: 'bootstrap'
     });
     objCalendar.render();
+
+    // setTimeout(function(){
+    //   $('body').waitMe('hide');
+    // }, 2000);
+    
 
   });
 </script>

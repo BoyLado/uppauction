@@ -19,6 +19,7 @@ const WINNERS = (function(){
 	thisWinners.loadWinners = function(textSearch = "")
 	{
 		let dateFilter = $('#txt_dateFilter').val();
+		$('body').waitMe(_waitMeLoaderConfig);
 		$.ajax({
 			/* WinnerController->loadWinners() */
 		  url : `${baseUrl}/portal/load-winners`,
@@ -29,7 +30,15 @@ const WINNERS = (function(){
 		  {
   	    let bidders = '';
   	    data.forEach(function(value,key){
-  	    	let imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+  	    	let imgSrc = '';
+  	    	if(value['season_pass'] == null && value['id_picture'] == null)
+  	    	{
+  	    		imgSrc = `${baseUrl}/public/assets/img/user-placeholder.png`;
+  	    	}
+  	    	else
+  	    	{
+  	    		imgSrc = (value['season_pass'] != null)? value['season_pass'] : `${baseUrl}/public/assets/uploads/images/bidders/${value['id_picture']}`;
+  	    	}
   	    	let bidderName = (value['first_name'] != null)? `${value['first_name']} ${value['last_name']}` : '---';
   	    	let email = (value['email'] != null)? value['email'] : '---';
   	    	bidders += `<div class="col-md-6 col-lg-6 col-xl-3 pt-2">
@@ -56,6 +65,7 @@ const WINNERS = (function(){
   	    }
 
   	    $('#div_winners').html(bidders);
+  	    $('body').waitMe('hide');
 		  }
 		});
 	}
@@ -71,6 +81,8 @@ const WINNERS = (function(){
 		  data:{bidderId:bidderId,txt_dateFilter:txt_dateFilter},
 		  success : function(data)
 		  {
+		  	let bidderName = `${data['arrBidderDetails']['first_name']} ${data['arrBidderDetails']['last_name']}`;
+		  	$('#lbl_bidderName').text(bidderName);
 		  	console.log(data);
 		  	$('#modal_checkout').modal('show');
 		  	$('#txt_bidderId').val(bidderId);
@@ -79,7 +91,7 @@ const WINNERS = (function(){
 		  	let subTotal = 0;
 		  	let tax = 0.0954;
 		  	let total = 0;
-		  	data.forEach(function(value,key){
+		  	data['arrItemDetails'].forEach(function(value,key){
 		  		tbody += `<tr>
                       <td>${number}</td>
                       <td>${value['item_number']}</td>
@@ -111,6 +123,8 @@ const WINNERS = (function(){
 
 		formData.set('txt_dateFilter',$('#txt_dateFilter').val());
 
+		$('#btn_checkout').html('<i>Please wait...</i>');
+		$('#btn_checkout').prop('disabled',true);
 		$.ajax({
 			/* WinnerController->addPayment() */
 		  url : `${baseUrl}/portal/add-payment`,
@@ -140,6 +154,8 @@ const WINNERS = (function(){
 		        title: `Error! <br>${result}`
 		      });
 		    }
+		    $('#btn_checkout').html('Check Out');
+		    $('#btn_checkout').prop('disabled',false);
 		  }
 		});
 	}
