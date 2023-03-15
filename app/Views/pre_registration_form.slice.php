@@ -122,7 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container">
 
         <form id="form_preRegistration">
-          <h2 id="h2">Auction Pre-Registration</h2>
+          <h2 style="color: red;" id="h2"><b>Auction Pre-Registration</b></h2>
           <div class="mb-3">
             <h5 id="h4" style="text-align: center;">
               To pre-register to bid onsite at our next auction, please fill out the form below. After we receive your information, we will contact you to complete the registration process.
@@ -141,7 +141,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <hr>
 
           <div class="mb-2">
-            <h6>Are you a SEASON PASS holder?</h6>
+            <h6 style="color: red;">Are you a SEASON PASS holder?</h6>
             <div class="row">
               <div class="col-lg-2">
                 <div class="row">

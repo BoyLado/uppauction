@@ -122,8 +122,8 @@
 
       <div class="row">
         <div class="col-md-9">
-          <div class="card">
-            <div class="card-body">
+          <div class="card bg-gradient-success">
+            <div class="card-body" >
               <div id="div_calendars">
 
               </div>
@@ -217,7 +217,7 @@
         #1
         </td>
         <td>$13</td>
-        <td>
+        <td> <span class="badge badge-danger">
         Paid
         </td>
         </a>
@@ -228,7 +228,7 @@
         #2
         </td>
         <td>$29</td>
-        <td>
+        <td><span class="badge badge-warning">
         Unpaid
         </td>
         </tr>
@@ -237,7 +237,7 @@
         #3
         </td>
         <td>$100</td>
-        <td>
+        <td><span class="badge badge-danger">
         Paid
         </td>
         </tr>
@@ -246,7 +246,7 @@
         #4
         </td>
         <td>$49</td>
-        <td>
+        <td><span class="badge badge-warning">
         Unpaid
         </td>
         </tr>
