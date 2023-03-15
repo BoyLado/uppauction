@@ -46,7 +46,7 @@ const CALENDAR = (function(){
 		  	  eventClick:function(info)
 		  	  {
 		  	  	let eventObj = info.event;
-		  	  	alert(eventObj.id);
+		  	  	CALENDAR.selectAuction(eventObj.id);
 		  	  }
 		  	});
 		  	objCalendar.render();
@@ -102,7 +102,14 @@ const CALENDAR = (function(){
 		  data : {auctionId : auctionId},
 		  success : function(data)
 		  {
+		  	$('#lbl_header').html('<i class="fa fa-pen mr-1"></i> Update Event');
+
 		  	$('#txt_auctionId').val(data['id']);
+		  	$('#txt_title').val(data['auction_title']);
+		  	$('#txt_description').val(data['auction_description']);
+		  	$('#txt_date').val(data['auction_date']);
+
+		  	$('#modal_auctionEvent').modal('show');
 		  }
 		});
 	}

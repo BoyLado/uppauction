@@ -94,7 +94,7 @@
         <div class="modal-dialog modal-md" role="document">
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
-              <h5 class="modal-title"><i class="fa fa-plus mr-1"></i> Add New Event</h5>
+              <h5 class="modal-title" id="lbl_header"><i class="fa fa-plus mr-1"></i> Add New Event</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -183,10 +183,14 @@
     CALENDAR.loadAuctions();
 
     $('#lnk_addAuctionEvent').on('click',function(){
+      $('#lbl_header').html('<i class="fa fa-plus mr-1"></i> Add New Event');
+      $('#txt_auctionId').val('');
       $('#modal_auctionEvent').modal('show');
     });
 
     $('#btn_addAuctionEvent').on('click',function(){
+      $('#lbl_header').html('<i class="fa fa-plus mr-1"></i> Add New Event');
+      $('#txt_auctionId').val('');
       $('#modal_auctionEvent').modal('show');
     });
 

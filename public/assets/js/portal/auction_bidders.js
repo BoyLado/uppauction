@@ -60,6 +60,11 @@ const BIDDERS = (function(){
 							        </div>`;
 		    });
 
+		    if(bidders == '')
+		    {
+		    	bidders = '<div class="col-md-12 col-lg-12 col-xl-12 pt-2"><center><h5>No Bidder Found!</h5></center>';
+		    }
+
 		    $('#div_bidders').html(bidders);
 
 		    $('body').waitMe('hide');
@@ -452,6 +457,11 @@ const BIDDERS = (function(){
 							          </div>
 							        </div>`;
 		    });
+
+		    if(bidders == '')
+  	    {
+  	    	bidders = '<div class="col-md-12 col-lg-12 col-xl-12 pt-2"><center><h5>No Bidder Found!</h5></center>';
+  	    }
 
 		    $('#div_bidders').html(bidders);
 		    $('body').waitMe('hide');

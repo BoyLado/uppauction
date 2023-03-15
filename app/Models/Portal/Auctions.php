@@ -98,7 +98,7 @@ class Auctions extends Model
             'a.id',
             'a.auction_title',
             'a.auction_description',
-            'a.auction_date',
+            'DATE_FORMAT(a.auction_date,"%Y-%m-%d") as auction_date',
             'a.status',
             'a.created_by',
             'a.created_date',

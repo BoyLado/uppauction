@@ -348,6 +348,7 @@ class Bidders extends Model
             'a.id',
             'a.bidder_number',
             'a.email',
+            'a.season_pass'
         ];
 
         $builder = $this->db->table('bidders a')->select($columns);

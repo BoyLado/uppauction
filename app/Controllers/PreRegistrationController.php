@@ -58,7 +58,7 @@ class PreRegistrationController extends BaseController
 
             if($validationResult != null)
             {
-                if($emailAddress == $validationResult['email'] && $seasonPassNumber == $validationResult['bidder_number'])
+                if($emailAddress == $validationResult['email'] && $seasonPassNumber == $validationResult['bidder_number'] && $validationResult['season_pass'] != null)
                 { 
                     $authCode = generate_code();
                     $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
@@ -99,7 +99,6 @@ class PreRegistrationController extends BaseController
                         $data['bidderEmailAddress']     = $validationResult['email'];
                         $data['bidderSeasonPassNumber'] = $validationResult['bidder_number'];
                         $data['bidderAuthCode']         = $authCode;
-                        $data['bidderGuests']           = $arrGuest;
 
                         $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
                     }
@@ -107,12 +106,19 @@ class PreRegistrationController extends BaseController
                 }
                 else
                 {
-                    $msgResult[] = "Email or Season Pass Number does not exist!";
+                    if($validationResult['season_pass'] == null)
+                    {
+                        $msgResult[] = "Sorry, You are not a Season Pass holder yet!";
+                    }
+                    else
+                    {
+                        $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
+                    }                    
                 }
             }
             else
             {
-                $msgResult[] = "Email or Season Pass Number does not exist!";
+                $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
             }
         }
         else
@@ -231,7 +237,33 @@ class PreRegistrationController extends BaseController
             }
             else
             {
-                $msgResult[] = "Email already exist!";
+                $authCode = generate_code();
+                $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
+                $arrData = [
+                    'bidder_id'     => $validationResult['id'],
+                    'auction_id'    => $auctionDate['id'],
+                    'auction_date'  => $auctionDate['auction_date'],
+                    'auth_code'     => encrypt_code($authCode),    
+                    'created_date'  => date('Y-m-d H:i:s')
+                ];
+
+                $result = $this->bidders->addBidderRegistration($arrData);
+                if($result > 0)
+                {
+                    //email
+                    $emailSender    = 'ajhay.work@gmail.com';
+                    $emailReceiver  = $emailAddress;
+
+                    $data['subjectTitle']           = 'Welcome New Bidder';
+                    $data['bidderId']               = $validationResult['id'];
+                    $data['bidderEmailAddress']     = $emailAddress;
+                    $data['bidderSeasonPassNumber'] = "";
+                    $data['bidderNumber']           = $validationResult['bidder_number'];
+                    $data['bidderAuthCode']         = $authCode;
+                    $data['bidderGuests']           = [];
+
+                    $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
+                }
             }
         }
         else

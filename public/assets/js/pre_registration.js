@@ -79,6 +79,7 @@ const PRE_REGISTRATION = (function(){
 			    }
 			    else
 			    {
+			    	$('#lbl_errorMsg').text(result);
 			      $('#modal_errorValidation').modal({'backdrop':'static'});
 			    }
 			  }

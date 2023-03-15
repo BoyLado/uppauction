@@ -43,35 +43,27 @@
 </head>
 <body>
 
-<!-- 	@if($confirmation_result == 'Success')
-		<p>Pre Registration Complete!</p>
-	@else
-		<p>Pre Registration cannot be completed!</p>
-	@endif -->
-
+	@if($confirmation_result == 'Success')
 		<center>
 			<div id="email_confirmation" class="card" style="width: 50rem;">
 				 <i id="email_confirmation" class="fa-solid fa-envelope-open-text fa-5x"></i>
 				 <div class="card-body">
 				 	<hr>
-				    <p class="card-text"><h1>Email confirmation completed!</h1></p>		  
-				  <!-- /.navbar -->
+				    <p class="card-text"><h1>Email confirmation completed!</h1></p>		
 				</div>
 			</div>
 		</center>
+	@else
 		<center>
 			<div id="email_confirmation1" class="card" style="width: 50rem;">
 				 <i id="email_confirmation1" class="fa-solid fa-circle-xmark fa-5x"></i>
 				 <div class="card-body">
 				 	<hr>
-				    <p class="card-text"><h1 id="notcompleted">Pre Registration cannot be completed!</h1></p>		  
-				  <!-- /.navbar -->
+				    <p class="card-text"><h1 id="notcompleted">Pre Registration cannot be completed!</h1></p>
 				</div>
 			</div>
 		</center>
-
-
-
+	@endif
 
  <!-- REQUIRED SCRIPTS -->
 

@@ -45,6 +45,8 @@ class PaymentController extends BaseController
         $arrItems = [];
         $arrItemsId = [];
 
+        $numberOfItems = 0;
+
         foreach ($arrPayments as $key => $value) 
         {
             $subTotal += (float)$value['winning_amount'];
@@ -53,6 +55,8 @@ class PaymentController extends BaseController
                 'paid' => 1
             ];
             $arrItemsId[] = $value['id'];
+
+            $numberOfItems++;
         }
 
         $tax = $subTotal * 0.0954;
@@ -79,6 +83,32 @@ class PaymentController extends BaseController
         $result = $this->payments->addPayment($arrData);
         if($result > 0)
         {
+            $receipt = '';
+            if($result < 10)
+            {
+                $receipt = '00000'.$result;
+            }
+            else if($result < 100)
+            {
+                $receipt = '0000'.$result;
+            }
+            else if($result < 1000)
+            {
+                $receipt = '000'.$result;
+            }
+            else if($result < 10000)
+            {
+                $receipt = '00'.$result;
+            }
+            else if($result < 100000)
+            {
+                $receipt = '0'.$result;
+            }
+            else
+            {
+                $receipt = $result;
+            }
+
             $result = $this->items->changeStatus($arrItems);
 
             //email
@@ -86,14 +116,22 @@ class PaymentController extends BaseController
             $emailReceiver  = $arrBidder['email'];
 
             $data['subjectTitle']           = 'UPP Payment Receipt';
+            $data['receiptNumber']          = $receipt;
             $data['bidderId']               = $arrBidder['id'];
-            $data['bidderEmailAddress']     = $arrBidder['email'];
             $data['bidderNumber']           = $arrBidder['bidder_number'];
+            $data['bidderName']             = $arrBidder['first_name'] . " " . $arrBidder['last_name'];
+            $data['bidderEmailAddress']     = $arrBidder['email'];
+            $data['bidderPhoneNumber']     = $arrBidder['phone_number'];
+            $data['bidderAddress']     = $arrBidder['address'];
+            $data['numberOfItems']          = $numberOfItems;
             $data['arrItems']               = $arrPayments;
             $data['subTotal']               = number_format($subTotal,2);
             $data['tax']                    = number_format($tax,2);
             $data['card_transaction_fee']   = number_format($transactionFee,2);
             $data['total_payment']          = number_format($totalPayment,2);
+            $data['cash_payment']           = number_format((float)$fields['txt_cashPayment'],2);
+            $data['card_payment']           = number_format((float)$fields['txt_cardPayment'],2);
+            $data['dateSent']               = date('F d, Y');
 
             $emailResult = sendSliceMail('upp_receipt',$emailSender,$emailReceiver,$data);
         }

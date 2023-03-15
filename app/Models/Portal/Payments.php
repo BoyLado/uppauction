@@ -108,8 +108,9 @@ class Payments extends Model
             $this->db->transStart();
                 $builder = $this->db->table('payments');
                 $builder->insert($arrData);
+                $insertId = $this->db->insertID();
             $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
+            return ($this->db->transStatus() === TRUE)? $insertId : 0;
         } catch (PDOException $e) {
             throw $e;
         }

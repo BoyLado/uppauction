@@ -100,7 +100,7 @@ class AuctionController extends BaseController
                 'created_date'          => date('Y-m-d H:i:s')
             ];
 
-            $result = $this->auctions->editItem($arrData, $fields['txt_auctionId']);
+            $result = $this->auctions->editAuction($arrData, $fields['txt_auctionId']);
             $msgResult[] = ($result > 0)? "Success" : "Database error";
         }
         else

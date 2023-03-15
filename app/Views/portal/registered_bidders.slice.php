@@ -72,7 +72,7 @@
         <div class="col-sm-12">
 
           <div class="mt-1 float-left">
-            <input type="search" class="form-control form-control-sm" id="txt_searchWinner" name="txt_searchWinner" placeholder="Search Winner">
+            <input type="search" class="form-control form-control-sm" id="txt_searchWinner" name="txt_searchWinner" placeholder="Search Bidder">
           </div>
           <div class="mt-1 float-right">
             <div class="form-inline">

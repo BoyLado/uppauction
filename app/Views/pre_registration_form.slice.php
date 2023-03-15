@@ -299,6 +299,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="modal fade" id="modal_successValidation" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="modal-body">
 
             <div class="card card-outline card-primary">
@@ -315,13 +320,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="modal fade" id="modal_errorValidation" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="modal-body">
 
             <div class="card card-outline card-danger">
               <div class="card-body">
                 <h2>
                   <center>
-                    Sorry, Your Email or Season Pass does not exist. 
+                    <span id="lbl_errorMsg">Sorry, Your Email or Season Pass does not exist. </span>
                     <br>You can buy a Season Pass <a href="https://upickapallet.com/" target="_blank">here</a>.
                   </center>
                 </h2>
