@@ -44,7 +44,7 @@ $routes->get('/', 'NavigationController');
  *  FRONT END NAVIGATION 
  *  ------------------------------------------------------------------
  */
-$routes->get('pre-registration', 'NavigationController::preRegistration');
+$routes->get('contact-us', 'NavigationController::contactUs');
 $routes->get('login', 'NavigationController::login');
 
 $routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preRegistrationConfirmation/$1');

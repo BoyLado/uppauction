@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -70,7 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" id="nav">
     <div class="container">
-      <a href="<?php echo base_url(); ?>/public/assets/AdminLTE/index3.html" class="navbar-brand">
+      <a href="<?php echo base_url(); ?>" class="navbar-brand">
         <img src="<?php echo base_url(); ?>/public/assets/img/upp-logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <div class="d-none d-lg-inline">
           <span class="brand-text font-weight-bold">U PICK A PALLET LLC</span>
@@ -85,10 +81,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="#" class="nav-link text-bold">Contact Us</a>
+            <a href="<?php echo base_url(); ?>/contact-us" class="nav-link text-bold">Contact Us</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link text-bold">Sign In</a>
+            <a href="<?php echo base_url(); ?>/login" class="nav-link text-bold">Sign In</a>
           </li>
         </ul>
       </div>

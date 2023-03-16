@@ -8,12 +8,16 @@ class NavigationController extends BaseController
 {
     public function index()
     {
-        // $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        // $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/login';
-        // return redirect()->to($uri);
-        $data['pageTitle'] = "U Pick A Pallet | Pre Registration";
+        $data['pageTitle'] = "Pre Registration | U Pick A Pallet";
         $data['userAuthCode'] = "";
         return $this->slice->view('pre_registration_form', $data);
+    }
+
+    public function contactUs()
+    {
+        $data['pageTitle'] = "Contact Us | U Pick A Pallet";
+        $data['userAuthCode'] = "";
+        return $this->slice->view('contact_us', $data);
     }
 
     public function login()
@@ -25,19 +29,13 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "U Pick A Pallet | Login";
+        $data['pageTitle'] = "Login | U Pick A Pallet";
         $data['userAuthCode'] = "";
         return $this->slice->view('login', $data);
     }
 
     public function forgotPassword()
     {
-        $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        if(!file_exists(FCPATH . '.env'))
-        {
-            $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
-            return redirect()->to($uri); 
-        }
         if($this->session->has('upp_user_loggedIn'))
         {
             if($this->session->get('upp_user_loggedIn'))
@@ -45,18 +43,12 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "U Pick A Pallet | Forgot Password";
+        $data['pageTitle'] = "Forgot Password | U Pick A Pallet";
         return $this->slice->view('forgot_password', $data);
     }
 
     public function changePassword($userId, $userAuthCode, $passwordAuthCode)
     {
-        $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        if(!file_exists(FCPATH . '.env'))
-        {
-            $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
-            return redirect()->to($uri); 
-        }
         if($this->session->has('upp_user_loggedIn'))
         {
             if($this->session->get('upp_user_loggedIn'))
@@ -64,7 +56,7 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "U Pick A Pallet | Change Password";
+        $data['pageTitle'] = "Change Password | U Pick A Pallet";
         $data['userId'] = $userId;
         $data['userAuthCode'] = $userAuthCode;
         $data['passwordAuthCode'] = $passwordAuthCode;
@@ -73,12 +65,6 @@ class NavigationController extends BaseController
 
     public function signUp($userId, $userAuthCode)
     {
-        $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        if(!file_exists(FCPATH . '.env'))
-        {
-            $uri = (isset($_SERVER['HTTPS']))? 'https://' : 'http://' . $_SERVER['SERVER_NAME'] . '/' . $uriSegments[1] . '/install';
-            return redirect()->to($uri); 
-        }
         if($this->session->has('upp_user_loggedIn'))
         {
             if($this->session->get('upp_user_loggedIn'))
@@ -86,15 +72,10 @@ class NavigationController extends BaseController
                 return redirect()->to(base_url() . '/portal/auction-dashboard');
             }
         }
-        $data['pageTitle'] = "U Pick A Pallet | Sign Up";
+        $data['pageTitle'] = "Sign Up | U Pick A Pallet";
         $data['userId'] = $userId;
         $data['userAuthCode'] = $userAuthCode;
         return $this->slice->view('sign_up', $data);
-    }
-
-    public function preRegistration()
-    {
-        return $this->slice->view('pre_registration_form');
     }
 
     public function preRegistrationConfirmation($result)
