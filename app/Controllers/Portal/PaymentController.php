@@ -112,7 +112,7 @@ class PaymentController extends BaseController
             $result = $this->items->changeStatus($arrItems);
 
             //email
-            $emailSender    = 'ajhay.work@gmail.com';
+            $emailSender    = 'customerservice@upickapallet.com';
             $emailReceiver  = $arrBidder['email'];
 
             $data['subjectTitle']           = 'UPP Payment Receipt';

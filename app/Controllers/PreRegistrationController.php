@@ -91,7 +91,7 @@ class PreRegistrationController extends BaseController
                             $result = $this->bidders->addBidderGuest($arrData);
                         }
                         //email
-                        $emailSender    = 'ajhay.work@gmail.com';
+                        $emailSender    = 'customerservice@upickapallet.com';
                         $emailReceiver  = $emailAddress;
 
                         $data['subjectTitle']           = 'Welcome Bidder';
@@ -218,7 +218,7 @@ class PreRegistrationController extends BaseController
                     if($result > 0)
                     {
                         //email
-                        $emailSender    = 'ajhay.work@gmail.com';
+                        $emailSender    = 'customerservice@upickapallet.com';
                         $emailReceiver  = $emailAddress;
 
                         $data['subjectTitle']           = 'Welcome New Bidder';
@@ -251,7 +251,7 @@ class PreRegistrationController extends BaseController
                 if($result > 0)
                 {
                     //email
-                    $emailSender    = 'ajhay.work@gmail.com';
+                    $emailSender    = 'customerservice@upickapallet.com';
                     $emailReceiver  = $emailAddress;
 
                     $data['subjectTitle']           = 'Welcome New Bidder';

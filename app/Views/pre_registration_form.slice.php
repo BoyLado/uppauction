@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" id="nav" style="height: 80px;">
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" id="nav">
     <div class="container">
       <a href="<?php echo base_url(); ?>/public/assets/AdminLTE/index3.html" class="navbar-brand">
         <img src="<?php echo base_url(); ?>/public/assets/img/upp-logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -80,6 +80,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#" class="nav-link text-bold">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link text-bold">Sign In</a>
+          </li>
+        </ul>
+      </div>
 
       <!-- Right navbar links -->
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">

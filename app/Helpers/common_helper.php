@@ -295,8 +295,8 @@ function sendSliceMail($type,$senderEmail,$receiverEmail,&$data)
 		'SMTPHost'  => 'smtp.googlemail.com',
 		'SMTPPort'  => 465,
 		'SMTPCrypto'=> 'ssl',
-		'SMTPUser'  => 'ajhay.dev@gmail.com',
-		'SMTPPass'  => 'moznmnthwmdefziy',
+		'SMTPUser'  => 'customerservice@upickapallet.com',
+		'SMTPPass'  => 'xzoeyfaqlapvwozk',
 		'mailType'  => 'html', 
 		'charset'   => 'iso-8859-1',
 		'wordWrap'  => true

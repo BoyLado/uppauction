@@ -58,7 +58,7 @@ class UserController extends BaseController
                 $result = $this->users->inviteNewUser($arrData);
                 if($result > 0)
                 {
-                    $emailSender    = 'ajhay.work@gmail.com';
+                    $emailSender    = 'customerservice@upickapallet.com';
                     $emailReceiver  = $fields['txt_userEmail'];
 
                     $arrResult = $this->users->loadUser(['user_email'=>$emailReceiver]);
