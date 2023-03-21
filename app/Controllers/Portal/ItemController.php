@@ -4,6 +4,12 @@ namespace App\Controllers\Portal;
 
 use App\Controllers\BaseController;
 
+use Square\SquareClient;
+use Square\Environment;
+use Square\Exceptions\ApiException;
+use Square\Models\Money;
+use Square\Models\CreatePaymentRequest;
+
 class ItemController extends BaseController
 {
     public function __construct()
@@ -29,6 +35,66 @@ class ItemController extends BaseController
         // {
         //     return $this->response->setJSON('Access denied!');
         // }  
+    }
+
+    public function listPayments()
+    {
+
+        $client = new SquareClient([
+            'accessToken' => getenv('SQUARE_ACCESS_TOKEN'),
+            'environment' => getenv('SQUARE_ENVIRONMENT'),
+        ]);
+
+        $api_response = $client->getPaymentsApi()->listPayments();
+
+        if ($api_response->isSuccess()) 
+        {
+            $arrResult = $api_response->getResult();
+        } 
+        else 
+        {
+            $arrResult = $api_response->getErrors();
+        }
+
+        return $this->response->setJSON($arrResult);
+    }
+
+    public function createPayment()
+    {
+        $fields = $this->request->getPost();
+
+        $sourceId = $fields['sourceId'];
+        $amount = $fields['txt_amount'];
+
+        $client = new SquareClient([
+            'accessToken' => getenv('SQUARE_ACCESS_TOKEN'),
+            'environment' => getenv('SQUARE_ENVIRONMENT'),
+        ]);
+
+        $amount_money = new \Square\Models\Money();
+        $amount_money->setAmount($amount);
+        $amount_money->setCurrency('USD');
+
+        $idempotencyKey = uniqid('upp_'); 
+        $body = new \Square\Models\CreatePaymentRequest(
+            $sourceId,
+            $idempotencyKey,
+            $amount_money
+        );
+        $body->setAutocomplete(true);
+        $body->setLocationId(getenv('SQUARE_LOCATION_ID'));
+
+        $api_response = $client->getPaymentsApi()->createPayment($body);
+        if ($api_response->isSuccess()) 
+        {
+            $arrResult = $api_response->getResult();
+        }
+        else 
+        {
+            $arrResult = $api_response->getErrors();
+        }
+
+        return $this->response->setJSON($arrResult);
     }
 
     public function addItem()

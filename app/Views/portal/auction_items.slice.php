@@ -5,6 +5,9 @@
 
 
 @section('custom_styles')
+<!-- Square Payment -->
+<link href="<?php echo base_url(); ?>/public/assets/css/square-app.css" rel="stylesheet" />
+
 <!-- Select2 -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/css/select2.min.css">
 
@@ -106,46 +109,15 @@
 
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-4">
-          <h5>Auction Item Details</h5>
-          <form id="form_addItem">
-            <table class="table mb-0">
-              <tbody>
-                <tr>
-                  <td class="p-1">
-                    <label>Item Number *:</label>
-                    <input type="text" class="form-control" id="txt_itemNumber" name="txt_itemNumber" required>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="p-1">
-                    <label>Item Description *:</label>
-                    <textarea class="form-control" rows="5" id="txt_itemDescription" name="txt_itemDescription" required></textarea>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="p-1">
-                    <label>Bidder Number/Name *:</label>
-                    <select class="form-control select2" id="slc_bidderNumber" name="slc_bidderNumber" style="width: 100%;" required>
-                      <option value="">Choose Bidder</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="p-1">
-                    <label>Amount *:</label>
-                    <input type="number" class="form-control" id="txt_winningAmount" name="txt_winningAmount" required>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="p-1">
-                    <div class="float-right">
-                      <button type="submit" class="btn btn-primary" form="form_addItem" id="btn_nextItem">Next Item</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form> 
+          <h5>Payment Form</h5>
+          <div class="card">
+            <div class="card-body">
+              <form id="form_payment">
+                <div id="card-container"></div>
+                <button id="card-button" type="button">Pay $1.00</button>
+              </form> 
+            </div>
+          </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-8">
           <h5>Auction Item Lists (<?php echo date('Y-m-d'); ?>)</h5>
@@ -301,6 +273,10 @@
 @section('custom_scripts')
 
 <!-- Plugins -->
+
+<!-- square payment -->
+<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+
 <!-- Select2 -->
 <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
@@ -308,6 +284,123 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>/public/assets/js/portal/{{ $customScripts }}.js"></script>
 
 <script type="text/javascript">
+
+  const appId = 'sandbox-sq0idb-FLjCK6tr1hOWRUdfSHlGpw';
+  const locationId = 'L4Z4BWM9K96AR';
+
+  async function initializeCard(payments) {
+    const card = await payments.card();
+    await card.attach('#card-container');
+
+    return card;
+  }
+
+  async function createPayment(token) {
+    const body = JSON.stringify({
+      locationId,
+      sourceId: token,
+    });
+
+    const paymentResponse = await fetch('/payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body,
+    });
+
+    if (paymentResponse.ok) {
+      return paymentResponse.json();
+    }
+
+    const errorBody = await paymentResponse.text();
+    throw new Error(errorBody);
+  }
+
+  async function tokenize(paymentMethod) {
+    const tokenResult = await paymentMethod.tokenize();
+    if (tokenResult.status === 'OK') {
+      return tokenResult.token;
+    } else {
+      let errorMessage = `Tokenization failed with status: ${tokenResult.status}`;
+      if (tokenResult.errors) {
+        errorMessage += ` and errors: ${JSON.stringify(
+          tokenResult.errors
+        )}`;
+      }
+
+      throw new Error(errorMessage);
+    }
+  }
+
+  // status is either SUCCESS or FAILURE;
+  function displayPaymentResults(status) {
+    const statusContainer = document.getElementById(
+      'payment-status-container'
+    );
+    if (status === 'SUCCESS') {
+      statusContainer.classList.remove('is-failure');
+      statusContainer.classList.add('is-success');
+    } else {
+      statusContainer.classList.remove('is-success');
+      statusContainer.classList.add('is-failure');
+    }
+
+    statusContainer.style.visibility = 'visible';
+  }
+
+  $(document).ready(async function(){
+    if (!window.Square) {
+      throw new Error('Square.js failed to load properly');
+    }
+
+    let payments;
+    try {
+      payments = window.Square.payments(appId, locationId);
+    } catch {
+      const statusContainer = document.getElementById(
+        'payment-status-container'
+      );
+      statusContainer.className = 'missing-credentials';
+      statusContainer.style.visibility = 'visible';
+      return;
+    }
+
+    let card;
+    try {
+      card = await initializeCard(payments);
+    } catch (e) {
+      console.error('Initializing Card failed', e);
+      return;
+    }
+
+    // Checkpoint 2.
+    async function handlePaymentMethodSubmission(event, paymentMethod) {
+      event.preventDefault();
+
+      try {
+        // disable the submit button as we await tokenization and make a payment request.
+        cardButton.disabled = true;
+        const token = await tokenize(paymentMethod);
+
+        console.log(token);
+        // const paymentResults = await createPayment(token);
+        // displayPaymentResults('SUCCESS');
+
+        // console.debug('Payment Success', paymentResults);
+      } catch (e) {
+        cardButton.disabled = false;
+        displayPaymentResults('FAILURE');
+        console.error(e.message);
+      }
+    }
+
+    const cardButton = document.getElementById('card-button');
+    cardButton.addEventListener('click', async function (event) {
+      await handlePaymentMethodSubmission(event, card);
+    });
+  });
+
   $(document).ready(function(){
     //jQuery Events
 
@@ -329,6 +422,9 @@
     //
     // ======================================================>
     //
+
+
+
 
     ITEMS.loadItems();
     ITEMS.loadBidders('slc_bidderNumber');

@@ -115,8 +115,11 @@ $routes->get('portal/select-item', 'Portal\ItemController::selectItem');
 $routes->post('portal/edit-item', 'Portal\ItemController::editItem');
 $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
+$routes->get('portal/load-list-payments', 'Portal\ItemController::listPayments');
+$routes->get('portal/load-create-payment', 'Portal\ItemController::createPayment');
+
 ////////////////////////////////////////////////////////////////////
-//////////////////////// ITEMS /////////////////////////////////////
+//////////////////////// WINNERS /////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
 $routes->get('portal/load-winners', 'Portal\WinnerController::loadWinners');
