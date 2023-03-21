@@ -131,9 +131,51 @@
 
         
         <!-- page content here START -->
+        <center>
+        <div class="col-sm-6">
+            <h1>Contact us</h1>
+        </div>
+      </center>
 
-        <h1>Sample Content</h1>
+        <section class="content">
 
+          <div class="card">
+            <div class="card-body row">
+              <div class="col-5 text-center d-flex align-items-center justify-content-center">
+                    <div class="">
+                      <img src="<?php echo base_url(); ?>/public/assets/img/upp-logo.png">
+                    <h2>U PICK A PALLET<strong> LLC</strong></h2>
+                      <p class="lead mb-5">315 Broadway Street, Mount Vernon,<br> Illinois 62864, USA
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-7">
+                    <div class="form-group">
+                      <label for="inputName">Name</label>
+                      <input type="text" id="inputName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputEmail">E-Mail</label>
+                      <input type="email" id="inputEmail" class="form-control">
+                    </div>
+                  <div class="form-group">
+                    <label for="inputSubject">Subject</label>
+                    <input type="text" id="inputSubject" class="form-control">
+                  </div>
+                    <div class="form-group">
+                    <label for="inputMessage">Message</label>
+                    <textarea id="inputMessage" class="form-control" rows="4"></textarea>
+                    </div>
+                  <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="Send message">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="510" id="gmap_canvas" src="https://maps.google.com/maps?q=315 Broadway Street, Mount Vernon, Illinois 62864, USA&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://2yu.co">2yu</a><br><style>.mapouter{position:relative;text-align:right;height:510px;width:100%;}</style><a href="https://embedgooglemap.2yu.co">html embed google map</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:510px;width:100%;}</style></div></div>
+  
         <!-- page content here END -->
 
 

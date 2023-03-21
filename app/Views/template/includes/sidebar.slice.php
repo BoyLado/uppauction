@@ -46,21 +46,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?php echo base_url(); ?>/portal/auction-bidders" id="nav_bidders" class="nav-link">
-           <i class="nav-icon fa fa-users" ></i> 
-            <p>AUCTION BIDDERS</p>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="<?php echo base_url(); ?>/portal/auction-items" id="nav_items" class="nav-link">
             <i class="nav-icon fas fa-list"></i>
             <p>AUCTION ITEMS</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?php echo base_url(); ?>/portal/auction-winners" id="nav_winners" class="nav-link">
-            <i class="nav-icon fas fa fa-trophy"></i>
-            <p>AUCTION WINNERS</p>
           </a>
         </li>
         <li class="nav-item">
@@ -73,12 +61,6 @@
           <a href="<?php echo base_url(); ?>/portal/auction-calendar" id="nav_calendar" class="nav-link">
             <i class="nav-icon fas fa fa-calendar"></i>
             <p>AUCTION CALENDAR</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?php echo base_url(); ?>/portal/registered-bidders" id="nav_regBidders" class="nav-link">
-            <i class="nav-icon fas fa fa-users"></i>
-            <p>REGISTERED BIDDERS</p>
           </a>
         </li>
       </ul>

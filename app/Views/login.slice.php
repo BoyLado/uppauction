@@ -22,7 +22,7 @@
 
   <style type="text/css">
     body{
-      background-image: url('<?php echo base_url(); ?>/public/assets/img/Mart.gif');
+      background-image: url('<?php echo base_url(); ?>/public/assets/img/bg4.gif');
       background-size: cover;
       background-position: center; /* Center the image */
       background-repeat: no-repeat; /* Do not repeat the image */
@@ -51,7 +51,7 @@
       </center>
     </div>
     <!-- /.login-logo -->
-    <div class="card card-outline card-primary" style="background: rgba(9, 131, 165, 0.7);">
+    <div class="card card-outline card-white" style="background: rgba(9, 131, 165, 0.7);">
       <div class="card-body">
         <p class="login-box-msg text-white">Sign in to start your session</p>
 

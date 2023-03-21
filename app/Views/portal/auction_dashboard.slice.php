@@ -122,7 +122,7 @@
 
       <div class="row">
         <div class="col-md-9">
-          <div class="card bg-gradient-success">
+          <div class="card">
             <div class="card-body" >
               <div id="div_calendars">
 
