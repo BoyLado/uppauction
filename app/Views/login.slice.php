@@ -22,7 +22,7 @@
 
   <style type="text/css">
     body{
-      background-image: url('<?php echo base_url(); ?>/public/assets/img/bg4.gif');
+      background-image: url('<?php echo base_url(); ?>/public/assets/img/bg6.gif');
       background-size: cover;
       background-position: center; /* Center the image */
       background-repeat: no-repeat; /* Do not repeat the image */

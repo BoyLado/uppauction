@@ -53,10 +53,19 @@
       background-color: #6EC1E4;
     }
 
-    #icon
+    #txt
     {
       color: white;
+
     }
+
+    #inputSubject:hover,#inputEmail:hover,#inputName:hover,#inputMessage:hover {
+    background-color: #f2f2f2;
+  }
+  #cardinline{
+    display:flex;
+  }
+
   </style>
 
 </head>
@@ -131,24 +140,65 @@
 
         
         <!-- page content here START -->
-        <center>
-        <div class="col-sm-6">
-            <h1>Contact us</h1>
+      <center>
+        <div class="mb-5">
+            <h1>FEEDBACK/CONTACT US</h1> 
+            
         </div>
       </center>
-
+            <div class="row">
+          <div class="col-sm-4">
+           <div class="card bg-gradient-primary">
+              <div class="card-body">
+                <center>
+                <i style="font-size: 30px;"class="fa-solid fa-location-dot"></i><br>
+                <center>
+                <h5 class="card-title"></h5></center>
+                <p class="card-text"><strong>FIND US</strong><br>315 Broadway Street, Mount Vernon, Illinois 62864, USA</p>
+                <a id="txt" class="mt-2">GET IN TOUCH</a>
+              </center>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <center>
+                <i style="font-size: 30px;"class="fa-solid fa-phone"></i><br>
+                <center>
+                <h5 class="card-title"></h5></center>
+                <p class="card-text"><strong>CALL US</strong><br>Feel free to give us a call anytime. Our customer service hotline is open 24/7.</p>
+                <a class="mt-2">+1 618-270-4207</a>
+              </center>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card bg-gradient-primary">
+              <div class="card-body">
+                <center>
+                <i style="font-size: 30px;"class="fa-solid fa-envelope"></i><br>
+                <center>
+                <h5 class="card-title"></h5></center>
+                <p class="card-text"><strong>EMAIL US</strong><br>Send us an email at any time and we will get back to you within 24 hours</p>
+                <a id="txt"class="mt-2">customerservice@upickapallet.com</a>
+              </center>
+              </div>
+            </div>
+          </div>
+        </div>
         <section class="content">
 
           <div class="card">
             <div class="card-body row">
               <div class="col-5 text-center d-flex align-items-center justify-content-center">
-                    <div class="">
-                      <img src="<?php echo base_url(); ?>/public/assets/img/upp-logo.png">
-                    <h2>U PICK A PALLET<strong> LLC</strong></h2>
-                      <p class="lead mb-5">315 Broadway Street, Mount Vernon,<br> Illinois 62864, USA
-                      </p>
-                    </div>
-                  </div>
+            <div class="">
+                        <i style="font-size: 150px;" class="fa-solid fa-envelope-open-text mb-2"></i>
+            <p class="lead mb-5">If you have questions or <br> just want to get in touch, use the form below.<br> We look forward to hearing from you!<br>
+            </p>
+          </div>
+        </div>
+                  
                   <div class="col-7">
                     <div class="form-group">
                       <label for="inputName">Name</label>
@@ -170,6 +220,7 @@
                   <input type="submit" class="btn btn-primary" value="Send message">
                   </div>
                 </div>
+                
               </div>
             </div>
           </section>
