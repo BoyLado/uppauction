@@ -41,9 +41,9 @@ class Items extends Model
     protected $afterDelete    = [];
 
     ////////////////////////////////////////////////////////////
-    ///// ItemController->loadItems()
+    ///// ItemController->loadWinningItems()
     ////////////////////////////////////////////////////////////
-    public function loadItems($dateNow)
+    public function loadWinningItems($bidderId)
     {
         $columns = [
             'a.id',
@@ -55,14 +55,15 @@ class Items extends Model
             'a.winning_amount',
             'a.paid',
             'a.created_by',
-            'a.created_date',
+            'DATE_FORMAT(a.created_date,"%Y-%m-%d") as created_date',
             'a.updated_by',
             'a.updated_date',
         ];
 
         $builder = $this->db->table('items a');
         $builder->select($columns);
-        $builder->where('DATE_FORMAT(a.created_date,"%Y-%m-%d")',$dateNow);
+        $builder->where('a.bidder_id',$bidderId);
+        $builder->where('a.paid',null);
         $builder->orderBy('a.id','DESC');
         $query = $builder->get();
         return  $query->getResultArray();

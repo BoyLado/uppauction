@@ -39,39 +39,29 @@ const ITEMS = (function(){
 		});
 	}
 
-	thisItems.loadItems = function()
+	thisItems.loadWinningItems = function()
 	{
 		$('body').waitMe(_waitMeLoaderConfig);
 		$.ajax({
-			/* ItemController->loadItems() */
-		  url : `${baseUrl}/portal/load-items`,
+			/* ItemController->loadWinningItems() */
+		  url : `${baseUrl}/portal/load-winning-items`,
 		  method : 'get',
 		  dataType: 'json',
 		  success : function(data)
 		  {
 		  	let items = '';
 		  	let count = 0;
+		  	let totalAmount = 0;
 		  	data.forEach(function(value,key){
 		  		items += `<div class="col-sm-12 col-md-6 col-lg-6">
 				              <div class="card card-outline card-primary">
 				                <div class="card-header">
 				                  <h3 class="card-title">Item #${value['item_number']}</h3>
 				                  <div class="float-right">
-				                    <a href="javascript:void(0)" data-toggle="dropdown">
-				                      <i class="nav-icon fas fa-ellipsis-v"></i>
-				                    </a>
-				                    <div class="dropdown-menu" style="">
-				                      <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.selectItem(${value['id']});">
-				                        <i class="fa fa-pen mr-1"></i>Edit
-				                      </a>
-				                      <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.removeItem(${value['id']});">
-				                        <i class="fa fa-trash mr-1"></i>Delete
-				                      </a>
-				                    </div>
+				                    ${(value['paid'] == 1)? 'PAID' : '<span class="text-red">UNPAID</span>'}
 				                  </div>
 				                </div>
 				                <div class="card-body">
-				                  <h5>WINNER: <span class="text-primary text-bold">${value['bidder_number']} - ${value['bidder_name']}</span></h5>
 				                  <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$${value['winning_amount']}</span></h5>
 				                  <h5>ITEM DESCRIPTION:</h5>
 				                  <h6 class="text-muted" id="lbl_description">${value['item_description']}</h6>
@@ -79,6 +69,7 @@ const ITEMS = (function(){
 				              </div>
 				            </div>`;
 				  count++;
+				  totalAmount += parseFloat(value['winning_amount']);
 		  	});
 
 		  	if(count == 0)
@@ -92,7 +83,42 @@ const ITEMS = (function(){
 
 		  	$('#div_items').html(items);
 
+		  	$('#txt_amount').val(totalAmount);
+		  	$('#card-button').html(`Pay $${(totalAmount).toFixed(2)}`);
+
 		  	$('body').waitMe('hide');
+		  }
+		});
+	}
+
+	thisItems.createPayment = function(cardToken)
+	{
+		let formData = new FormData();
+
+		formData.set('cardToken',cardToken);
+
+		$('body').waitMe(_waitMeLoaderConfig);
+		
+		$.ajax({
+			/* ItemController->createPayment() */
+		  url : `${baseUrl}/portal/load-create-payment`,
+		  method : 'post',
+		  dataType: 'json',
+		  processData: false, // important
+		  contentType: false, // important
+		  data : formData,
+		  success : function(result)
+		  {
+		  	console.log(result);
+		  	$('body').waitMe('hide');
+
+        Toast.fire({
+	        icon: 'success',
+	        title: 'Success! <br>Payment Sent.',
+	      });
+		  	setTimeout(function(){
+          window.location.replace(`${baseUrl}/portal/auction-items`);
+        }, 2000);
 		  }
 		});
 	}

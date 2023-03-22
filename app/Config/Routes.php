@@ -109,14 +109,14 @@ $routes->get('portal/download-conflicts/(:any)', 'Portal\BidderController::downl
 //////////////////////// ITEMS /////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
-$routes->get('portal/load-items', 'Portal\ItemController::loadItems');
+$routes->get('portal/load-winning-items', 'Portal\ItemController::loadWinningItems');
 $routes->post('portal/add-item', 'Portal\ItemController::addItem');
 $routes->get('portal/select-item', 'Portal\ItemController::selectItem');
 $routes->post('portal/edit-item', 'Portal\ItemController::editItem');
 $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
 $routes->get('portal/load-list-payments', 'Portal\ItemController::listPayments');
-$routes->get('portal/load-create-payment', 'Portal\ItemController::createPayment');
+$routes->post('portal/load-create-payment', 'Portal\ItemController::createPayment');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// WINNERS /////////////////////////////////////

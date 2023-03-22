@@ -112,15 +112,28 @@
           <h5>Payment Form</h5>
           <div class="card">
             <div class="card-body">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input type="text" class="form-control mt-0" id="inputEmail3" placeholder="First Name *">
+              </div>
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input type="text" class="form-control mt-0" id="inputEmail3" placeholder="Last Name *">
+              </div>
+              <div class="form-group">
+                <label>Email Address*</label>
+                <input type="email" class="form-control mt-0" id="inputEmail3" placeholder="Email Address *">
+              </div>
               <form id="form_payment">
                 <div id="card-container"></div>
-                <button id="card-button" type="button">Pay $1.00</button>
+                <input type="hidden" id="txt_amount">
+                <button id="card-button" type="button">Pay $0.00</button>
               </form> 
             </div>
           </div>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-8">
-          <h5>Auction Item Lists (<?php echo date('Y-m-d'); ?>)</h5>
+          <h5>Auction Winning Items</h5>
           <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
             <div class="row" id="div_items">
               <!-- <div class="col-sm-12 col-md-6 col-lg-6">
@@ -285,8 +298,8 @@
 
 <script type="text/javascript">
 
-  const appId = 'sandbox-sq0idb-FLjCK6tr1hOWRUdfSHlGpw';
-  const locationId = 'L4Z4BWM9K96AR';
+  const appId = 'sandbox-sq0idb-os8hvBheMABtzl3HhNLdXA';
+  const locationId = 'L9K4W3J739S2N';
 
   async function initializeCard(payments) {
     const card = await payments.card();
@@ -295,53 +308,59 @@
     return card;
   }
 
-  async function createPayment(token) {
-    const body = JSON.stringify({
-      locationId,
-      sourceId: token,
-    });
+  // async function createPayment(token) {
+  //   const body = JSON.stringify({
+  //     locationId,
+  //     sourceId: token,
+  //   });
 
-    const paymentResponse = await fetch('/payment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body,
-    });
+  //   const paymentResponse = await fetch('/payment', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body,
+  //   });
 
-    if (paymentResponse.ok) {
-      return paymentResponse.json();
-    }
+  //   if (paymentResponse.ok) {
+  //     return paymentResponse.json();
+  //   }
 
-    const errorBody = await paymentResponse.text();
-    throw new Error(errorBody);
-  }
+  //   const errorBody = await paymentResponse.text();
+  //   throw new Error(errorBody);
+  // }
 
-  async function tokenize(paymentMethod) {
+  async function tokenize(paymentMethod) 
+  {
     const tokenResult = await paymentMethod.tokenize();
-    if (tokenResult.status === 'OK') {
+    if (tokenResult.status === 'OK') 
+    {
       return tokenResult.token;
-    } else {
+    } 
+    else 
+    {
       let errorMessage = `Tokenization failed with status: ${tokenResult.status}`;
-      if (tokenResult.errors) {
+      if (tokenResult.errors) 
+      {
         errorMessage += ` and errors: ${JSON.stringify(
           tokenResult.errors
         )}`;
       }
-
       throw new Error(errorMessage);
     }
   }
 
   // status is either SUCCESS or FAILURE;
-  function displayPaymentResults(status) {
-    const statusContainer = document.getElementById(
-      'payment-status-container'
-    );
-    if (status === 'SUCCESS') {
+  function displayPaymentResults(status) 
+  {
+    const statusContainer = document.getElementById('payment-status-container');
+    if (status === 'SUCCESS') 
+    {
       statusContainer.classList.remove('is-failure');
       statusContainer.classList.add('is-success');
-    } else {
+    } 
+    else 
+    {
       statusContainer.classList.remove('is-success');
       statusContainer.classList.add('is-failure');
     }
@@ -350,48 +369,58 @@
   }
 
   $(document).ready(async function(){
-    if (!window.Square) {
+    if (!window.Square) 
+    {
       throw new Error('Square.js failed to load properly');
     }
 
     let payments;
-    try {
+    try 
+    {
       payments = window.Square.payments(appId, locationId);
-    } catch {
-      const statusContainer = document.getElementById(
-        'payment-status-container'
-      );
+    } 
+    catch 
+    {
+      const statusContainer = document.getElementById('payment-status-container');
       statusContainer.className = 'missing-credentials';
       statusContainer.style.visibility = 'visible';
       return;
     }
 
     let card;
-    try {
+    try 
+    {
       card = await initializeCard(payments);
-    } catch (e) {
-      console.error('Initializing Card failed', e);
+    } 
+    catch (e) 
+    {
+      alert('Initializing Card failed', e);
       return;
     }
 
     // Checkpoint 2.
-    async function handlePaymentMethodSubmission(event, paymentMethod) {
+    async function handlePaymentMethodSubmission(event, paymentMethod) 
+    {
       event.preventDefault();
 
-      try {
-        // disable the submit button as we await tokenization and make a payment request.
-        cardButton.disabled = true;
-        const token = await tokenize(paymentMethod);
-
-        console.log(token);
-        // const paymentResults = await createPayment(token);
-        // displayPaymentResults('SUCCESS');
-
-        // console.debug('Payment Success', paymentResults);
-      } catch (e) {
-        cardButton.disabled = false;
-        displayPaymentResults('FAILURE');
-        console.error(e.message);
+      if($('#txt_amount').val() == 0)
+      {
+        alert('Zero');
+      }
+      else
+      {
+        try 
+        {
+          // disable the submit button as we await tokenization and make a payment request.
+          cardButton.disabled = true;
+          const token = await tokenize(paymentMethod);
+          ITEMS.createPayment(token);
+        }
+        catch (e) 
+        {
+          cardButton.disabled = false;
+          alert(e.message);
+        }
       }
     }
 
@@ -424,9 +453,7 @@
     //
 
 
-
-
-    ITEMS.loadItems();
+    ITEMS.loadWinningItems();
     ITEMS.loadBidders('slc_bidderNumber');
 
     $('#txt_itemNumber').focus();

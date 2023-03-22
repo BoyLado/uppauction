@@ -17,13 +17,14 @@ class ItemController extends BaseController
         $this->items = model('Portal/Items');
     }
 
-    public function loadItems()
+    public function loadWinningItems()
     {
         // if(session()->has('upp_user_loggedIn'))
         // {
         //     if(session()->get('upp_user_loggedIn'))
         //     {
-                $arrResult = $this->items->loadItems(date('Y-m-d'));
+                $bidderId = $this->session->get('upp_user_id');
+                $arrResult = $this->items->loadWinningItems($bidderId);
                 return $this->response->setJSON($arrResult);
         //     }
         //     else
@@ -63,8 +64,19 @@ class ItemController extends BaseController
     {
         $fields = $this->request->getPost();
 
-        $sourceId = $fields['sourceId'];
-        $amount = $fields['txt_amount'];
+        $cardToken = $fields['cardToken'];
+        $paymentAmount = 0;
+
+        $bidderId = $this->session->get('upp_user_id');
+        $arrWinningItems = $this->items->loadWinningItems($bidderId);
+
+        foreach ($arrWinningItems as $key => $value) 
+        {
+            $paymentAmount += (float)$value['winning_amount'];
+        }
+
+        $paymentAmount = number_format($paymentAmount,2);
+        $paymentAmount = preg_replace('/\./', '', $paymentAmount);
 
         $client = new SquareClient([
             'accessToken' => getenv('SQUARE_ACCESS_TOKEN'),
@@ -72,12 +84,12 @@ class ItemController extends BaseController
         ]);
 
         $amount_money = new \Square\Models\Money();
-        $amount_money->setAmount($amount);
+        $amount_money->setAmount($paymentAmount);
         $amount_money->setCurrency('USD');
 
         $idempotencyKey = uniqid('upp_'); 
         $body = new \Square\Models\CreatePaymentRequest(
-            $sourceId,
+            $cardToken,
             $idempotencyKey,
             $amount_money
         );
@@ -87,12 +99,19 @@ class ItemController extends BaseController
         $api_response = $client->getPaymentsApi()->createPayment($body);
         if ($api_response->isSuccess()) 
         {
-            $arrResult = $api_response->getResult();
+            $arrResult['Success'] = $api_response->getResult();
         }
         else 
         {
-            $arrResult = $api_response->getErrors();
+            $arrResult['Error'] = $api_response->getErrors();
         }
+
+        // $arrResult = [
+
+        //     'cardToken' => $cardToken,
+        //     'paymentAmount' => $paymentAmount
+
+        // ];
 
         return $this->response->setJSON($arrResult);
     }
