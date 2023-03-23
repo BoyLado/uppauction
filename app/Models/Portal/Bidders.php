@@ -85,19 +85,30 @@ class Bidders extends Model
 
     ////////////////////////////////////////////////////////////
     ///// IndexController->forgotPassword();
+    ///// PaymentController->createPayment();
     ////////////////////////////////////////////////////////////
     public function selectBidder($whereParams)
     {
         $columns = [
-            'id as bidder_id',
-            'first_name',
-            'last_name',
-            'auth_code'
+            'a.id as bidder_id',
+            'a.bidder_number',
+            'a.first_name',
+            'a.last_name',
+            'a.address',
+            'a.phone_number',
+            'a.email',
+            'a.auth_code',
+            'a.id_number',
+            'a.id_picture',
+            'a.season_pass',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date',
         ];
 
-        $builder = $this->db->table('bidders');
+        $builder = $this->db->table('bidders a')->select($columns);
         $builder->where($whereParams);
-        $builder->select($columns);        
         $query = $builder->get();
         return  $query->getRowArray();
     }
@@ -120,6 +131,20 @@ class Bidders extends Model
     }
 
 
+    ////////////////////////////////////////////////////////////
+    ///// MyAccountController->loadProfile()
+    ////////////////////////////////////////////////////////////
+    public function loadProfile($bidderId)
+    {
+        $columns = [
+          'id as bidder_id',
+          'CONCAT(first_name," ",last_name) as complete_name'
+        ];
+
+        $builder = $this->db->table('bidders')->select($columns)->where('id',$bidderId);
+        $query = $builder->get();
+        return  $query->getRowArray();
+    }
 
 
 

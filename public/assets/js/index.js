@@ -130,7 +130,7 @@ const INDEX = (function(){
             });
 
             setTimeout(function(){
-              window.location.replace(`${baseUrl}/login/${$('#txt_bidderAuthCode').val()}`);
+              window.location.replace(`${baseUrl}/login`);
             }, 1000);
           }
           else

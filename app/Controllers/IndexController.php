@@ -93,7 +93,7 @@ class IndexController extends BaseController
                 $emailSender    = 'customerservice@upickapallet.com';
                 $emailReceiver  = $fields['txt_bidderEmail'];
 
-                $arrResult = $this->bidders->selectBidder(['email'=>$emailReceiver]);
+                $arrResult = $this->bidders->selectBidder(['a.email'=>$emailReceiver]);
 
                 $data['subjectTitle']       = 'Forgot Password';
                 $data['bidderId']           = $arrResult['bidder_id'];

@@ -114,15 +114,15 @@
             <div class="card-body">
               <div class="form-group">
                 <label>First Name *</label>
-                <input type="text" class="form-control mt-0" id="inputEmail3" placeholder="First Name *">
+                <input type="text" class="form-control mt-0" id="txt_firstName" placeholder="First Name *">
               </div>
               <div class="form-group">
                 <label>Last Name *</label>
-                <input type="text" class="form-control mt-0" id="inputEmail3" placeholder="Last Name *">
+                <input type="text" class="form-control mt-0" id="txt_lastName" placeholder="Last Name *">
               </div>
               <div class="form-group">
                 <label>Email Address*</label>
-                <input type="email" class="form-control mt-0" id="inputEmail3" placeholder="Email Address *">
+                <input type="email" class="form-control mt-0" id="txt_emailAddress" placeholder="Email Address *">
               </div>
               <form id="form_payment">
                 <div id="card-container"></div>
@@ -298,8 +298,11 @@
 
 <script type="text/javascript">
 
-  const appId = 'sandbox-sq0idb-os8hvBheMABtzl3HhNLdXA';
-  const locationId = 'L9K4W3J739S2N';
+  // const appId = 'sandbox-sq0idb-os8hvBheMABtzl3HhNLdXA';
+  // const locationId = 'L9K4W3J739S2N';
+
+  const appId = 'sandbox-sq0idb-FLjCK6tr1hOWRUdfSHlGpw';
+  const locationId = 'L4Z4BWM9K96AR';
 
   async function initializeCard(payments) {
     const card = await payments.card();

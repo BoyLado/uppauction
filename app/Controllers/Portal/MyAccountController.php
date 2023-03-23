@@ -8,84 +8,8 @@ class MyAccountController extends BaseController
 {
     public function __construct()
     {
-        $this->users = model('Portal/Users');
+        $this->bidders = model('Portal/Bidders');
     }
-
-    public function loadUsers()
-    {
-        $whereParams = [
-            'id !=' => $this->session->get('upp_user_id'),
-            'user_status' => '1'
-        ];
-        $arrResult = $this->users->loadUsers($whereParams);
-        return $this->response->setJSON($arrResult);
-    }
-
-    public function loadPendingInvites()
-    {
-        $whereParams = ['user_status' => '0'];
-        $arrResult = $this->users->loadUsers($whereParams);
-        return $this->response->setJSON($arrResult);
-    }
-
-    // public function inviteNewUser()
-    // {
-    //     $this->validation->setRules([
-    //         'txt_userEmail' => [
-    //             'label'  => 'Email Address',
-    //             'rules'  => 'required|valid_email',
-    //             'errors' => [
-    //                 'required'    => 'User Email is required',
-    //                 'valid_email' => 'User Email must be valid'
-    //             ],
-    //         ],
-    //     ]);
-
-    //     if($this->validation->withRequest($this->request)->run())
-    //     {
-    //         $fields = $this->request->getPost();
-
-    //         $arrData = [
-    //             'user_email'     => $fields['txt_userEmail'],
-    //             'user_auth_code' => encrypt_code(generate_code()),
-    //             'user_status'    => '0',
-    //             'created_date'   => date('Y-m-d H:i:s')
-    //         ];
-
-    //         $result = $this->users->loadUser(['user_email'=>$fields['txt_userEmail']]);
-    //         if($result == null)
-    //         {
-    //             $result = $this->users->inviteNewUser($arrData);
-    //             if($result > 0)
-    //             {
-    //                 $emailSender    = 'ajhay.work@gmail.com';
-    //                 $emailReceiver  = $fields['txt_userEmail'];
-
-    //                 $arrResult = $this->users->loadUser(['user_email'=>$emailReceiver]);
-
-    //                 $data['subjectTitle'] = 'Invite New User';
-    //                 $data['userId'] = $arrResult['user_id'];
-    //                 $data['userAuthCode'] = decrypt_code($arrResult['user_auth_code']);
-
-    //                 $emailResult = sendSliceMail('invite_user',$emailSender,$emailReceiver,$data);
-    //                 $msgResult[] = ($emailResult == 1)? "Success" : $emailResult;
-    //             }
-    //             else
-    //             {
-    //                 $msgResult[] = "Error! <br>Database error!";
-    //             }
-    //         }
-    //         else
-    //         {
-    //             $msgResult[] = "Error! <br>Email already exist!";
-    //         }
-    //     }
-    //     else
-    //     {
-    //         $msgResult[] = $this->validation->getErrors();
-    //     }
-    //     return $this->response->setJSON($msgResult);
-    // }
 
 
     ////////////////////////////////////////////////////////////////////
@@ -93,9 +17,9 @@ class MyAccountController extends BaseController
     ////////////////////////////////////////////////////////////////////
     public function loadMyAccount()
     {
-        $userId = $this->session->get('upp_user_id');
+        $bidderId = $this->session->get('upp_bidder_id');
 
-        $arrResult = $this->users->loadProfile($userId);
+        $arrResult = $this->bidders->loadProfile($bidderId);
         return $this->response->setJSON($arrResult);
     }
 

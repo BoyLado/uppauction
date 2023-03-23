@@ -34,9 +34,9 @@ const PAYMENTS = (function(){
 			                <th>(${value['bidder_number']})-${value['bidder_name']}</th>
 			                <th>${value['sub_total']}</th>
 			                <th>${value['tax']}</th>
-			                <th>${value['card_transaction_fee']}</th>
-			                <th>${value['cash_payment']}</th>
-			                <th>${value['card_payment']}</th>
+			                <th>${(value['card_transaction_fee'] == null)? '0.00' : value['card_transaction_fee']}</th>
+			                <th>${(value['cash_payment'] == null)? '0.00' : value['cash_payment']}</th>
+			                <th>${(value['card_payment'] == null)? '0.00' : value['card_payment']}</th>
 			                <th>${value['total_payment']}</th>
 			                <th><a href="javascript:void(0)" onclick='PAYMENTS.loadPaymentDetails(${value['id']},${sample});'>Details</a></th>
 			              </tr>`;

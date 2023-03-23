@@ -44,7 +44,7 @@ class Payments extends Model
     ////////////////////////////////////////////////////////////
     ///// PaymentsController->loadPayments()
     ////////////////////////////////////////////////////////////
-    public function loadPayments()
+    public function loadPayments($whereParams)
     {
         $columns = [
             'a.id',
@@ -65,7 +65,7 @@ class Payments extends Model
 
         $builder = $this->db->table('payments a');
         $builder->select($columns);
-        $builder->where('a.status',1);
+        $builder->where($whereParams);
         $builder->orderBy('a.created_date','DESC');
         $query = $builder->get();
         return  $query->getResultArray();

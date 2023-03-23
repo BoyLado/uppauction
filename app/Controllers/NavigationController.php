@@ -63,7 +63,6 @@ class NavigationController extends BaseController
         $data['pageTitle'] = "Change Password | U Pick A Pallet";
         $data['bidderId'] = $bidderId;
         $data['bidderAuthCode'] = $bidderAuthCode;
-        $data['passwordAuthCode'] = $passwordAuthCode;
         return $this->slice->view('change_password', $data);
     }
 

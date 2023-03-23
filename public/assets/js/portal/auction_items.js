@@ -51,6 +51,9 @@ const ITEMS = (function(){
 		  {
 		  	let items = '';
 		  	let count = 0;
+		  	let tax = 0;
+		  	let transactionFee = 0;
+		  	let subTotal = 0;
 		  	let totalAmount = 0;
 		  	data.forEach(function(value,key){
 		  		items += `<div class="col-sm-12 col-md-6 col-lg-6">
@@ -69,7 +72,7 @@ const ITEMS = (function(){
 				              </div>
 				            </div>`;
 				  count++;
-				  totalAmount += parseFloat(value['winning_amount']);
+				  subTotal += parseFloat(value['winning_amount']);
 		  	});
 
 		  	if(count == 0)
@@ -83,8 +86,12 @@ const ITEMS = (function(){
 
 		  	$('#div_items').html(items);
 
-		  	$('#txt_amount').val(totalAmount);
-		  	$('#card-button').html(`Pay $${(totalAmount).toFixed(2)}`);
+		  	tax = subTotal * 0.0954;
+		  	transactionFee = (subTotal + tax) * 0.0435;
+		  	totalAmount = subTotal + tax + transactionFee;  
+
+		  	$('#txt_amount').val(totalAmount.toFixed(2));
+		  	$('#card-button').html(`Pay $${totalAmount.toFixed(2)}`);
 
 		  	$('body').waitMe('hide');
 		  }
@@ -96,11 +103,14 @@ const ITEMS = (function(){
 		let formData = new FormData();
 
 		formData.set('cardToken',cardToken);
+		formData.set('txt_emailAddress',$('#txt_emailAddress').val());
+		formData.set('txt_firstName',$('#txt_firstName').val());
+		formData.set('txt_lastName',$('#txt_lastName').val());
 
 		$('body').waitMe(_waitMeLoaderConfig);
 		
 		$.ajax({
-			/* ItemController->createPayment() */
+			/* PaymentController->createPayment() */
 		  url : `${baseUrl}/portal/load-create-payment`,
 		  method : 'post',
 		  dataType: 'json',

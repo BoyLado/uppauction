@@ -58,14 +58,14 @@
                 <i class="nav-icon fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-menu" style="">
-                <a class="dropdown-item" href="javascript:void(0)" id="lnk_addAuctionEvent">
-                  <i class="fa fa-plus mr-1"></i>Add Auction Event
+                <a class="dropdown-item" href="javascript:void(0)" id="lnk_preRegistration">
+                  <i class="fa fa-plus mr-1"></i>Pre Registration
                 </a>
               </div>
             </div>
             <div class="d-none d-lg-block">
-              <button type="button" class="btn btn-default btn-sm" id="btn_addAuctionEvent">
-                <i class="fa fa-plus mr-1"></i> Add Auction Event
+              <button type="button" class="btn btn-default btn-sm" id="btn_preRegistration">
+                <i class="fa fa-plus mr-1"></i> Pre Registration
               </button>
             </div>
           </div>
@@ -90,30 +90,24 @@
         </div>
       </div>
 
-      <div class="modal fade" id="modal_auctionEvent" role="dialog">
+      <div class="modal fade" id="modal_preRegistration" role="dialog">
         <div class="modal-dialog modal-md" role="document">
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
-              <h5 class="modal-title" id="lbl_header"><i class="fa fa-plus mr-1"></i> Add New Event</h5>
+              <h5 class="modal-title" id="lbl_header"><i class="fa fa-plus mr-1"></i> Pre Registration</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
 
-              <form id="form_auctionEvent">
-                <input type="hidden" id="txt_auctionId" name="txt_auctionId">
-                <label>Auction Event Title:</label>
-                <input type="text" class="form-control" id="txt_title" name="txt_title">
-                <label>Auction Event Details:</label>
-                <textarea class="form-control" rows="3" id="txt_description" name="txt_description"></textarea>
-                <label>Auction Date</label>
-                <input type="date" class="form-control" id="txt_date" name="txt_date">
+              <form id="form_preRegistration">
+                <h1>For Approval!</h1>
               </form>
 
             </div>
             <div class="modal-footer modal-footer--sticky">
-              <button type="submit" class="btn btn-primary" id="btn_saveEvent" form="form_auctionEvent">Submit</button>
+              <button type="submit" class="btn btn-primary" id="btn_saveEvent" form="form_preRegistration">Submit</button>
             </div>
           </div>
         </div>

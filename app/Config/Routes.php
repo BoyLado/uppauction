@@ -119,7 +119,6 @@ $routes->post('portal/edit-item', 'Portal\ItemController::editItem');
 $routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
 
 $routes->get('portal/load-list-payments', 'Portal\ItemController::listPayments');
-$routes->post('portal/load-create-payment', 'Portal\ItemController::createPayment');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// WINNERS /////////////////////////////////////
@@ -133,7 +132,7 @@ $routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerIte
 ////////////////////////////////////////////////////////////////////
 $routes->get('portal/load-payments', 'Portal\PaymentController::loadPayments');
 $routes->get('portal/load-payment-details', 'Portal\PaymentController::loadPaymentDetails');
-$routes->post('portal/add-payment', 'Portal\PaymentController::addPayment');
+$routes->post('portal/load-create-payment', 'Portal\PaymentController::createPayment');
 
 
 ////////////////////////////////////////////////////////////////////
