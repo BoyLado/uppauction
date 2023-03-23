@@ -27,17 +27,29 @@
       background-position: center; /* Center the image */
       background-repeat: no-repeat; /* Do not repeat the image */
     }
+    #signbutton{
+
+  border-color: white;
+  color: white;
+  background-color: #22859F;
+}
+#signbutton{
+
+  border-color: white;
+  color: white;
+}
+
 
   </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url(); ?>">U PICK A PALLET<b>LLC</b> </a>
+    <!-- <a href="<?php echo base_url(); ?>">U PICK A PALLET<b>LLC</b> </a> -->
   </div>
   <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body">
+  <div  class="card">
+    <div id="signbutton" class="card-body login-card-body">
       <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
       <form id="form_forgotPassword">
@@ -45,7 +57,7 @@
           <input type="email" class="form-control form-control-sm" id="txt_bidderEmail" name="txt_bidderEmail" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span style="color: white;"class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
