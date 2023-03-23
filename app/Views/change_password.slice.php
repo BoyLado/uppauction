@@ -31,9 +31,8 @@
       <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
 
       <form id="form_changePassword">
-        <input type="hidden" id="txt_userId" name="txt_userId" value="{{ $userId }}">
-        <input type="hidden" id="txt_userAuthCode" name="txt_userAuthCode" value="{{ $userAuthCode }}">
-        <input type="hidden" id="txt_passwordAuthCode" name="txt_passwordAuthCode" value="{{ $passwordAuthCode }}">
+        <input type="hidden" id="txt_bidderId" name="txt_bidderId" value="{{ $bidderId }}">
+        <input type="hidden" id="txt_bidderAuthCode" name="txt_bidderAuthCode" value="{{ $bidderAuthCode }}">
         <div class="input-group mb-3">
           <input type="password" class="form-control form-control-sm" id="txt_newPassword" name="txt_newPassword" placeholder="New Password">
           <div class="input-group-append">

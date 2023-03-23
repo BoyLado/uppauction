@@ -8,21 +8,21 @@ class IndexController extends BaseController
 {
     public function __construct()
     {
-        $this->users = model('Portal/Users');
+        $this->bidders = model('Portal/Bidders');
     }
 
     public function login()
     {
         $this->validation->setRules([
-            'txt_userEmail' => [
-                'label'  => 'User Email',
+            'txt_bidderEmail' => [
+                'label'  => 'Bidder Email',
                 'rules'  => 'required',
                 'errors' => [
-                    'required' => 'User Email/Username is required'
+                    'required' => 'Bidder Email is required'
                 ],
             ],
-            'txt_userPassword' => [
-                'label'  => 'User Password',
+            'txt_bidderPassword' => [
+                'label'  => 'Bidder Password',
                 'rules'  => 'required',
                 'errors' => [
                     'required' => 'Password is Incorrect',
@@ -35,21 +35,20 @@ class IndexController extends BaseController
             $fields = $this->request->getPost();
 
             $logInRequirements = [
-              'user_email'      => $fields['txt_userEmail'],
-              'user_name'       => $fields['txt_userEmail'],
-              'user_password'   => encrypt_code($fields['txt_userPassword']),
-              'user_status'     => '1', //meaning active
+              'email'      => $fields['txt_bidderEmail'],
+              'password'   => encrypt_code($fields['txt_bidderPassword']),
+              'status'     => '1', //meaning active
             ];
 
-            $validateLogInResult = $this->users->validateLogIn($logInRequirements);
+            $validateLogInResult = $this->bidders->validateLogIn($logInRequirements);
 
             if(!empty($validateLogInResult))
             {
               $userData = [
-                'upp_user_id'        => $validateLogInResult['user_id'],
-                'upp_user_firstName' => $validateLogInResult['first_name'],
-                'upp_user_lastName'  => $validateLogInResult['last_name'],
-                'upp_user_loggedIn'  => true
+                'upp_bidder_id'        => $validateLogInResult['bidder_id'],
+                'upp_bidder_firstName' => $validateLogInResult['first_name'],
+                'upp_bidder_lastName'  => $validateLogInResult['last_name'],
+                'upp_bidder_loggedIn'  => true
               ];
               $this->session->set($userData);
 
@@ -71,12 +70,12 @@ class IndexController extends BaseController
     public function forgotPassword()
     {
         $this->validation->setRules([
-            'txt_userEmail' => [
-                'label'  => 'User Email',
+            'txt_bidderEmail' => [
+                'label'  => 'Bidder Email',
                 'rules'  => 'required|valid_email',
                 'errors' => [
-                    'required' => 'User Email is required',
-                    'valid_email' => 'User Email must be valid'
+                    'required' => 'Bidder Email is required',
+                    'valid_email' => 'Bidder Email must be valid'
                 ],
             ]
         ]);
@@ -86,21 +85,20 @@ class IndexController extends BaseController
             $fields = $this->request->getPost();
 
             $arrData = [
-                'password_auth_code' => encrypt_code(generate_code())
+                'auth_code' => encrypt_code(generate_code())
             ];
-            $result = $this->users->createPasswordAuthCode($arrData, $fields['txt_userEmail']);
+            $result = $this->bidders->createPasswordAuthCode($arrData, $fields['txt_bidderEmail']);
             if($result > 0)
             {
-                $emailSender    = 'ajhay.work@gmail.com';
-                $emailReceiver  = $fields['txt_userEmail'];
+                $emailSender    = 'customerservice@upickapallet.com';
+                $emailReceiver  = $fields['txt_bidderEmail'];
 
-                $arrResult = $this->users->loadUser(['user_email'=>$emailReceiver]);
+                $arrResult = $this->bidders->selectBidder(['email'=>$emailReceiver]);
 
                 $data['subjectTitle']       = 'Forgot Password';
-                $data['userId']             = $arrResult['user_id'];
-                $data['userName']           = $arrResult['first_name'] . " " . $arrResult['last_name'];
-                $data['userAuthCode']       = decrypt_code($arrResult['user_auth_code']);
-                $data['passwordAuthCode']   = decrypt_code($arrResult['password_auth_code']);
+                $data['bidderId']           = $arrResult['bidder_id'];
+                $data['bidderName']         = $arrResult['first_name'] . " " . $arrResult['last_name'];
+                $data['bidderAuthCode']     = decrypt_code($arrResult['auth_code']);
 
                 $emailResult = sendSliceMail('forgot_password',$emailSender,$emailReceiver,$data);
                 $msgResult[] = ($emailResult == 1)? "Success" : $emailResult;
@@ -142,15 +140,15 @@ class IndexController extends BaseController
             $fields = $this->request->getPost();
             
             $arrData = [
-                'user_password' => encrypt_code($fields['txt_newPassword'])
+                'password' => encrypt_code($fields['txt_newPassword'])
             ];
 
             $whereParams = [
-                'id' => $fields['txt_userId'],
-                'password_auth_code' => encrypt_code($fields['txt_passwordAuthCode'])
+                'id' => $fields['txt_bidderId'],
+                'auth_code' => encrypt_code($fields['txt_bidderAuthCode'])
             ];
 
-            $result = $this->users->changePassword($arrData, $whereParams);
+            $result = $this->bidders->changePassword($arrData, $whereParams);
             $msgResult[] = ($result == 1)? "Success" : "Database error";
         }
         else
@@ -161,77 +159,13 @@ class IndexController extends BaseController
         return $this->response->setJSON($msgResult);
     }
 
-    public function signUp()
-    {
-      $this->validation->setRules([
-            'slc_salutation' => [
-                'label'  => 'Salutation',
-                'rules'  => 'required',
-                'errors' => [
-                    'required' => 'Salutation is required'
-                ],
-            ],
-            'txt_firstName' => [
-                'label'  => 'First Name',
-                'rules'  => 'required',
-                'errors' => [
-                    'required' => 'First Name is required'
-                ],
-            ],
-            'txt_userEmail' => [
-                'label'  => 'Email Address',
-                'rules'  => 'required|valid_email',
-                'errors' => [
-                    'required' => 'User Email is required',
-                    'valid_email' => 'User Email must be valid'
-                ],
-            ],
-            'txt_userPassword' => [
-                'label'  => 'Password',
-                'rules'  => 'required',
-                'errors' => [
-                    'required' => 'Password is required'
-                ],
-            ]
-        ]);
-
-        if($this->validation->withRequest($this->request)->run())
-        {
-            $fields = $this->request->getPost();
-
-            $arrData = [
-                'salutation'    => $fields['slc_salutation'],
-                'first_name'    => $fields['txt_firstName'],
-                'last_name'     => $fields['txt_lastName'],
-                'user_email'    => $fields['txt_userEmail'],
-                'user_password' => encrypt_code($fields['txt_userPassword']),
-                'user_status'   => '1'
-            ];
-
-            $whereParams = [
-                'id' => $fields['txt_userId'],
-                'user_auth_code' => encrypt_code($fields['txt_userAuthCode']),
-                'user_status' => '0'
-            ];
-
-            $result = $this->users->signUp($arrData, $whereParams);
-            $msgResult[] = ($result > 0)? "Success" : "Database error";
-        }
-        else
-        {
-            $msgResult[] = strip_tags(validation_errors());
-        }
-
-        return $this->response->setJSON($msgResult);
-    }
-
     public function logout()
     {
         $userData = [
-            'arkonorllc_user_id',
-            'arkonorllc_user_firstName',
-            'arkonorllc_user_lastName',
-            'arkonorllc_user_loggedIn'
+            'upp_bidder_id',
+            'upp_bidder_firstName',
+            'upp_bidder_lastName',
+            'upp_bidder_loggedIn'
         ];
         $this->session->destroy();
         return redirect()->to(base_url());

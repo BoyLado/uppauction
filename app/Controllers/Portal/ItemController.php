@@ -113,6 +113,15 @@ class ItemController extends BaseController
 
         // ];
 
+        // $body->setCustomerId('1');
+        // $body->setBuyerEmailAddress('ajhay.dev@gmail.com');
+        // $body->setBillingAddress($billing_address);
+
+        // $billing_address = new \Square\Models\Address();
+        // $billing_address->setCountry('US');
+        // $billing_address->setFirstName('Jay');
+        // $billing_address->setLastName('Last');
+
         return $this->response->setJSON($arrResult);
     }
 

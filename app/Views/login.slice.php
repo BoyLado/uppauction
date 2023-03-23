@@ -57,7 +57,7 @@
 
         <form id="form_login">
           <div class="input-group mb-3">
-            <input type="text" class="form-control form-control-sm text-white" style="background: rgba(0, 0, 0, 0.5);" id="txt_userEmail" name="txt_userEmail" placeholder="Email or User Name" required>
+            <input type="text" class="form-control form-control-sm text-white" style="background: rgba(0, 0, 0, 0.5);" id="txt_bidderEmail" name="txt_bidderEmail" placeholder="Email" required>
             <div class="input-group-append">
               <div class="input-group-text" style="background: rgba(0, 0, 0, 0.5);">
                 <span class="fas fa-user text-white"></span>
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control form-control-sm text-white" style="background: rgba(0, 0, 0, 0.5);" id="txt_userPassword" name="txt_userPassword" placeholder="Password" required>
+            <input type="password" class="form-control form-control-sm text-white" style="background: rgba(0, 0, 0, 0.5);" id="txt_bidderPassword" name="txt_bidderPassword" placeholder="Password" required>
             <div class="input-group-append">
               <div class="input-group-text" style="background: rgba(0, 0, 0, 0.5);">
                 <span class="fas fa-lock text-white"></span>
@@ -74,7 +74,7 @@
           </div>
           <div class="row">
             <div class="col-8">
-              <!-- <a href="<?php echo base_url(); ?>/forgot-password" class="text-muted">Forgot password?</a> -->
+              <a href="<?php echo base_url(); ?>/forgot-password" class="text-white">Forgot password?</a>
             </div>
             <!-- /.col -->
             <div class="col-4">

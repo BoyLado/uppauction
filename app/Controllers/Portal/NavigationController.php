@@ -16,9 +16,9 @@ class NavigationController extends BaseController
 
     public function auctionDashboard()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Dashboard | UPP Auction Services";
                 $data['customScripts'] = 'auction_dashboard';
@@ -37,9 +37,9 @@ class NavigationController extends BaseController
 
     public function auctionBidders()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Bidders | UPP Auction Services";
                 $data['customScripts'] = 'auction_bidders';
@@ -58,9 +58,9 @@ class NavigationController extends BaseController
 
     public function auctionItems()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Items | UPP Auction Services";
                 $data['customScripts'] = 'auction_items';
@@ -79,9 +79,9 @@ class NavigationController extends BaseController
 
     public function auctionWinners()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Winners | UPP Auction Services";
                 $data['customScripts'] = 'auction_winners';
@@ -100,9 +100,9 @@ class NavigationController extends BaseController
 
     public function auctionPayments()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Payments | UPP Auction Services";
                 $data['customScripts'] = 'auction_payments';
@@ -121,9 +121,9 @@ class NavigationController extends BaseController
 
     public function auctionCalendar()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Auction Calendar | UPP Auction Services";
                 $data['customScripts'] = 'auction_calendar';
@@ -142,9 +142,9 @@ class NavigationController extends BaseController
 
     public function registeredBidders()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "Registered Bidders | UPP Auction Services";
                 $data['customScripts'] = 'auction_bidders';
@@ -163,9 +163,9 @@ class NavigationController extends BaseController
 
     public function myAccount()
     {
-        if($this->session->has('upp_user_loggedIn'))
+        if($this->session->has('upp_bidder_loggedIn'))
         {
-            if($this->session->get('upp_user_loggedIn'))
+            if($this->session->get('upp_bidder_loggedIn'))
             {
                 $data['pageTitle'] = "My Account | UPP Auction Services";
                 $data['customScripts'] = 'my_account';

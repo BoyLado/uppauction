@@ -49,6 +49,16 @@ class CreateBiddersTable extends Migration
                 'constraint'        => 255,
                 'null'              => true,
             ],
+            'password'          => [
+                'type'              => 'VARCHAR',
+                'constraint'        => 255,
+                'null'              => true,
+            ],
+            'auth_code'         => [
+                'type'              => 'VARCHAR',
+                'constraint'        => 255,
+                'null'              => true,
+            ],
             'id_number'         => [
                 'type'              => 'VARCHAR',
                 'constraint'        => 100,

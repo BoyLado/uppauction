@@ -20,7 +20,7 @@ const INDEX = (function(){
 
     $.ajax({
       // IndexController->login();
-      url : `${baseUrl}/user-login`,
+      url : `${baseUrl}/bidder-login`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -28,8 +28,8 @@ const INDEX = (function(){
       data : formData,
       success : function(result)
       {
-        $('#txt_userEmail').val('');
-        $('#txt_userPassword').val('');
+        $('#txt_bidderEmail').val('');
+        $('#txt_bidderPassword').val('');
 
         console.log(result);
 
@@ -67,7 +67,7 @@ const INDEX = (function(){
 
     $.ajax({
       // IndexController->forgotPassword();
-      url : `${baseUrl}/user-forgot-password`,
+      url : `${baseUrl}/bidder-forgot-password`,
       method : 'post',
       dataType: 'json',
       processData: false, // important
@@ -77,7 +77,7 @@ const INDEX = (function(){
       {
 
         console.log(result);
-        $('#txt_userEmail').val('');
+        $('#txt_bidderEmail').val('');
 
         if(result == "Success")
         {
@@ -111,7 +111,7 @@ const INDEX = (function(){
 
       $.ajax({
         // IndexController->changePassword();
-        url : `${baseUrl}/user-change-password`,
+        url : `${baseUrl}/bidder-change-password`,
         method : 'post',
         dataType: 'json',
         processData: false, // important
@@ -130,7 +130,7 @@ const INDEX = (function(){
             });
 
             setTimeout(function(){
-              window.location.replace(`${baseUrl}/login/${$('#txt_userAuthCode').val()}`);
+              window.location.replace(`${baseUrl}/login/${$('#txt_bidderAuthCode').val()}`);
             }, 1000);
           }
           else
@@ -153,63 +153,6 @@ const INDEX = (function(){
         title: 'Warning! <br>Password confirmation not match!'
       });
     }  
-  }
-
-  thisIndex.signUp = function(thisForm)
-  {
-    if($('#txt_userPassword').val() == $('#txt_confirmPassword').val())
-    {
-      let formData = new FormData(thisForm);
-
-      $('#btn_signUp').prop('disabled',true);
-      $('#btn_signUp').text('Please wait...');
-
-      $.ajax({
-        // IndexController->signUp();
-        url : `${baseUrl}/user-sign-up`,
-        method : 'post',
-        dataType: 'json',
-        processData: false, // important
-        contentType: false, // important
-        data : formData,
-        success : function(result)
-        {
-          $('#txt_userEmail').val('');
-
-          console.log(result);
-
-          if(result == "Success")
-          {
-            Toast.fire({
-              icon: 'success',
-              title: 'Success! <br>Sign-up complete!',
-            });
-          }
-          else
-          {
-            Toast.fire({
-              icon: 'warning',
-              title: 'Warning! <br>Your account is active, try login.'
-            });
-          }
-
-          setTimeout(function(){
-            window.location.replace(`${baseUrl}/login/${$('#txt_userAuthCode').val()}`);
-          }, 1000);
-
-          $('#btn_signUp').prop('disabled',false);
-          $('#btn_signUp').text('Register');
-        }
-      });
-    }
-    else
-    {
-      Toast.fire({
-        icon: 'warning',
-        title: 'Warning! <br>Password confirmation not match!'
-      });
-    }
-    
   }
 
 	return thisIndex;

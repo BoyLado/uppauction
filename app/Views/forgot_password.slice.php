@@ -42,7 +42,7 @@
 
       <form id="form_forgotPassword">
         <div class="input-group mb-3">
-          <input type="email" class="form-control form-control-sm" id="txt_userEmail" name="txt_userEmail" placeholder="Email">
+          <input type="email" class="form-control form-control-sm" id="txt_bidderEmail" name="txt_bidderEmail" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

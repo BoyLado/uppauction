@@ -44,8 +44,11 @@ $routes->get('/', 'NavigationController');
  *  FRONT END NAVIGATION 
  *  ------------------------------------------------------------------
  */
-$routes->get('contact-us', 'NavigationController::contactUs');
 $routes->get('login', 'NavigationController::login');
+$routes->get('forgot-password', 'NavigationController::forgotPassword');
+$routes->get('change-password/(:num)/(:any)', 'NavigationController::changePassword/$1/$2');
+
+$routes->get('contact-us', 'NavigationController::contactUs');
 
 $routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preRegistrationConfirmation/$1');
 
@@ -54,11 +57,11 @@ $routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preR
  * FRONT END FUNCTIONS
  * --------------------------------------------------------------------
  */
-$routes->post('user-login', 'IndexController::login');
-$routes->post('user-forgot-password', 'IndexController::forgotPassword');
-$routes->post('user-change-password', 'IndexController::changePassword');
-$routes->post('user-sign-up', 'IndexController::signUp');
-$routes->get('user-logout', 'IndexController::logout');
+$routes->post('bidder-login', 'IndexController::login');
+$routes->post('bidder-forgot-password', 'IndexController::forgotPassword');
+$routes->post('bidder-change-password', 'IndexController::changePassword');
+$routes->post('bidder-sign-up', 'IndexController::signUp');
+$routes->get('bidder-logout', 'IndexController::logout');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// PRE REGISTRATION //////////////////////////

@@ -6,10 +6,10 @@
 	<title></title>
 </head>
 <body>
-	<label>UserID: {{ $userId }}</label>
-	<label>Username: {{ $userName }}</label>
-	<label>Password Auth: {{ $passwordAuthCode }}</label>
+	<label>Bidder ID: {{ $bidderId }}</label>
+	<label>Bidder Name: {{ $bidderName }}</label>
+	<label>Auth Code: {{ $bidderAuthCode }}</label>
 	<br>
-	<a href="<?php echo base_url(); ?>/change-password/{{ $userId }}/{{ $userAuthCode }}/{{ $passwordAuthCode }}">Change Password</a>
+	<a href="<?php echo base_url(); ?>/change-password/{{ $bidderId }}/{{ $bidderAuthCode }}">Change Password</a>
 </body>
 </html>

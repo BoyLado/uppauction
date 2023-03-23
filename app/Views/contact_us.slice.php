@@ -60,15 +60,14 @@
     }
 
     #inputSubject:hover,#inputEmail:hover,#inputName:hover,#inputMessage:hover {
-    background-color: #f2f2f2;
-  }
-  #cardinline{
-
-    display:flex;
-  }
-#cardcolor{
-  background-color: #6EC1E4;
-}
+      background-color: #f2f2f2;
+    }
+    #cardinline{
+      display:flex;
+    }
+    #cardcolor{
+      background-color: #6EC1E4;
+    }
   </style>
 
 </head>
@@ -95,9 +94,17 @@
           <li class="nav-item">
             <a href="<?php echo base_url(); ?>/contact-us" class="nav-link text-bold">Contact Us</a>
           </li>
+          @if($loggedId == true)
+          <li class="nav-item">
+            <a href="<?php echo base_url(); ?>/portal/auction-dashboard" class="nav-link text-bold">
+              <i class="fa fa-user fa-sm mr-1"></i> {{ $bidderName }}
+            </a>
+          </li>
+          @else
           <li class="nav-item">
             <a href="<?php echo base_url(); ?>/login" class="nav-link text-bold">Sign In</a>
           </li>
+          @endif
         </ul>
       </div>
 

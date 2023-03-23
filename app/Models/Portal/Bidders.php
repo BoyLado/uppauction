@@ -41,142 +41,77 @@ class Bidders extends Model
     protected $afterDelete    = [];
 
 
+
+    ///////////////////////////////////////////// OUTSIDE SCRIPTS ///////////////////////////////////
+
     ////////////////////////////////////////////////////////////
-    ///// BidderController->loadBidders()
+    ///// IndexController->login();
     ////////////////////////////////////////////////////////////
-    public function loadBidders($order, $textSearch = "")
+    public function validateLogIn($logInRequirements)
     {
         $columns = [
-            'a.id',
-            'a.bidder_number',
-            'a.first_name',
-            'a.last_name',
-            'a.address',
-            'a.phone_number',
-            'a.email',
-            'a.id_number',
-            'a.id_picture',
-            'a.season_pass',
-            'a.created_by',
-            'a.created_date',
-            'a.updated_by',
-            'a.updated_date',
+          'id as bidder_id',
+          'first_name',
+          'last_name'
         ];
 
-        $builder = $this->db->table('bidders a')->select($columns)->orderBy('a.id',$order);
-        if($textSearch != "")
-        {
-            $builder->orLike('a.bidder_number',$textSearch);
-            $builder->orLike('a.first_name',$textSearch);
-            $builder->orLike('a.last_name',$textSearch);
-            $builder->orLike('a.email',$textSearch);
-        }
-        $builder->where('a.status',1);
-        $query = $builder->get();
-        return  $query->getResultArray();
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->addBidder()
-    ////////////////////////////////////////////////////////////
-    public function selectLastBidderNumber()
-    {
-        $columns = [
-            'a.id',
-            'a.bidder_number',
-            'a.first_name',
-            'a.last_name',
-            'a.address',
-            'a.phone_number',
-            'a.email',
-            'a.id_number',
-            'a.id_picture',
-            'a.season_pass',
-            'a.created_by',
-            'a.created_date',
-            'a.updated_by',
-            'a.updated_date',
+        $where = [
+            'email'     => $logInRequirements['email'],
+            'password'  => $logInRequirements['password'],
+            'status'    => 1 
         ];
 
-        $builder = $this->db->table('bidders a')->select($columns);
-        $builder->orderBy('a.id','DESC');
+        $builder = $this->db->table('bidders')->select($columns)->where($where);
         $query = $builder->get();
         return  $query->getRowArray();
     }
 
     ////////////////////////////////////////////////////////////
-    ///// BidderController->addBidder()
+    ///// IndexController->forgotPassword();
     ////////////////////////////////////////////////////////////
-    public function addBidder($arrData)
+    public function createPasswordAuthCode($arrData, $emailReceiver)
     {
         try {
             $this->db->transStart();
                 $builder = $this->db->table('bidders');
-                $builder->insert($arrData);
-                $insertId = $this->db->insertID();
+                $builder->where('email',$emailReceiver);
+                $builder->update($arrData);
             $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? $insertId : 0;
+            return ($this->db->transStatus() === TRUE)? 1 : 0;
         } catch (PDOException $e) {
             throw $e;
         }
     }
 
-
     ////////////////////////////////////////////////////////////
-    ///// BidderController->selectBidder()
+    ///// IndexController->forgotPassword();
     ////////////////////////////////////////////////////////////
-    public function selectBidder($bidderId)
+    public function selectBidder($whereParams)
     {
         $columns = [
-            'a.id',
-            'a.bidder_number',
-            'a.first_name',
-            'a.last_name',
-            'a.address',
-            'a.phone_number',
-            'a.email',
-            'a.id_number',
-            'a.id_picture',
-            'a.season_pass',
-            'a.created_by',
-            'a.created_date',
-            'a.updated_by',
-            'a.updated_date',
+            'id as bidder_id',
+            'first_name',
+            'last_name',
+            'auth_code'
         ];
 
-        $builder = $this->db->table('bidders a')->select($columns);
-        $builder->where('a.id',$bidderId);
+        $builder = $this->db->table('bidders');
+        $builder->where($whereParams);
+        $builder->select($columns);        
         $query = $builder->get();
         return  $query->getRowArray();
     }
 
     ////////////////////////////////////////////////////////////
-    ///// BidderController->editBidder()
+    ///// IndexController->changePassword()
     ////////////////////////////////////////////////////////////
-    public function editBidder($arrData, $bidderId)
-    {
-        try {
-            $this->db->transStart();
-                $this->db->table('bidders')
-                        ->where(['id'=>$bidderId])
-                        ->update($arrData);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->removeBidder()
-    ////////////////////////////////////////////////////////////
-    public function removeBidder($bidderId)
+    public function changePassword($arrData, $whereParams)
     {
         try {
             $this->db->transStart();
                 $builder = $this->db->table('bidders');
-                $builder->where(['id'=>$bidderId]);
-                $builder->update(['status'=>0]);
+                $builder->where($whereParams);
+                $builder->update($arrData);
             $this->db->transComplete();
             return ($this->db->transStatus() === TRUE)? 1 : 0;
         } catch (PDOException $e) {
@@ -184,155 +119,6 @@ class Bidders extends Model
         }
     }
 
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->checkOnDb()
-    ////////////////////////////////////////////////////////////
-    public function checkOnDb($bidderNumbers)
-    {
-        $columns = [
-            'a.id',
-            'a.bidder_number',
-            'a.first_name',
-            'a.last_name',
-            'a.address',
-            'a.phone_number',
-            'a.email',
-            'a.id_number',
-            'a.id_picture',
-            'a.created_by',
-            'a.created_date',
-            'a.updated_by',
-            'a.updated_date',
-        ];
-
-        $builder = $this->db->table('bidders a')->select($columns);
-        $builder->whereIn('a.bidder_number',$bidderNumbers);
-        $query = $builder->get();
-        return  $query->getResultArray();
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->uploadSeasonPass()
-    ////////////////////////////////////////////////////////////
-    public function addBidders($arrData)
-    {
-        try {
-            $this->db->transStart();
-                $builder = $this->db->table('bidders');
-                $builder->insertBatch($arrData);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->uploadSeasonPass()
-    ////////////////////////////////////////////////////////////
-    public function editBidders($arrData, $arrWhere)
-    {
-        try {
-            $this->db->transStart();
-                $builder = $this->db->table('bidders');
-                $builder->updateBatch($arrData, $arrWhere);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
-
-
-    ////////////////////////////////////////////////////////////
-    ///// BidderController->uploadSeasonPass()
-    ////////////////////////////////////////////////////////////
-    public function loadRegisteredBidders($order, $textSearch = "", $dateFilter = "")
-    {
-        $columns = [
-            'a.id',
-            'a.auction_date',
-            'a.confirmed',
-            'a.confirmed_date',
-            'a.created_date',
-            'b.id as bidder_id',
-            'b.bidder_number',
-            'b.first_name',
-            'b.last_name',
-            'b.address',
-            'b.phone_number',
-            'b.email',
-            'b.id_number',
-            'b.id_picture',
-            'b.season_pass'
-        ];
-
-        $builder = $this->db->table('bidder_registrations a');
-        $builder->select($columns);
-        $builder->join('bidders b','a.bidder_id = b.id','left');
-        $builder->orderBy('a.id',$order);
-        if($textSearch != "")
-        {
-            $builder->orLike('b.bidder_number',$textSearch);
-            $builder->orLike('b.first_name',$textSearch);
-            $builder->orLike('b.last_name',$textSearch);
-            $builder->orLike('b.email',$textSearch);
-        }
-        if($dateFilter != "")
-        {
-            $builder->where('DATE_FORMAT(a.auction_date,"%Y-%m-%d")',$dateFilter);
-        }
-        $builder->where('b.status',1);
-        $query = $builder->get();
-        return  $query->getResultArray();
-    }
-
-    public function loadBidderDetails($bidderId)
-    {
-        $columns = [
-            'a.id as registration_id',
-            'a.auction_date',
-            'a.confirmed',
-            'a.confirmed_date',
-            'a.created_date',
-            'b.id as bidder_id',
-            'b.bidder_number',
-            'b.first_name',
-            'b.last_name',
-            'b.address',
-            'b.phone_number',
-            'b.email',
-            'b.id_number',
-            'b.id_picture',
-            'b.season_pass'
-        ];
-
-        $builder = $this->db->table('bidder_registrations a');
-        $builder->select($columns);
-        $builder->join('bidders b','a.bidder_id = b.id','left');
-        $builder->where('a.bidder_id',$bidderId);
-        $builder->where('b.status',1);
-        $query = $builder->get();
-        return  $query->getRowArray();
-    }
-
-    public function loadBidderGuests($registrationId)
-    {
-        $columns = [
-            'a.id',
-            'a.guest_first_name',
-            'a.guest_last_name',
-            'a.guest_email',
-            'a.relation_to_bidder'
-        ];
-
-        $builder = $this->db->table('bidder_guests a');
-        $builder->select($columns);
-        $builder->where('a.registration_id',$registrationId);
-        $query = $builder->get();
-        return  $query->getResultArray();
-    }
 
 
 
@@ -423,6 +209,9 @@ class Bidders extends Model
         }
     }
 
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->confirmPreRegistration()
+    ////////////////////////////////////////////////////////////
     public function editBidderRegistration($arrData, $whereParams)
     {
         try {
