@@ -19,11 +19,21 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/dist/css/adminlte.min.css">
+  
+    <style type="text/css">
+    body{
+      background-image: url('<?php echo base_url(); ?>/public/assets/img/bg6.gif');
+      background-size: cover;
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* Do not repeat the image */
+    }
+
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url(); ?>"><b>Arkonor</b> LLC</a>
+    <a href="<?php echo base_url(); ?>">U PICK A PALLET<b>LLC</b> </a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

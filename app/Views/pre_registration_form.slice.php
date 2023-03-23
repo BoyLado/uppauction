@@ -92,22 +92,22 @@
       <!-- Right navbar links -->
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <li>
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="https://www.instagram.com/upickapallet1">
             <i class="fa-xl fa-brands fa-instagram"></i>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="https://www.facebook.com/upickapallet1">
             <i class="fa-xl fa-brands fa-square-facebook"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  href="#">
+          <a class="nav-link"  href="https://www.twitter.com/upickapallet">
             <i class="fa-xl fa-brands fa-square-twitter"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"  href="#">
+          <a class="nav-link"  href="https://www.youtube.com/@upickapalletmountvernonill974">
             <i class="fa-xl fa-brands fa-square-youtube"></i>
           </a>
         </li>

@@ -63,9 +63,12 @@
     background-color: #f2f2f2;
   }
   #cardinline{
+
     display:flex;
   }
-
+#cardcolor{
+  background-color: #6EC1E4;
+}
   </style>
 
 </head>
@@ -142,13 +145,13 @@
         <!-- page content here START -->
       <center>
         <div class="mb-5">
-            <h1>FEEDBACK/CONTACT US</h1> 
+            <h1>Feedback/Contact Us</h1> 
             
         </div>
       </center>
             <div class="row">
           <div class="col-sm-4">
-           <div class="card bg-gradient-primary">
+           <div id="cardcolor"class="card">
               <div class="card-body">
                 <center>
                 <i style="font-size: 30px;"class="fa-solid fa-location-dot"></i><br>
@@ -174,7 +177,7 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div class="card bg-gradient-primary">
+            <div id="cardcolor"class="card">
               <div class="card-body">
                 <center>
                 <i style="font-size: 30px;"class="fa-solid fa-envelope"></i><br>
