@@ -8,9 +8,6 @@ class NavigationController extends BaseController
 {
     public function __construct()
     {
-        // $this->campaigns        = model('Portal/Campaigns');
-        // $this->contacts         = model('Portal/Contacts');
-        // $this->organizations    = model('Portal/Organizations');
         $this->users        = model('Portal/Users');
     }
 
@@ -35,27 +32,6 @@ class NavigationController extends BaseController
         }
     }
 
-    public function auctionBidders()
-    {
-        if($this->session->has('upp_bidder_loggedIn'))
-        {
-            if($this->session->get('upp_bidder_loggedIn'))
-            {
-                $data['pageTitle'] = "Bidders | UPP Auction Services";
-                $data['customScripts'] = 'auction_bidders';
-                return $this->slice->view('portal.auction_bidders', $data);
-            }
-            else
-            {
-                return redirect()->to(base_url());
-            }
-        }
-        else
-        {
-            return redirect()->to(base_url());
-        }
-    }
-
     public function auctionItems()
     {
         if($this->session->has('upp_bidder_loggedIn'))
@@ -65,27 +41,6 @@ class NavigationController extends BaseController
                 $data['pageTitle'] = "Items | UPP Auction Services";
                 $data['customScripts'] = 'auction_items';
                 return $this->slice->view('portal.auction_items', $data);
-            }
-            else
-            {
-                return redirect()->to(base_url());
-            }
-        }
-        else
-        {
-            return redirect()->to(base_url());
-        }
-    }
-
-    public function auctionWinners()
-    {
-        if($this->session->has('upp_bidder_loggedIn'))
-        {
-            if($this->session->get('upp_bidder_loggedIn'))
-            {
-                $data['pageTitle'] = "Winners | UPP Auction Services";
-                $data['customScripts'] = 'auction_winners';
-                return $this->slice->view('portal.auction_winners', $data);
             }
             else
             {
@@ -128,27 +83,6 @@ class NavigationController extends BaseController
                 $data['pageTitle'] = "Auction Calendar | UPP Auction Services";
                 $data['customScripts'] = 'auction_calendar';
                 return $this->slice->view('portal.auction_calendar', $data);
-            }
-            else
-            {
-                return redirect()->to(base_url());
-            }
-        }
-        else
-        {
-            return redirect()->to(base_url());
-        }
-    }
-
-    public function registeredBidders()
-    {
-        if($this->session->has('upp_bidder_loggedIn'))
-        {
-            if($this->session->get('upp_bidder_loggedIn'))
-            {
-                $data['pageTitle'] = "Registered Bidders | UPP Auction Services";
-                $data['customScripts'] = 'auction_bidders';
-                return $this->slice->view('portal.registered_bidders', $data);
             }
             else
             {

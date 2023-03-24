@@ -124,8 +124,11 @@ class Payments extends Model
         $columns = [
             'a.id',
             'a.bidder_id',
-            '(SELECT CONCAT(first_name, " ", last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
             '(SELECT bidder_number FROM bidders WHERE id = a.bidder_id) as bidder_number',
+            '(SELECT CONCAT(first_name, " ", last_name) FROM bidders WHERE id = a.bidder_id) as bidder_name',
+            '(SELECT email FROM bidders WHERE id = a.bidder_id) as email',
+            '(SELECT phone_number FROM bidders WHERE id = a.bidder_id) as phone_number',
+            '(SELECT address FROM bidders WHERE id = a.bidder_id) as address',
             'a.items_id',
             'a.sub_total',
             'a.tax',

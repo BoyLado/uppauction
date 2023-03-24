@@ -136,71 +136,7 @@
           <h5>Auction Winning Items</h5>
           <div class="hide-scroll" style="width:100%; height: 100vh; overflow:scroll; scroll-behavior: hidden;">
             <div class="row" id="div_items">
-              <!-- <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Item #1</h3>
-                    <div class="float-right">
-                      <a href="javascript:void(0)" data-toggle="dropdown">
-                        <i class="nav-icon fas fa-ellipsis-v"></i>
-                      </a>
-                      <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.selectItem();">
-                          <i class="fa fa-pen mr-1"></i>Edit
-                        </a>
-                        <a class="dropdown-item" href="javascript:void(0)" onclick="ITEMS.removeItem();">
-                          <i class="fa fa-trash mr-1"></i>Delete
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
-                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
-                    <h5>ITEM DESCRIPTION:</h5>
-                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Item #2</h3>
-                  </div>
-                  <div class="card-body">
-                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
-                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
-                    <h5>ITEM DESCRIPTION:</h5>
-                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Item #3</h3>
-                  </div>
-                  <div class="card-body">
-                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
-                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
-                    <h5>ITEM DESCRIPTION:</h5>
-                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h3 class="card-title">Item #4</h3>
-                  </div>
-                  <div class="card-body">
-                    <h5>WINNER: <span class="text-primary text-bold">Juan Dela Cruz</span></h5>
-                    <h5>AMOUNT: <span class="text-danger text-bold" id="lbl_amount">$4,500</span></h5>
-                    <h5>ITEM DESCRIPTION:</h5>
-                    <h6 class="text-muted" id="lbl_description">Hello World</h6>
-                  </div>
-                </div>
-              </div> -->
+              
             </div>
           </div>
         </div>
@@ -298,11 +234,12 @@
 
 <script type="text/javascript">
 
-  // const appId = 'sandbox-sq0idb-os8hvBheMABtzl3HhNLdXA';
-  // const locationId = 'L9K4W3J739S2N';
+  const appId = 'sandbox-sq0idb-os8hvBheMABtzl3HhNLdXA';
+  const locationId = 'L9K4W3J739S2N';
 
-  const appId = 'sandbox-sq0idb-FLjCK6tr1hOWRUdfSHlGpw';
-  const locationId = 'L4Z4BWM9K96AR';
+  // my square account
+  // const appId = 'sandbox-sq0idb-FLjCK6tr1hOWRUdfSHlGpw';
+  // const locationId = 'L4Z4BWM9K96AR';
 
   async function initializeCard(payments) {
     const card = await payments.card();
@@ -310,28 +247,6 @@
 
     return card;
   }
-
-  // async function createPayment(token) {
-  //   const body = JSON.stringify({
-  //     locationId,
-  //     sourceId: token,
-  //   });
-
-  //   const paymentResponse = await fetch('/payment', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body,
-  //   });
-
-  //   if (paymentResponse.ok) {
-  //     return paymentResponse.json();
-  //   }
-
-  //   const errorBody = await paymentResponse.text();
-  //   throw new Error(errorBody);
-  // }
 
   async function tokenize(paymentMethod) 
   {
@@ -429,7 +344,45 @@
 
     const cardButton = document.getElementById('card-button');
     cardButton.addEventListener('click', async function (event) {
-      await handlePaymentMethodSubmission(event, card);
+      if($('#txt_firstName').val() == "" || $('#txt_lastName').val() == "" || $('#txt_emailAddress').val() == "")
+      {
+        if($('#txt_firstName').val() == "")
+        {
+          $('#txt_firstName').removeClass('is-valid');
+          $('#txt_firstName').addClass('is-invalid');
+        }
+        else
+        {
+          $('#txt_firstName').removeClass('is-invalid');
+          $('#txt_firstName').addClass('is-valid');
+        }
+
+        if($('#txt_lastName').val() == "")
+        {
+          $('#txt_lastName').removeClass('is-valid');
+          $('#txt_lastName').addClass('is-invalid');
+        }
+        else
+        {
+          $('#txt_lastName').removeClass('is-invalid');
+          $('#txt_lastName').addClass('is-valid');
+        }
+
+        if($('#txt_emailAddress').val() == "")
+        {
+          $('#txt_emailAddress').removeClass('is-valid');
+          $('#txt_emailAddress').addClass('is-invalid');
+        }
+        else
+        {
+          $('#txt_emailAddress').removeClass('is-invalid');
+          $('#txt_emailAddress').addClass('is-valid');
+        }
+      }
+      else
+      {
+        await handlePaymentMethodSubmission(event, card);
+      }
     });
   });
 
@@ -457,18 +410,44 @@
 
 
     ITEMS.loadWinningItems();
-    ITEMS.loadBidders('slc_bidderNumber');
 
-    $('#txt_itemNumber').focus();
-
-    $('#form_addItem').on('submit',function(e){
-      e.preventDefault();
-      ITEMS.addItem(this);
+    $('#txt_firstName').on('keyup',function(){
+      if($(this).val() == "")
+      {
+        $(this).removeClass('is-valid');
+        $(this).addClass('is-invalid');
+      }
+      else
+      {
+        $(this).removeClass('is-invalid');
+        $(this).addClass('is-valid');
+      }
     });
 
-    $('#form_editItem').on('submit',function(e){
-      e.preventDefault();
-      ITEMS.editItem(this);
+    $('#txt_lastName').on('keyup',function(){
+      if($(this).val() == "")
+      {
+        $(this).removeClass('is-valid');
+        $(this).addClass('is-invalid');
+      }
+      else
+      {
+        $(this).removeClass('is-invalid');
+        $(this).addClass('is-valid');
+      }
+    });
+
+    $('#txt_emailAddress').on('keyup',function(){
+      if($(this).val() == "")
+      {
+        $(this).removeClass('is-valid');
+        $(this).addClass('is-invalid');
+      }
+      else
+      {
+        $(this).removeClass('is-invalid');
+        $(this).addClass('is-valid');
+      }
     });
 
 

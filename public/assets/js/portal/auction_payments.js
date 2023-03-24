@@ -73,43 +73,75 @@ const PAYMENTS = (function(){
 		  {
 		  	$('#modal_paymentDetails').modal('show');
 
-		  	$('#lbl_bidderName').text(data['arrPaymentDetails']['bidder_name']);
+		  	$('#lbl_bidderNameHeader').text(data['arrPaymentDetails']['bidder_name']);
 
 		  	let tbody = '';
-		  	let number = 1;
+		  	let number = 0;
 		  	let subTotal = 0;
-		  	let tax = 0.0954;
+		  	let tax = 0;
+		  	let transactionFee = 0;
 		  	let total = 0;
 		  	data['arrItemDetails'].forEach(function(value,key){
-		  		tbody += `<tr>
-                      <td>${number}</td>
-                      <td>${value['item_number']}</td>
-                      <td>${value['item_description']}</td>
-                      <td>${(value['paid'] == 1)? 'PAID':'UNPAID'}</td>
-                      <td><span class="float-right">${parseFloat(value['winning_amount']).toFixed(2)}</span></td>
+          tbody += `<tr>
+                      <td style="border-bottom: 1px dotted black;">
+                        <span><b>Auction #${value['item_number']}</b></span><br>
+                        <i><span style="font-size: 12px;">${value['item_description']}</span></i>
+                      </td>
+                      <td style="border-bottom: 1px dotted black;">
+                        <span style="float:right;">$ ${parseFloat(value['winning_amount']).toFixed(2)}</span><br><br>
+                      </td>
                     </tr>`;
           number++;
-
           subTotal += parseFloat(value['winning_amount']);
 		  	});
 		  	
-		  	$('#tbl_cart tbody').html(tbody);
+		  	$('#tbl_items tbody').html(tbody);
 
-		  	tax = subTotal * tax;
-		  	total = subTotal + tax;
+		  	tax = subTotal * 0.0954;
+		  	transactionFee = (subTotal + tax) * 0.0435;
+		  	total = subTotal + tax + transactionFee;
 
 		  	$('#lbl_subTotal').text(numberWithCommas(subTotal.toFixed(2)));
 		  	$('#lbl_tax').text(numberWithCommas(tax.toFixed(2)));
-		  	$('#lbl_cardTransactionFee').text("0.00");
+		  	$('#lbl_cardTransactionFee').text(transactionFee.toFixed(2));
 		  	$('#lbl_total').text(numberWithCommas(total.toFixed(2)));
 
-		  	$('#txt_cashPayment').val(data['arrPaymentDetails']['cash_payment']);
-		  	$('#txt_cardPayment').val(data['arrPaymentDetails']['card_payment']);
+		  	//////////////////////////////////////////////////////////////////////
 
-		  	let payment = parseFloat(data['arrPaymentDetails']['cash_payment']) + parseFloat(data['arrPaymentDetails']['card_payment']);
-		  	let change = payment - parseFloat(data['arrPaymentDetails']['total_payment']);
+		  	$('#lbl_bidderNumber').html(data['arrPaymentDetails']['bidder_number']);
+		  	$('#lbl_numberOfItems').html(number);
 
-		  	$('#lbl_change').text(numberWithCommas(change.toFixed(2)));
+		  	let receipt = '';
+        if(data['arrPaymentDetails']['id'] < 10)
+        {
+            receipt = `00000${data['arrPaymentDetails']['id']}`;
+        }
+        else if(data['arrPaymentDetails']['id'] < 100)
+        {
+            receipt = `0000${data['arrPaymentDetails']['id']}`;
+        }
+        else if(data['arrPaymentDetails']['id'] < 1000)
+        {
+            receipt = `000${data['arrPaymentDetails']['id']}`;
+        }
+        else if(data['arrPaymentDetails']['id'] < 10000)
+        {
+            receipt = `00${data['arrPaymentDetails']['id']}`;
+        }
+        else if(data['arrPaymentDetails']['id'] < 100000)
+        {
+            receipt = `0${data['arrPaymentDetails']['id']}`;
+        }
+        else
+        {
+            receipt = data['arrPaymentDetails']['id'];
+        }
+		  	$('#lbl_receiptNumber').html(receipt);
+
+		  	$('#lbl_bidderName').html(data['arrPaymentDetails']['bidder_name']);
+		  	$('#lbl_bidderEmailAddress').html(data['arrPaymentDetails']['email']);
+		  	$('#lbl_bidderPhoneNumber').html(data['arrPaymentDetails']['phone_number']);
+		  	$('#lbl_bidderAddress').html(data['arrPaymentDetails']['address']);
 		  }
 		});
 	}

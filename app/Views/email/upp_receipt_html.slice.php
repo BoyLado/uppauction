@@ -8,7 +8,7 @@
 <body style="font-family: Arial, sans-serif;">
  
   <center>
-    <img src="<?php echo base_url(); ?>/public/assets/img/payment_receipt.jpeg" alt="AdminLTE Logo">
+    <img src="<?php echo base_url(); ?>/public/assets/img/payment_receipt.jpeg" style="width: 300px;" alt="AdminLTE Logo">
   </center>
   
   <hr>

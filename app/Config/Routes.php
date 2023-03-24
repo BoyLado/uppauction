@@ -44,29 +44,29 @@ $routes->get('/', 'NavigationController');
  *  FRONT END NAVIGATION 
  *  ------------------------------------------------------------------
  */
+$routes->get('contact-us', 'NavigationController::contactUs');
+$routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preRegistrationConfirmation/$1');
 $routes->get('login', 'NavigationController::login');
 $routes->get('forgot-password', 'NavigationController::forgotPassword');
 $routes->get('change-password/(:num)/(:any)', 'NavigationController::changePassword/$1/$2');
-
-$routes->get('contact-us', 'NavigationController::contactUs');
-
-$routes->get('pre-registration-confirmation/(:any)', 'NavigationController::preRegistrationConfirmation/$1');
 
 /*
  * --------------------------------------------------------------------
  * FRONT END FUNCTIONS
  * --------------------------------------------------------------------
  */
+
+////////////////////////////////////////////////////////////////////
+//////////////////////// LOGIN MODULE //////////////////////////////
+////////////////////////////////////////////////////////////////////
 $routes->post('bidder-login', 'IndexController::login');
 $routes->post('bidder-forgot-password', 'IndexController::forgotPassword');
 $routes->post('bidder-change-password', 'IndexController::changePassword');
-$routes->post('bidder-sign-up', 'IndexController::signUp');
 $routes->get('bidder-logout', 'IndexController::logout');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// PRE REGISTRATION //////////////////////////
 ////////////////////////////////////////////////////////////////////
-
 $routes->get('load-auction-dates', 'PreRegistrationController::loadAuctionDates');
 $routes->post('pre-registration-with-season-pass', 'PreRegistrationController::preRegistrationWithSeasonPass');
 $routes->post('pre-registration-without-season-pass', 'PreRegistrationController::preRegistrationWithoutSeasonPass');
@@ -79,12 +79,9 @@ $routes->get('confirm-pre-registration/(:any)/(:any)', 'PreRegistrationControlle
  */
 
 $routes->get('portal/auction-dashboard', 'Portal\NavigationController::auctionDashboard');
-$routes->get('portal/auction-bidders', 'Portal\NavigationController::auctionBidders');
 $routes->get('portal/auction-items', 'Portal\NavigationController::auctionItems');
-$routes->get('portal/auction-winners', 'Portal\NavigationController::auctionWinners');
 $routes->get('portal/auction-payments', 'Portal\NavigationController::auctionPayments');
 $routes->get('portal/auction-calendar', 'Portal\NavigationController::auctionCalendar');
-$routes->get('portal/registered-bidders', 'Portal\NavigationController::registeredBidders');
 
 //////////////////////////// MY ACCOUNT ////////////////////////////////
 $routes->get('my-account', 'Portal\NavigationController::myAccount');
@@ -95,45 +92,19 @@ $routes->get('my-account', 'Portal\NavigationController::myAccount');
  *  BACK END FUNCTIONS 
  *  ------------------------------------------------------------------
  */
-////////////////////////////////////////////////////////////////////
-//////////////////////// BIDDERS ///////////////////////////////////
-////////////////////////////////////////////////////////////////////
-
-$routes->get('portal/load-bidders', 'Portal\BidderController::loadBidders');
-$routes->post('portal/add-bidder', 'Portal\BidderController::addBidder');
-$routes->get('portal/select-bidder', 'Portal\BidderController::selectBidder');
-$routes->post('portal/edit-bidder', 'Portal\BidderController::editBidder');
-$routes->post('portal/remove-bidder', 'Portal\BidderController::removeBidder');
-$routes->post('portal/check-upload-file', 'Portal\BidderController::checkUploadFile');
-$routes->post('portal/upload-season-pass', 'Portal\BidderController::uploadSeasonPass');
-$routes->get('portal/download-conflicts/(:any)', 'Portal\BidderController::downloadConflicts/$1');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// ITEMS /////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
-
 $routes->get('portal/load-winning-items', 'Portal\ItemController::loadWinningItems');
-$routes->post('portal/add-item', 'Portal\ItemController::addItem');
-$routes->get('portal/select-item', 'Portal\ItemController::selectItem');
-$routes->post('portal/edit-item', 'Portal\ItemController::editItem');
-$routes->post('portal/remove-item', 'Portal\ItemController::removeItem');
-
-$routes->get('portal/load-list-payments', 'Portal\ItemController::listPayments');
-
-////////////////////////////////////////////////////////////////////
-//////////////////////// WINNERS /////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-
-$routes->get('portal/load-winners', 'Portal\WinnerController::loadWinners');
-$routes->get('portal/load-winner-items', 'Portal\WinnerController::loadWinnerItems');
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// PAYMENTS //////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 $routes->get('portal/load-payments', 'Portal\PaymentController::loadPayments');
 $routes->get('portal/load-payment-details', 'Portal\PaymentController::loadPaymentDetails');
+$routes->get('portal/load-list-payments', 'Portal\PaymentController::listPayments');
 $routes->post('portal/load-create-payment', 'Portal\PaymentController::createPayment');
-
 
 ////////////////////////////////////////////////////////////////////
 //////////////////////// CALENDAR //////////////////////////////////
@@ -143,16 +114,6 @@ $routes->post('portal/add-auction', 'Portal\AuctionController::addAuction');
 $routes->get('portal/select-auction', 'Portal\AuctionController::selectAuction');
 $routes->post('portal/edit-auction', 'Portal\AuctionController::editAuction');
 $routes->post('portal/remove-auction', 'Portal\AuctionController::removeAuction');
-
-
-////////////////////////////////////////////////////////////////////
-//////////////////////// REGISTERED BIDDERS ////////////////////////
-////////////////////////////////////////////////////////////////////
-
-$routes->get('portal/load-registered-bidders', 'Portal\BidderController::loadRegisteredBidders');
-$routes->get('portal/load-bidder-details', 'Portal\BidderController::loadBidderDetails');
-
-
 
 /////////////////////////////////////////////////////////////////////
 //////////////////////////// MY ACCOUNT /////////////////////////////

@@ -64,7 +64,7 @@ const HELPER = (function(){
 	function timerIncrement() {
     idleTime = idleTime + 1;
     if (idleTime > 9) { // 20 minutes
-      window.location.replace(`${baseUrl}/user-logout`);
+      window.location.replace(`${baseUrl}/bidder-logout`);
     }
 	}
 	

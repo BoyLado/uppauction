@@ -117,86 +117,82 @@
           <div class="modal-content">
             <div class="modal-header modal-header--sticky">
               <h5 class="modal-title">
-                <i class="fa fa-shopping-cart mr-1"></i> <span id="lbl_bidderName">Juan Dela Cruz</span>
+                <i class="fa fa-shopping-cart mr-1"></i> <span id="lbl_bidderNameHeader">Juan Dela Cruz</span>
               </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-family: Arial, sans-serif;">
 
-              <form id="form_checkout">
-                <input type="hidden" id="txt_bidderId" name="txt_bidderId">
-                <table class="table table-striped mb-2" id="tbl_cart">
-                  <thead class="bg-primary">
-                    <tr>
-                      <th>No.</th>
-                      <th>Item No.</th>
-                      <th>Item Description</th>
-                      <th>Status</th>
-                      <th><span class="float-right">Amount</span></th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                  <tfoot class="bg-secondary">
-                    <tr>
-                      <td colspan="5"></td>
-                    </tr>
-                  </tfoot>
-                </table>
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6">
-                    <table class="table mb-0">
-                      <tbody>
-                        <tr>
-                          <td width="58%"><label>Sub Total: </label></td>
-                          <td><label class="float-right">$<span id="lbl_subTotal">0.00</span></label></td>
-                        </tr>
-                        <tr>
-                          <td width="58%"><label>Tax (9.54%): </label></td>
-                          <td><label class="float-right">$<span id="lbl_tax">0.00</span></label></td>
-                        </tr>
-                        <tr>
-                          <td width="58%"><label>Card Transaction Fee (4.35%): </label></td>
-                          <td><label class="float-right">$<span id="lbl_cardTransactionFee">0.00</span></label></td>
-                        </tr>
-                        <tr>
-                          <td width="58%"><label>Total: </label></td>
-                          <td><label class="float-right text-danger">$<span id="lbl_total">0.00</span></label></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 ">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6">
-                        <label class="form-check-label text-bold" for="chk_cashPayment">CASH</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                          </div>
-                          <input type="number" class="form-control" id="txt_cashPayment" name="txt_cashPayment" readonly>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6 col-lg-6">
-                        <label class="form-check-label text-bold" for="chk_cardPayment">CARD</label>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                          </div>
-                          <input type="number" class="form-control" id="txt_cardPayment" name="txt_cardPayment" readonly>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="callout callout-danger bg-warning">
-                        <h5 class="text-bold">Change: </h5>
-                        <h3 class="text-bold">$<span id="lbl_change">0.00</span></h3>
-                      </div>
-                    </div>
-                  </div>
+              <center>
+                <img src="<?php echo base_url(); ?>/public/assets/img/payment_receipt.jpeg" width="300px" alt="AdminLTE Logo">
+              </center>
+              
+              <hr>
+
+              <center>
+                <div>
+                  <p>Hello <b>Bidder Number <span id="lbl_bidderNumber"></span></b>,</p>
+                  <p>
+                    Congratulations! You have won (<span id="lbl_numberOfItems"></span>) items from the auction today.
+                  </p>
+
+                  <br>
+                  
+                  <p><b>Receipt #<span id="lbl_receiptNumber"></span></b></p>
+                  <p><span id="lbl_dateSent"></span></p>
+
+                  <br>
+
+                  <p>Customer</p>
+                  <p><b><span id="lbl_bidderName"></span></b></p>
+                  <a href="javascript:void(0)"><span id="lbl_bidderEmailAddress"></span></a>
+                  <p><span id="lbl_bidderPhoneNumber"></span></p>
+                  <p><span id="lbl_bidderAddress"></span></p>
                 </div>
-              </form>     
+
+                <br>
+
+                <h4>PAYMENT SUMMARY</h4>
+
+                <table style="width:50%" id="tbl_items">
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+                <table style="width:50%">
+                  <tr>
+                    <td style="width: 50%;"><b>Subtotal:</b></td>
+                    <td><span style="float:right;"><b>$ <span id="lbl_subTotal"></span></b></span></td>
+                  </tr>
+                  <tr>  
+                    <td style="width: 50%;">Sales tax:</td>
+                    <td><span style="float:right;">$ <span id="lbl_tax"></span></span></td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px dotted black; width: 50%;">Transaction Fee:</td>
+                    <td style="border-bottom: 1px dotted black;">
+                      <span style="float:right;">$ <span id="lbl_cardTransactionFee"></span></span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width: 50%;"><b>Total:</b></td>
+                    <td><span style="float:right;"><b>$ <span id="lbl_total"></span></b></span></td>
+                  </tr>
+                </table>
+              </center>
+
+              <hr>
+
+              <center>
+                <p><b>Thank you for being a great customer!</b></p>
+                <p>U Pick A Pallet LLC</p>
+                <p>323 Broadway Street</p>
+                <p>Mount Vernon, IL 62864-5115 United States</p>
+                <a href="mailto:customerservice@upickapallet.com">customerservice@upickapallet.com</a>
+                <p>(618) 270 - 4207</p>
+              </center>   
 
             </div>
           </div>

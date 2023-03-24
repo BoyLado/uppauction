@@ -38,6 +38,28 @@ class PaymentController extends BaseController
         return $this->response->setJSON($data);
     }
 
+    public function listPayments()
+    {
+
+        $client = new SquareClient([
+            'accessToken' => getenv('SQUARE_ACCESS_TOKEN'),
+            'environment' => getenv('SQUARE_ENVIRONMENT'),
+        ]);
+
+        $api_response = $client->getPaymentsApi()->listPayments();
+
+        if ($api_response->isSuccess()) 
+        {
+            $arrResult = $api_response->getResult();
+        } 
+        else 
+        {
+            $arrResult = $api_response->getErrors();
+        }
+
+        return $this->response->setJSON($arrResult);
+    }
+
     public function createPayment()
     {
         $fields = $this->request->getPost();
@@ -180,56 +202,5 @@ class PaymentController extends BaseController
         }
 
         return $this->response->setJSON($arrResult);
-    }
-
-    public function selectPayment()
-    {
-        $fields = $this->request->getGet();
-
-        $data = $this->auctions->selectAuction($fields['auctionId']);
-        return $this->response->setJSON($data);
-    }
-
-    public function editPayment()
-    {
-        $fields = $this->request->getPost();
-
-        $this->validation->setRules([
-            'txt_title' => [
-                'label'  => 'Auction Title',
-                'rules'  => 'required',
-                'errors' => [
-                    'required'    => 'Auction Title is required',
-                ],
-            ],
-            'txt_date'  => [
-                'label'  => 'Auction Date',
-                'rules'  => 'required',
-                'errors' => [
-                    'required'    => 'Auction Date is required',
-                ],
-            ]
-        ]);
-
-        if($this->validation->withRequest($this->request)->run())
-        {
-            $arrData = [
-                'auction_title'         => $fields['txt_title'],
-                'auction_description'   => $fields['txt_description'],
-                'auction_date'          => $fields['txt_date'],
-                'status'                => 1,
-                'created_by'            => $this->session->get('upp_user_id'),
-                'created_date'          => date('Y-m-d H:i:s')
-            ];
-
-            $result = $this->auctions->editItem($arrData, $fields['txt_auctionId']);
-            $msgResult[] = ($result > 0)? "Success" : "Database error";
-        }
-        else
-        {
-            $msgResult[] = $this->validation->getErrors();
-        }
-
-        return $this->response->setJSON($msgResult);
     }
 }

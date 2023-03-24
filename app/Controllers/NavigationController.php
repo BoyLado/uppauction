@@ -66,21 +66,6 @@ class NavigationController extends BaseController
         return $this->slice->view('change_password', $data);
     }
 
-    public function signUp($bidderId, $bidderAuthCode)
-    {
-        if($this->session->has('upp_bidder_loggedIn'))
-        {
-            if($this->session->get('upp_bidder_loggedIn'))
-            {
-                return redirect()->to(base_url() . '/portal/auction-dashboard');
-            }
-        }
-        $data['pageTitle'] = "Sign Up | U Pick A Pallet";
-        $data['bidderId'] = $bidderId;
-        $data['bidderAuthCode'] = $bidderAuthCode;
-        return $this->slice->view('sign_up', $data);
-    }
-
     public function preRegistrationConfirmation($result)
     {
         $data['confirmation_result'] = $result;
