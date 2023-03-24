@@ -1,5 +1,7 @@
 <?php  
 
+use CodeIgniter\HTTP\RequestInterface;
+
 function dayTime($start)
 {
   if($start == null || $start == '')
@@ -436,4 +438,19 @@ function uploadSingleImage($imageFile, $uploadPath)
 		$arrResult = ['errorMsg'=>"Unknown File"];
 		return $arrResult;
 	}
+}
+
+function reCaptchaTest($recaptchaResponse, $request)
+{
+	$userIp = $request->getIPAddress();
+	$secret = getenv('RECAPTCHA_SECRET_KEY');
+	$url="https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$recaptchaResponse."&remoteip=".$userIp;
+
+	$ch = curl_init(); 
+	curl_setopt($ch, CURLOPT_URL, $url); 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+	$output = curl_exec($ch); 
+	curl_close($ch);      
+	 
+	return json_decode($output, true);
 }

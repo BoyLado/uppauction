@@ -72,6 +72,11 @@ $routes->post('pre-registration-with-season-pass', 'PreRegistrationController::p
 $routes->post('pre-registration-without-season-pass', 'PreRegistrationController::preRegistrationWithoutSeasonPass');
 $routes->get('confirm-pre-registration/(:any)/(:any)', 'PreRegistrationController::confirmPreRegistration/$1/$2');
 
+////////////////////////////////////////////////////////////////////
+//////////////////////// CONTACT US ////////////////////////////////
+////////////////////////////////////////////////////////////////////
+$routes->post('send-email', 'ContactUsController::sendEmail');
+
 /*
  *  ------------------------------------------------------------------
  *  BACK END NAVIGATION 

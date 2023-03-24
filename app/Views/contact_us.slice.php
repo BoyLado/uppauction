@@ -197,43 +197,49 @@
             </div>
           </div>
         </div>
-        <section class="content">
 
+        <section class="content">
           <div class="card">
             <div class="card-body row">
+              
               <div class="col-5 text-center d-flex align-items-center justify-content-center">
-            <div class="">
-                        <i style="font-size: 150px;" class="fa-solid fa-envelope-open-text mb-2"></i>
-            <p class="lead mb-5">If you have questions or <br> just want to get in touch, use the form below.<br> We look forward to hearing from you!<br>
-            </p>
-          </div>
-        </div>
-                  
-                  <div class="col-7">
-                    <div class="form-group">
-                      <label for="inputName">Name</label>
-                      <input type="text" id="inputName" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label for="inputEmail">E-Mail</label>
-                      <input type="email" id="inputEmail" class="form-control">
-                    </div>
-                  <div class="form-group">
-                    <label for="inputSubject">Subject</label>
-                    <input type="text" id="inputSubject" class="form-control">
-                  </div>
-                    <div class="form-group">
-                    <label for="inputMessage">Message</label>
-                    <textarea id="inputMessage" class="form-control" rows="4"></textarea>
-                    </div>
-                  <div class="form-group">
-                  <input type="submit" class="btn btn-primary" value="Send message">
-                  </div>
+                <div class="">
+                  <i style="font-size: 150px;" class="fa-solid fa-envelope-open-text mb-2"></i>
+                  <p class="lead mb-5">If you have questions or <br> just want to get in touch, use the form below.<br> We look forward to hearing from you!<br>
+                  </p>
                 </div>
-                
               </div>
+                  
+              <div class="col-7">
+                <form id="form_contactUs" method="post">
+                  <div class="form-group">
+                    <label for="txt_name">Name *</label>
+                    <input type="text" class="form-control" id="txt_name" name="txt_name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txt_email">E-Mail *</label>
+                    <input type="email" class="form-control" id="txt_email" name="txt_email" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txt_subject">Subject *</label>
+                    <input type="text" class="form-control" id="txt_subject" name="txt_subject" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="txt_message">Message *</label>
+                    <textarea class="form-control" rows="4" id="txt_message" name="txt_message" required></textarea>
+                  </div>
+                  <div class="g-recaptcha mb-2" data-sitekey="{{ $googleSiteKey }}" data-callback="form_contactUs"></div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="btn_sendMessage" disabled>
+                      <i class="fa fa-paper-plane mr-2"></i> Send Message
+                    </button>
+                  </div>
+                </form>
+              </div>
+                
             </div>
-          </section>
+          </div>
+        </section>
 
           <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="510" id="gmap_canvas" src="https://maps.google.com/maps?q=315 Broadway Street, Mount Vernon, Illinois 62864, USA&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://2yu.co">2yu</a><br><style>.mapouter{position:relative;text-align:right;height:510px;width:100%;}</style><a href="https://embedgooglemap.2yu.co">html embed google map</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:510px;width:100%;}</style></div></div>
   
@@ -335,12 +341,22 @@
   <!-- AdminLTE App -->
   <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/dist/js/adminlte.min.js"></script>
 
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+
   <!-- Custom Script -->
   <script src="<?php echo base_url(); ?>/public/assets/js/contact_us.js"></script>
 
   <script type="text/javascript">
+    function form_contactUs()
+    {
+      $('#btn_sendMessage').prop('disabled',false);
+    }
+
     $(document).ready(function(){
-      
+      $('#form_contactUs').on('submit',function(e){
+        e.preventDefault();
+        CONTACT_US.sendEmail(this);
+      });
     });
   </script>
 
