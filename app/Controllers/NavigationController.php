@@ -12,6 +12,7 @@ class NavigationController extends BaseController
         $data['bidderAuthCode'] = "";
         $data['loggedId'] = $this->session->get('upp_bidder_loggedIn');
         $data['bidderName'] = $this->session->get('upp_bidder_firstName');
+        $data['googleSiteKey'] = getenv('RECAPTCHA_SITE_KEY');
         return $this->slice->view('pre_registration_form', $data);
     }
 

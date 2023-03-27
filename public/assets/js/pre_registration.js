@@ -57,8 +57,8 @@ const PRE_REGISTRATION = (function(){
 			formData.append("chk_guest", $('#chk_guests').is(':checked')? 1 : 0);
 			formData.append("arrGuest", JSON.stringify(arrGuest));
 
-			$('#btn_submit').html('<i>Please wait</i>');
-			$('#btn_submit').prop('disabled',true);
+			$('#btn_submitForm').html('<i>Please wait</i>');
+			$('#btn_submitForm').prop('disabled',true);
 
 			$.ajax({
 				/* PreRegistrationController->preRegistrationWithSeasonPass() */
@@ -71,8 +71,8 @@ const PRE_REGISTRATION = (function(){
 			  success : function(result)
 			  {
 			    console.log(result);
-			    $('#btn_submit').html('Submit');
-			    $('#btn_submit').prop('disabled',false);
+			    $('#btn_submitForm').html('Submit');
+			    $('#btn_submitForm').prop('disabled',false);
 			    if(result == 'Success')
 			    {
 			      $('#modal_successValidation').modal({'backdrop':'static'});
@@ -100,8 +100,8 @@ const PRE_REGISTRATION = (function(){
 		{
 			let formData = new FormData(thisForm);
 
-			$('#btn_submit').html('<i>Please wait</i>');
-			$('#btn_submit').prop('disabled',true);
+			$('#btn_submitForm').html('<i>Please wait</i>');
+			$('#btn_submitForm').prop('disabled',true);
 
 			$.ajax({
 				/* PreRegistrationController->preRegistrationWithOutSeasonPass() */
@@ -114,8 +114,8 @@ const PRE_REGISTRATION = (function(){
 			  success : function(result)
 			  {
 			    console.log(result);
-			    $('#btn_submit').html('Submit');
-			    $('#btn_submit').prop('disabled',false);
+			    $('#btn_submitForm').html('Submit');
+			    $('#btn_submitForm').prop('disabled',false);
 			    if(result == 'Success')
 			    {
 			      $('#modal_successValidation').modal({'backdrop':'static'});
@@ -124,6 +124,9 @@ const PRE_REGISTRATION = (function(){
 			    {
 			      $('#modal_errorValidation').modal({'backdrop':'static'});
 			    }
+  		  	// setTimeout(function(){
+          //   window.location.replace(`${baseUrl}/portal/auction-items`);
+          // }, 2000);
 			  }
 			});
 		}

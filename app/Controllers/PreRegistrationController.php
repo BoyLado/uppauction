@@ -52,73 +52,83 @@ class PreRegistrationController extends BaseController
 
         if($this->validation->withRequest($this->request)->run())
         {
-            $emailAddress       = $fields['txt_emailAddress'];
-            $seasonPassNumber   = (int)$fields['txt_seasonPassNumber'];
-            $validationResult = $this->bidders->validateBidder($emailAddress,$seasonPassNumber);
+            $recaptchaResponse = trim($fields['g-recaptcha-response']);
+            $status = reCaptchaTest($recaptchaResponse, $this->request);
 
-            if($validationResult != null)
+            if($status['success'])
             {
-                if($emailAddress == $validationResult['email'] && $seasonPassNumber == $validationResult['bidder_number'] && $validationResult['season_pass'] != null)
-                { 
-                    $authCode = generate_code();
-                    $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
-                    $arrData = [
-                        'bidder_id'     => $validationResult['id'],
-                        'auction_id'    => $auctionDate['id'],
-                        'auction_date'  => $auctionDate['auction_date'],
-                        'auth_code'     => encrypt_code($authCode),    
-                        'created_date'  => date('Y-m-d H:i:s')
-                    ];
+                $emailAddress       = $fields['txt_emailAddress'];
+                $seasonPassNumber   = (int)$fields['txt_seasonPassNumber'];
+                $validationResult = $this->bidders->validateBidder($emailAddress,$seasonPassNumber);
 
-                    $result = $this->bidders->addBidderRegistration($arrData);
-                    if($result > 0)
-                    {
-                        if($fields['chk_guest'] == 1)
-                        {
-                            $arrData = [];
-                            $arrGuest = json_decode($fields['arrGuest'],true);
-                            foreach ($arrGuest as $key => $value) 
-                            {
-                                $arrData[] = [
-                                    'registration_id'       => $result,
-                                    'guest_first_name'      => $value['first_name'],
-                                    'guest_last_name'       => $value['last_name'],
-                                    'guest_email'           => $value['email_address'],
-                                    'relation_to_bidder'    => $value['relationship'],
-                                    'created_date'          => date('Y-m-d H:i:s')
-                                ];
-                            }
-                            $result = $this->bidders->addBidderGuest($arrData);
-                        }
-                        //email
-                        $emailSender    = 'customerservice@upickapallet.com';
-                        $emailReceiver  = $emailAddress;
-
-                        $data['subjectTitle']           = 'Welcome Bidder';
-                        $data['bidderId']               = $validationResult['id'];
-                        $data['bidderEmailAddress']     = $validationResult['email'];
-                        $data['bidderSeasonPassNumber'] = $validationResult['bidder_number'];
-                        $data['bidderAuthCode']         = $authCode;
-
-                        $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
-                    }
-                    $msgResult[] = ($result > 0)? "Success" : "Database error";
-                }
-                else
+                if($validationResult != null)
                 {
-                    if($validationResult['season_pass'] == null)
-                    {
-                        $msgResult[] = "Sorry, You are not a Season Pass holder yet!";
+                    if($emailAddress == $validationResult['email'] && $seasonPassNumber == $validationResult['bidder_number'] && $validationResult['season_pass'] != null)
+                    { 
+                        $authCode = generate_code();
+                        $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
+                        $arrData = [
+                            'bidder_id'     => $validationResult['id'],
+                            'auction_id'    => $auctionDate['id'],
+                            'auction_date'  => $auctionDate['auction_date'],
+                            'auth_code'     => encrypt_code($authCode),    
+                            'created_date'  => date('Y-m-d H:i:s')
+                        ];
+
+                        $result = $this->bidders->addBidderRegistration($arrData);
+                        if($result > 0)
+                        {
+                            if($fields['chk_guest'] == 1)
+                            {
+                                $arrData = [];
+                                $arrGuest = json_decode($fields['arrGuest'],true);
+                                foreach ($arrGuest as $key => $value) 
+                                {
+                                    $arrData[] = [
+                                        'registration_id'       => $result,
+                                        'guest_first_name'      => $value['first_name'],
+                                        'guest_last_name'       => $value['last_name'],
+                                        'guest_email'           => $value['email_address'],
+                                        'relation_to_bidder'    => $value['relationship'],
+                                        'created_date'          => date('Y-m-d H:i:s')
+                                    ];
+                                }
+                                $result = $this->bidders->addBidderGuest($arrData);
+                            }
+                            //email
+                            $emailSender    = 'customerservice@upickapallet.com';
+                            $emailReceiver  = $emailAddress;
+
+                            $data['subjectTitle']           = 'Welcome Bidder';
+                            $data['bidderId']               = $validationResult['id'];
+                            $data['bidderEmailAddress']     = $validationResult['email'];
+                            $data['bidderSeasonPassNumber'] = $validationResult['bidder_number'];
+                            $data['bidderAuthCode']         = $authCode;
+
+                            $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
+                        }
+                        $msgResult[] = ($result > 0)? "Success" : "Database error";
                     }
                     else
                     {
-                        $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
-                    }                    
+                        if($validationResult['season_pass'] == null)
+                        {
+                            $msgResult[] = "Sorry, You are not a Season Pass holder yet!";
+                        }
+                        else
+                        {
+                            $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
+                        }                    
+                    }
+                }
+                else
+                {
+                    $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
                 }
             }
             else
             {
-                $msgResult[] = "Sorry, Your Email or Season Pass Number does not exist!";
+                $msgResult[] = "Recaptcha Error!";
             }
         }
         else
@@ -264,6 +274,8 @@ class PreRegistrationController extends BaseController
 
                     $emailResult = sendSliceMail('pre_registration',$emailSender,$emailReceiver,$data);
                 }
+
+                $msgResult[] = ($result > 0)? "Success" : "Database error";
             }
         }
         else

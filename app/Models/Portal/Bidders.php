@@ -40,8 +40,6 @@ class Bidders extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-
     ///////////////////////////////////////////// OUTSIDE SCRIPTS ///////////////////////////////////
 
     ////////////////////////////////////////////////////////////
@@ -78,6 +76,23 @@ class Bidders extends Model
                 $builder->update($arrData);
             $this->db->transComplete();
             return ($this->db->transStatus() === TRUE)? 1 : 0;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    ///// PreRegistrationController->preRegistrationWithoutSeasonPass();
+    ////////////////////////////////////////////////////////////
+    public function addBidder($arrData)
+    {
+        try {
+            $this->db->transStart();
+                $builder = $this->db->table('bidders');
+                $builder->insert($arrData);
+                $insertId = $this->db->insertID();
+            $this->db->transComplete();
+            return ($this->db->transStatus() === TRUE)? $insertId : 0;
         } catch (PDOException $e) {
             throw $e;
         }

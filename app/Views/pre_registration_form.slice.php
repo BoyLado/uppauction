@@ -21,6 +21,26 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>/public/assets/AdminLTE/plugins/toastr/toastr.min.css">
 
   <style type="text/css">
+    /* width */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; 
+    }
+     
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #888; 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555; 
+    }
+
     #button 
     {
       margin-top: 25px;
@@ -138,7 +158,7 @@
       <div class="container">
 
         <form id="form_preRegistration">
-          <h2 style="color: red;" id="h2"><b>Auction Pre-Registration</b></h2>
+          <h2 style="color: red;" class="h2" id="h2"><b>Auction Pre-Registration</b></h2>
           <div class="mb-3">
             <h5 id="h4" style="text-align: center;">
               To pre-register to bid onsite at our next auction, please fill out the form below. After we receive your information, we will contact you to complete the registration process.
@@ -294,14 +314,16 @@
             </label>
           </div>
 
-          <div class="mb-3 p-2" style="height: 35vh; overflow-y:hidden; width: 100%; border: 1px solid black;">
+          <div class="mb-3 p-2" style="height: 35vh; overflow-y:scroll; width: 100%; border: 1px solid black;">
             <center><h5>Auction Terms and conditions</h5></center>
             <p style="text-align: justify;">All items sold in U Pick A Pallet auctions are sold “as is” and we do not accept refunds or exchanges on any auction items. It is your responsibility to fullfill your purchase obligation before exiting the auction. U Pick A Pallet will not be held responsible for any accidents that may occur physical or emotional. All attendees are required to be present with a season pass holder. I consent to U Pick A Pallet season pass holder terms and conditions as well as the terms and conditions applied to  U Pick A Pallet LLC. I understand that all items are sold “as is” and I will not attempt to perform any form of chargeback from the use of debit or credit card. I understand and consent to the fee of 4.35 on all debit card purchases. Terms and conditions listed above may included but not limited to any other rules or regulations implied by U Pick A Pallet LLC. Contact customer service at 618-270-4207 for any questions relating to these terms and conditions.</p>
           </div>
 
+          <div class="g-recaptcha mb-2" data-sitekey="{{ $googleSiteKey }}" data-callback="form_preRegistration"></div>
+
           <div class="row mb-4">
             <div class="col-lg-6">
-              <button type="submit" class="btn btn-primary" id="btn_submit">Submit</button> 
+              <button type="submit" class="btn btn-primary" id="btn_submitForm" disabled>Submit</button> 
             </div>
           </div>
           
@@ -316,7 +338,7 @@
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" id="btn_closeModalSuccessValidation" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -337,7 +359,7 @@
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" id="btn_closeModalErrorValidation" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -402,10 +424,17 @@
   <!-- AdminLTE App -->
   <script src="<?php echo base_url(); ?>/public/assets/AdminLTE/dist/js/adminlte.min.js"></script>
 
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+
   <!-- Custom Script -->
   <script src="<?php echo base_url(); ?>/public/assets/js/pre_registration.js"></script>
 
   <script type="text/javascript">
+    function form_preRegistration()
+    {
+      $('#btn_submitForm').prop('disabled',false);
+    }
+
     $(document).ready(function(){
       PRE_REGISTRATION.loadAuctionDates();
 
@@ -419,7 +448,6 @@
       $('#txt_driverLicenseNumber').prop('required',true);
       $('#txt_emailAddress').prop('required',true);
       $('#txt_seasonPassNumber').prop('required',false);
-      $('#btn_submit').prop('disabled',true);
 
       $('#rdb1').on('change',function(){
         if($(this).is(':checked'))
@@ -510,17 +538,6 @@
         $('#div_otherGuests').append(divGuestForm);
       });
 
-      $('#chk_agree').on('change',function(){
-        if($(this).is(':checked'))
-        {
-          $('#btn_submit').prop('disabled',false);
-        }
-        else
-        {
-          $('#btn_submit').prop('disabled',true);
-        }
-      });
-
       $('#form_preRegistration').on('submit',function(e){
         e.preventDefault();
         if($('#rdb1').is(':checked'))
@@ -531,6 +548,14 @@
         {
           PRE_REGISTRATION.submitWithOutSeasonPass(this);
         }
+      });
+
+      $('#btn_closeModalSuccessValidation').on('click',function(){
+        window.location.replace(`<?php echo base_url(); ?>/`);
+      });
+
+      $('#btn_closeModalErrorValidation').on('click',function(){
+        window.location.replace(`<?php echo base_url(); ?>/`);
       });
     });
   </script>
