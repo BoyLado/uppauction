@@ -55,39 +55,29 @@ const CALENDAR = (function(){
 		});
 	}
 
-	thisCalendar.addAuction = function(thisForm)
+	thisCalendar.selectAuctionDates = function(auctionId = null)
 	{
-		let formData = new FormData(thisForm);
-
 		$.ajax({
-			/* AuctionController->addAuction() */
-		  url : `${baseUrl}/portal/add-auction`,
-		  method : 'post',
+			/* AuctionController->loadAuctionDates() */
+		  url : `${baseUrl}/portal/load-auction-dates`,
+		  method : 'get',
 		  dataType: 'json',
-		  processData: false, // important
-		  contentType: false, // important
-		  data : formData,
-		  success : function(result)
+		  success : function(data)
 		  {
-		    console.log(result);
-		    if(result == 'Success')
-		    {
-          Toast.fire({
-		        icon: 'success',
-		        title: 'Success! <br>New auction event saved successfully.',
-		      });
+		  	let options = `<option value="">Choose Date</option>`;
 
-		      setTimeout(function(){
-            window.location.replace(`${baseUrl}/portal/auction-calendar`);
-          }, 1000);
-		    }
-		    else
-		    {
-          Toast.fire({
-		        icon: 'error',
-		        title: `Error! <br>${result}`
-		      });
-		    }
+		  	data.forEach(function(value,key){
+		  		if(value['id'] == auctionId)
+		  		{
+		  			options += `<option value="${value['id']}" selected>${value['auction_date']}</option>`;
+		  		}
+		  		else
+		  		{
+		  			options += `<option value="${value['id']}">${value['auction_date']}</option>`;
+		  		}
+		  	});
+
+		  	$('#slc_auctionDate').html(options);
 		  }
 		});
 	}
@@ -95,32 +85,59 @@ const CALENDAR = (function(){
 	thisCalendar.selectAuction = function(auctionId)
 	{
 		$.ajax({
-			/* AuctionController->selectAuction() */
-		  url : `${baseUrl}/portal/select-auction`,
+	  	/* AuctionController->selectAuction() */
+	    url : `${baseUrl}/portal/select-auction`,
 		  method : 'get',
 		  dataType: 'json',
 		  data : {auctionId : auctionId},
 		  success : function(data)
 		  {
-		  	// $('#lbl_header').html('<i class="fa fa-pen mr-1"></i> Update Event');
-
-		  	$('#txt_auctionId').val(data['id']);
-		  	$('#txt_title').val(data['auction_title']);
-		  	$('#txt_description').val(data['auction_description']);
-		  	$('#txt_date').val(data['auction_date']);
-
-		  	$('#modal_preRegistration').modal('show');
+		  	if(data == null)
+		  	{
+		  		alert('Auction Event was expired already, Please choose future dates!');
+		  	}
+		  	else
+		  	{
+		  		CALENDAR.selectAuctionDates(auctionId);
+		  		$('#modal_preRegistration').modal('show');
+		  	}
 		  }
 		});
 	}
 
-	thisCalendar.editAuction = function(thisForm)
+	thisCalendar.removeGuest = function(thisButton)
 	{
-		let formData = new FormData(thisForm);
+		if(confirm('Please confirm!'))
+		{
+			$(thisButton).parents('.row').remove();
+		}
+	}
 
-		$.ajax({
-			/* AuctionController->editAuction() */
-		  url : `${baseUrl}/portal/edit-auction`,
+	thisCalendar.submitPreRegistration = function(thisForm)
+	{
+		if($('#chk_agree').is(':checked'))
+		{
+			let arrGuest = [];
+			$('#div_guest .guest-form').each(function(){
+				arrGuest.push({
+					'first_name' 		: $(this).find('input:eq(0)').val(),
+					'last_name' 		: $(this).find('input:eq(1)').val(),
+					'email_address'	: $(this).find('input:eq(2)').val(),
+					'relationship'	: $(this).find('select').val(),
+				});
+			});
+
+			let formData = new FormData(thisForm);
+
+			formData.append("chk_guest", $('#chk_guests').is(':checked')? 1 : 0);
+			formData.append("arrGuest", JSON.stringify(arrGuest));
+
+			$('#btn_submitForm').html('<i>Please wait</i>');
+			$('#btn_submitForm').prop('disabled',true);
+
+			$.ajax({
+			/* AuctionController->submitPreRegistration() */
+		  url : `${baseUrl}/portal/submit-pre-registration`,
 		  method : 'post',
 		  dataType: 'json',
 		  processData: false, // important
@@ -129,11 +146,13 @@ const CALENDAR = (function(){
 		  success : function(result)
 		  {
 		    console.log(result);
+		    $('#btn_submitForm').html('Submit');
+		    $('#btn_submitForm').prop('disabled',false);
 		    if(result == 'Success')
 		    {
           Toast.fire({
 		        icon: 'success',
-		        title: 'Success! <br>Auction event updated successfully.',
+		        title: 'Success! <br>Pre Registration Completed successfully.',
 		      });
 
 		      setTimeout(function(){
@@ -149,11 +168,14 @@ const CALENDAR = (function(){
 		    }
 		  }
 		});
-	}
-
-	thisCalendar.removeAuction = function(auctionId)
-	{
-
+		}
+		else
+		{
+      Toast.fire({
+        icon: 'warning',
+        title: 'Warning! <br>Please read & accept TERMS and CONDITIONS.',
+      });
+		}
 	}
 
 	return thisCalendar;

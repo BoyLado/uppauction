@@ -115,10 +115,9 @@ $routes->post('portal/load-create-payment', 'Portal\PaymentController::createPay
 //////////////////////// CALENDAR //////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 $routes->get('portal/load-auctions', 'Portal\AuctionController::loadAuctions');
-$routes->post('portal/add-auction', 'Portal\AuctionController::addAuction');
+$routes->get('portal/load-auction-dates', 'Portal\AuctionController::loadAuctionDates');
 $routes->get('portal/select-auction', 'Portal\AuctionController::selectAuction');
-$routes->post('portal/edit-auction', 'Portal\AuctionController::editAuction');
-$routes->post('portal/remove-auction', 'Portal\AuctionController::removeAuction');
+$routes->post('portal/submit-pre-registration', 'Portal\AuctionController::submitPreRegistration');
 
 /////////////////////////////////////////////////////////////////////
 //////////////////////////// MY ACCOUNT /////////////////////////////

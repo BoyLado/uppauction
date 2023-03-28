@@ -9,6 +9,7 @@ class AuctionController extends BaseController
     public function __construct()
     {
         $this->auctions = model('Portal/Auctions');
+        $this->bidders = model('Portal/Bidders');
     }
 
     public function loadAuctions()
@@ -17,47 +18,10 @@ class AuctionController extends BaseController
         return $this->response->setJSON($arrResult);
     }
 
-    public function addAuction()
+    public function loadAuctionDates()
     {
-        $fields = $this->request->getPost();
-
-        $this->validation->setRules([
-            'txt_title' => [
-                'label'  => 'Auction Title',
-                'rules'  => 'required',
-                'errors' => [
-                    'required'    => 'Auction Title is required',
-                ],
-            ],
-            'txt_date'  => [
-                'label'  => 'Auction Date',
-                'rules'  => 'required',
-                'errors' => [
-                    'required'    => 'Auction Date is required',
-                ],
-            ]
-        ]);
-
-        if($this->validation->withRequest($this->request)->run())
-        {
-            $arrData = [
-                'auction_title'         => $fields['txt_title'],
-                'auction_description'   => $fields['txt_description'],
-                'auction_date'          => $fields['txt_date'],
-                'status'                => 1,
-                'created_by'            => $this->session->get('upp_user_id'),
-                'created_date'          => date('Y-m-d H:i:s')
-            ];
-
-            $result = $this->auctions->addAuction($arrData);
-            $msgResult[] = ($result > 0)? "Success" : "Database error";
-        }
-        else
-        {
-            $msgResult[] = $this->validation->getErrors();
-        }
-
-        return $this->response->setJSON($msgResult);
+        $arrResult = $this->auctions->loadAuctionDates();
+        return $this->response->setJSON($arrResult);
     }
 
     public function selectAuction()
@@ -68,20 +32,13 @@ class AuctionController extends BaseController
         return $this->response->setJSON($data);
     }
 
-    public function editAuction()
+    public function submitPreRegistration()
     {
         $fields = $this->request->getPost();
 
         $this->validation->setRules([
-            'txt_title' => [
-                'label'  => 'Auction Title',
-                'rules'  => 'required',
-                'errors' => [
-                    'required'    => 'Auction Title is required',
-                ],
-            ],
-            'txt_date'  => [
-                'label'  => 'Auction Date',
+            'slc_auctionDate' => [
+                'label'  => 'Item Number',
                 'rules'  => 'required',
                 'errors' => [
                     'required'    => 'Auction Date is required',
@@ -91,16 +48,39 @@ class AuctionController extends BaseController
 
         if($this->validation->withRequest($this->request)->run())
         {
+            $authCode = generate_code();
+            $auctionDate = $this->auctions->selectAuction($fields['slc_auctionDate']);
             $arrData = [
-                'auction_title'         => $fields['txt_title'],
-                'auction_description'   => $fields['txt_description'],
-                'auction_date'          => $fields['txt_date'],
-                'status'                => 1,
-                'created_by'            => $this->session->get('upp_user_id'),
-                'created_date'          => date('Y-m-d H:i:s')
+                'bidder_id'     => $this->session->get('upp_bidder_id'),
+                'auction_id'    => $auctionDate['id'],
+                'auction_date'  => $auctionDate['auction_date'],
+                'auth_code'     => encrypt_code($authCode),
+                'confirmed'     => 'YES',    
+                'confirmed_date'=> date('Y-m-d H:i:s'),
+                'created_date'  => date('Y-m-d H:i:s')
             ];
 
-            $result = $this->auctions->editAuction($arrData, $fields['txt_auctionId']);
+            $result = $this->bidders->addBidderRegistration($arrData);
+            if($result > 0)
+            {
+                if($fields['chk_guest'] == 1)
+                {
+                    $arrData = [];
+                    $arrGuest = json_decode($fields['arrGuest'],true);
+                    foreach ($arrGuest as $key => $value) 
+                    {
+                        $arrData[] = [
+                            'registration_id'       => $result,
+                            'guest_first_name'      => $value['first_name'],
+                            'guest_last_name'       => $value['last_name'],
+                            'guest_email'           => $value['email_address'],
+                            'relation_to_bidder'    => $value['relationship'],
+                            'created_date'          => date('Y-m-d H:i:s')
+                        ];
+                    }
+                    $result = $this->bidders->addBidderGuest($arrData);
+                }
+            }
             $msgResult[] = ($result > 0)? "Success" : "Database error";
         }
         else
@@ -111,12 +91,4 @@ class AuctionController extends BaseController
         return $this->response->setJSON($msgResult);
     }
 
-    public function removeAuction()
-    {
-        $fields = $this->request->getPost();
-
-        $result = $this->auctions->removeAuction($fields['txt_auctionId']);
-        $msgResult[] = ($result > 0)? "Success" : "Database error";
-        return $this->response->setJSON($msgResult);
-    }
 }

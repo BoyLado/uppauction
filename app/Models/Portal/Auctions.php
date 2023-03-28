@@ -73,19 +73,33 @@ class Auctions extends Model
     }
 
     ////////////////////////////////////////////////////////////
-    ///// AuctionController->addAuction()
+    ///// AuctionController->loadAuctionDates()
     ////////////////////////////////////////////////////////////
-    public function addAuction($arrData)
+    public function loadAuctionDates($whereParams = [])
     {
-        try {
-            $this->db->transStart();
-                $builder = $this->db->table('auctions');
-                $builder->insert($arrData);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
+        $columns = [
+            'a.id',
+            'a.auction_title',
+            'a.auction_description',
+            'DATE_FORMAT(a.auction_date,"%Y-%m-%d") as auction_date',
+            'a.status',
+            'a.created_by',
+            'a.created_date',
+            'a.updated_by',
+            'a.updated_date',
+        ];
+
+        $builder = $this->db->table('auctions a');
+        $builder->select($columns);
+        $builder->where('a.status',1);
+        $builder->where('DATE_FORMAT(a.auction_date,"%Y-%m-%d") >=',date('Y-m-d'));
+        if(count($whereParams) > 0)
+        {
+            $builder->where($whereParams);
         }
+        $builder->orderBy('a.auction_date','ASC');
+        $query = $builder->get();
+        return  $query->getResultArray();
     }
 
 
@@ -108,42 +122,10 @@ class Auctions extends Model
 
         $builder = $this->db->table('auctions a')->select($columns);
         $builder->where('a.id',$auctionId);
+        $builder->where('a.status',1);
+        $builder->where('DATE_FORMAT(a.auction_date,"%Y-%m-%d") >=',date('Y-m-d'));
         $query = $builder->get();
         return  $query->getRowArray();
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// AuctionController->editAuction()
-    ////////////////////////////////////////////////////////////
-    public function editAuction($arrData, $auctionId)
-    {
-        try {
-            $this->db->transStart();
-                $this->db->table('auctions')
-                        ->where(['id'=>$auctionId])
-                        ->update($arrData);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
-        }
-    }
-
-    ////////////////////////////////////////////////////////////
-    ///// AuctionController->removeAuction()
-    ////////////////////////////////////////////////////////////
-    public function removeAuction($auctionId)
-    {
-        try {
-            $this->db->transStart();
-                $builder = $this->db->table('auctions');
-                $builder->where(['id'=>$auctionId]);
-                $builder->update(['status'=>0]);
-            $this->db->transComplete();
-            return ($this->db->transStatus() === TRUE)? 1 : 0;
-        } catch (PDOException $e) {
-            throw $e;
-        }
     }
 
 
